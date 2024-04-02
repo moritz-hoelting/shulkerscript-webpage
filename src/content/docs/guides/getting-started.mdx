@@ -1,0 +1,94 @@
+---
+title: Getting Started
+description: Get started with ShulkerScript
+---
+import { Steps, FileTree } from '@astrojs/starlight/components';
+
+## Installation
+
+To get started with ShulkerScript, you need to install the ShulkerScript CLI.
+You can either [download](#download-from-github) the latest release from the GitHub releases page or [build it from source](#building-from-source).
+
+### Download from GitHub
+<Steps>
+1. Go to the [GitHub releases page](https://github.com/moritz-hoelting/shulkerscript-cli/releases) and download the latest release for your platform.
+2. Extract the downloaded archive.
+3. Move the extracted binary to a directory in your PATH.
+4. Test the installation by running
+    ```bash
+    shulkerscript --version
+    ```
+    You should see the version of the CLI printed to the console.
+</Steps>
+
+### Building from source
+<Steps>
+1. Make sure you have [Rust and Cargo](https://rustup.rs) installed.
+2. Install the CLI by running
+    ```bash
+    cargo install --git https://github.com/moritz-hoelting/shulkerscript-cli
+    ```
+3. Test the installation by running
+    ```bash
+    shulkerscript --version
+    ```
+</Steps>
+
+## Creating a new project
+<Steps>
+1. Create a new directory for your project.
+2. Navigate into the directory.
+3. Run
+    ```bash
+    shulkerscript init
+    ```
+    This will create a new ShulkerScript project in the current directory.
+4. Open the `pack.toml` file in your favorite text editor and configure the project to your liking.
+</Steps>
+
+The project structure should look like this:
+<FileTree>
+- src/
+  - main.shu
+- .gitignore
+- pack.toml
+- pack.png
+</FileTree>
+
+## Writing your first script
+After opening the file `src/main.shu` in your favorite text editor, you should see the following content:
+```shulkerscript title="src/main.shu"
+#[tick]
+fn main() {
+    /say Hello, world!
+}
+```
+The annotation `#[tick]` tells the compiler that this function should be executed every tick.
+Every line that starts with a `/` is a command that will included in the output. You can add as many commands as you like.
+To begin with, you can change the message in the `/say` command to something else.
+
+## Building the project
+<Steps>
+1. Navigate into the project directory.
+2. Run
+    ```bash
+    shulkerscript build
+    ```
+    This will compile the project and output the result to the `dist` directory.
+3. Alternatively you can run
+    ```bash
+    shulkerscript watch
+    ```
+    to automatically rebuild the project when a file changes.
+</Steps>
+
+## Distributing the project
+<Steps>
+1. Navigate into the project directory.
+2. Run
+    ```bash
+    shulkerscript package
+    ```
+    This will create a ZIP archive containing the compiled project.
+3. You can now distribute the archive to your users.
+</Steps>

@@ -1,0 +1,39 @@
+---
+title: Wilkommen bei der ShulkerScript Dokumentation
+description: Eine einfache und leistungsstarke Sprache für Minecraft Datapacks
+template: splash
+hero:
+  tagline: Einführung in ShulkerScript
+  image:
+    file: ../../../assets/logo.webp
+  actions:
+    - text: Los geht's
+      link: guides/getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: Beitragen
+      link: https://github.com/moritz-hoelting/shulkerscript-cli
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+
+<CardGrid stagger>
+	<Card title="Einfacher Syntax" icon="seti:html">
+		Der Syntax ist ähnlich zu anderen Programmiersprachen, was das Lernen einfach macht,
+		und bietet gleichzeitig leistungsstarke Funktionen, die in `.mcfunction` Dateien nicht zu finden sind.
+	</Card>
+	<Card title="Unkomplizierte Functions" icon="add-document">
+		Mehrere Funktionsdateien aus einer einzigen Quelldatei generieren und sie 
+		von Minecraft oder anderen ShulkerScript-Dateien aus aufrufen.
+	</Card>
+	<Card title="In Rust geschrieben" icon="seti:rust">
+		Die ShulkerScript-Compiler sind in Rust geschrieben, was für eine hohe Geschwindigkeit und Sicherheit sorgt.
+	</Card>
+	<Card title="Zum Projekt beitragen" icon="github">
+		Zu [dem CLI](https://github.com/moritz-hoelting/shulkerscript-cli) oder [dem Compiler](https://github.com/moritz-hoelting/shulkerscript-lang) beitragen.
+	</Card>
+</CardGrid>
+
+
