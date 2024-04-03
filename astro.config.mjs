@@ -32,6 +32,7 @@ export default defineConfig({
 			editLink: {
 				baseUrl: 'https://github.com/moritz-hoelting/shulkerscript-webpage/edit/main',
 			},
+			customCss: ['./src/styles/style.css'],
 			plugins: [starlightLinksValidator({
 				errorOnFallbackPages: false,
 			})],
