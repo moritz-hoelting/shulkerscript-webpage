@@ -65,3 +65,13 @@ if ("block ~ ~-1 ~ minecraft:stone") {
     /say Not on stone
 }
 ```
+
+## Groupings
+Groupings are used to group multiple commands together into one `mcfunction` file without declaring a new function.
+This can be used for commands that need to be executed atomically.
+```shulkerscript
+group {
+    /say Hello
+    /say World
+}
+```
