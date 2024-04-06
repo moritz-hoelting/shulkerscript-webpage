@@ -45,11 +45,25 @@ export default defineConfig({
 					autogenerate: {
 						directory: 'guides',
 					},
+					translations: {
+						de: 'Anleitungen',
+					}
+				},
+				{
+					label: 'Roadmap',
+					link: '/roadmap',
+					translations: {
+						de: 'Zukunftspläne',
+					},
 				},
 				{
 					label: 'Reference',
 					autogenerate: {
 						directory: 'reference',
+					},
+					collapsed: true,
+					translations: {
+						de: 'Referenz',
 					},
 					badge: {
 						text: 'WIP',

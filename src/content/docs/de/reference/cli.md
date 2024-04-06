@@ -21,6 +21,7 @@ Optionen:
 - `--name`: Der Name des Projekts. Standardmäßig der Name des Verzeichnisses.
 - `--description`: Die Beschreibung des Projekts.
 - `--pack-format`: Das Format des Packs. Standardmäßig `26`.
+- `--vcs`: Das gewünschte Versionskontrollsystem. Standardmäßig `git`.
 
 ## build
 Baut das Projekt im angegebenen Pfad in das `dist`-Verzeichnis.

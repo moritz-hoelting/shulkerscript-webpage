@@ -1,0 +1,32 @@
+---
+title: Roadmap
+description: Our Plans for the future of ShulkerScript.
+hero: 
+    tagline: Our Plans for the future of ShulkerScript.
+    image:
+        file: ../../assets/logo.webp
+    actions:
+        - text: Contribute yourself
+          link: https://github.com/moritz-hoelting/shulkerscript-cli
+          icon: external
+          variant: primary
+---
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+1. **Multi-File Support**\
+    Allow users to split their code into multiple files and import them into each other.
+    This will work something like this:
+    ```shulkerscript
+    use "path/to/file.shu";
+    ```
+    And will import all the public  (`pub`) functions and variables from the file.
+2. **Better Error Reports**\
+    Improve the error reports to be more helpful and easier to understand.
+3. **Package CLI-command**\
+    Add a command to the CLI to package the code into a zip file that can easily be distributed.
+4. **Variables & Constants**\
+    Add support for variables and constants. Constants can be any type (string, number, etc.) and 
+    can be passed from function to function. They will be processed by the compiler. Variables will be
+    mutable and can be changed at any time, and are stored as entries in minecraft scoreboards.
+</Steps>

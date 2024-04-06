@@ -21,6 +21,7 @@ Options:
 - `--name`: The name of the project. Defaults to the name of the directory.
 - `--description`: The description of the project.
 - `--pack-format`: The format of the pack. Defaults to `26`.
+- `--vcs`: The version control system to use. Defaults to `git`.
 
 ## build
 Build the project at the specified path to the `dist` folder.
