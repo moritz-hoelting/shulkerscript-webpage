@@ -8,7 +8,7 @@ sidebar:
 ---
 
 ## Comments
-Single line comments start with `//` and continue until the end of the line.
+Single-line comments start with `//` and continue until the end of the line.
 Multiline comments start with `/*` and end with `*/`.
 
 ```shulkerscript
@@ -17,8 +17,8 @@ Multiline comments start with `/*` and end with `*/`.
 multiline comment */
 ```
 
-These comments are completely ignored by the compiler and will not show up in the generated datapack.
-If you want to include a comment in the datapack, you can use the doccomment syntax.
+These comments are completely ignored by the compiler and will not show up in the generated data pack.
+If you want to include a comment in the data pack, you can use the doccomment syntax.
 ```shulkerscript
 /// This is a doccomment
 ```
@@ -31,6 +31,10 @@ They start with a `/` and are followed by the command.
 ```
 
 This will result in `say Hello, world!` being included in the `.mcfunction` file.
+
+:::note
+Literal commands are just syntactic sugar for the [`run`](#run) keyword.
+:::
 
 ## Functions
 Functions are blocks of code that can be executed.
@@ -51,10 +55,9 @@ ShulkerScript always requires a `main` function to be present in the code.
 ### Annotations
 Annotations are special attributes that can be attached to functions.
 They start with `#` followed by the name of the annotation in square brackets. Some annotations can have arguments assigned to them with the `=` operator.
-
-Currently the following annotations are supported:
+Currently, the following annotations are supported:
 - `#[tick]`: The function will be executed every tick.
-- `#[load]`: The function will be executed when the datapack is loaded.
+- `#[load]`: The function will be executed when the data pack is loaded.
 - `#[deobfuscate]`: The function will keep the original name in the output (path of the `.shu`-file followed by the function name).
 - `#[deobfuscate = "path/to/function"]`: The function will be named as specified in the argument.
 
@@ -84,11 +87,30 @@ if ("block ~ ~-1 ~ minecraft:stone") {
 ```
 
 ## Groupings
-Groupings are used to group multiple commands together into one `mcfunction` file without declaring a new function.
+Groupings are used to group multiple commands into one `mcfunction` file without declaring a new function.
 This can be used for commands that need to be executed atomically.
 ```shulkerscript
 group {
     /say Hello
     /say World
+}
+```
+
+## Run
+The `run` keyword is used to evaluate the following expression and include the resulting command in the output.
+```shulkerscript
+run "say Hello, world!"
+```
+
+:::tip
+In most cases, you can use [literal commands](#literal-commands) instead of the `run` keyword.
+:::
+
+## Lua Code
+The `lua` keyword is used to embed Lua code in your ShulkerScript code. It can be combined with the `run` keyword to include the result of the Lua code in the output.
+```shulkerscript
+run lua() {
+    // Lua code goes here
+    return "Hello, Lua!";
 }
 ```
