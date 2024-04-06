@@ -44,6 +44,10 @@ fn main() {
 ```
 This code defines a function called `main` that will be executed every tick.
 
+:::note
+ShulkerScript always requires a `main` function to be present in the code.
+:::
+
 ### Annotations
 Annotations are special attributes that can be attached to functions.
 They start with `#` followed by the name of the annotation in square brackets. Some annotations can have arguments assigned to them with the `=` operator.
@@ -53,6 +57,19 @@ Currently the following annotations are supported:
 - `#[load]`: The function will be executed when the datapack is loaded.
 - `#[deobfuscate]`: The function will keep the original name in the output (path of the `.shu`-file followed by the function name).
 - `#[deobfuscate = "path/to/function"]`: The function will be named as specified in the argument.
+
+### Function calls
+Functions can be called by using their name followed by parenthesis.
+```shulkerscript
+#[tick]
+fn main() {
+    hello();
+}
+
+fn hello() {
+    /say Hello, world!
+}
+```
 
 ## Conditional Statements
 Conditional statements are used to execute code based on a condition.
