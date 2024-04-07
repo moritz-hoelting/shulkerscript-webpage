@@ -16,7 +16,7 @@ Your Lua code should return a string value when used in combination with the run
 ## Syntax
 ```shulkerscript
 run lua() {
-    // Lua code goes here
+    -- Lua code goes here
     return "Hello, Lua!";
-}
+};
 ```

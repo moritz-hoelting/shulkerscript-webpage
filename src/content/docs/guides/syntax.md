@@ -49,7 +49,8 @@ fn main() {
 This code defines a function called `main` that will be executed every tick.
 
 :::note
-ShulkerScript always requires a `main` function to be present in the code.
+ShulkerScript always requires at least one function annotated with `tick`, `load` or `deobfuscate`. 
+Otherwise no `.mcfunction` files will be generated.
 :::
 
 ### Annotations
@@ -110,7 +111,7 @@ In most cases, you can use [literal commands](#literal-commands) instead of the 
 The `lua` keyword is used to embed Lua code in your ShulkerScript code. It can be combined with the `run` keyword to include the result of the Lua code in the output.
 ```shulkerscript
 run lua() {
-    // Lua code goes here
+    -- Lua code goes here
     return "Hello, Lua!";
-}
+};
 ```
