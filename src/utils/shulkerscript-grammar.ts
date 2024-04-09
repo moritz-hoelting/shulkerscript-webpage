@@ -7,6 +7,9 @@ export const shulkerscriptGrammar = {
     scopeName: "source.shulkerscript",
     patterns: [
         {
+            include: "#namespaceKeyword",
+        },
+        {
             include: "#functionContents",
         },
         {
@@ -28,9 +31,10 @@ export const shulkerscriptGrammar = {
                 { include: "#groupBlock" },
                 { include: "#stringLiteral" },
                 { include: "#binaryOperator" },
-                { include: "#ifKeyword" },
+                { include: "#executeKeyword" },
                 { include: "#elseKeyword" },
                 { include: "#runKeyword" },
+                { include: "#functionCall" },
             ],
         },
 
@@ -48,8 +52,11 @@ export const shulkerscriptGrammar = {
             name: "comment.documentation.shulkerscript",
             match: "///.*$",
         },
+        namespaceKeyword: {
+            name: "keyword.control.namespace.shulkerscript",
+            match: "\\bnamespace\\b",
+        },
         functionDeclaration: {
-            name: "entity.name.function.shulkerscript",
             begin: "^\\s*(fn)\\s+(\\w+)\\(\\s*\\)\\s*{",
             end: "}",
             captures: {
@@ -77,13 +84,21 @@ export const shulkerscriptGrammar = {
                 },
             },
         },
+        functionCall: {
+            match: "(\\w+)\\s*\\(\\s*(?:\\w+\\s*)?\\)",
+            captures: {
+                1: {
+                    name: "entity.name.function.shulkerscript",
+                },
+            }
+        },
         binaryOperator: {
             name: "punctuation.operator.binary.shulkerscript",
             match: "(&&|\\|\\|)",
         },
-        ifKeyword: {
-            name: "keyword.control.if.shulkerscript",
-            match: "\\bif\\b",
+        executeKeyword: {
+            name: "keyword.control.execute.shulkerscript",
+            match: "\\b(if|align|as|asat|at|facing|in|on|positioned|rotated|store|summon)\\b",
         },
         elseKeyword: {
             name: "keyword.control.else.shulkerscript",
@@ -98,7 +113,7 @@ export const shulkerscriptGrammar = {
             match: "^\\s*(/\\w+)(.*)$",
             captures: {
                 1: {
-                    name: "keyword.operator.literalcommand.shulkerscript",
+                    name: "keyword.other.commandliteral.shulkerscript",
                 },
                 2: {
                     name: "string.command.shulkerscript",

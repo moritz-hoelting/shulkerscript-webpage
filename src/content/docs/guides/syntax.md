@@ -87,6 +87,45 @@ if ("block ~ ~-1 ~ minecraft:stone") {
 }
 ```
 
+## Execute Blocks
+Execute blocks are used to execute a block of code in a specific context.
+They consist of the keyword you would pass to the `/execute` command followed the argument as a string in parenthesis and a block of code.
+```shulkerscript
+as ("@a") { // execute as all players
+    /say Hello, world!
+}
+```
+
+:::tip[Quality of Life]
+You can use the `asat` keyword to combine the `as` and `at` keywords. It has the same effect as using `as("...")` and `at("@s")` in sequence.
+:::
+
+Multiple execute blocks can be chained together by separating them with a comma.
+```shulkerscript
+positioned ("0 0 0"), in ("minecraft:overworld") {
+    /setblock ~ ~ ~ minecraft:stone
+}
+```
+
+:::tip[Did you know?]
+[Conditionals](#conditional-statements) are also implemented as execute blocks.Therefore you can chain them together with other execute blocks. Keep in mind that an if-else statement can only be used as the last execute block in a chain.
+:::
+
+### Supported Execute Blocks
+
+- `align`
+- `anchored`
+- `as`
+- `at`
+- `asat`
+- `facing`
+- `in`
+- `on`
+- `positioned`
+- `rotated`
+- `store`
+- `summon`
+
 ## Groupings
 Groupings are used to group multiple commands into one `mcfunction` file without declaring a new function.
 This can be used for commands that need to be executed atomically.

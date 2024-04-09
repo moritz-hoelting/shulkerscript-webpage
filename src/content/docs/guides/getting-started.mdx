@@ -69,6 +69,10 @@ The annotation `#[tick]` tells the compiler that this function should be execute
 Every line that starts with a `/` is a command that will included in the output. You can add as many commands as you like.
 To begin with, you can change the message in the `/say` command to something else.
 
+:::caution
+Only functions annotated with `#[tick]`, `#[load]`, `#[deobfuscate]` or called from generated functions will be included in the output.
+:::
+
 ## Building the project
 <Steps>
 1. Navigate into the project directory.
