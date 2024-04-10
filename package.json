@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "shulkerscript-webpage",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build-wasm": "cargo build -r && wasm-bindgen --target web --out-dir ./wasm-pkg --out-name shulkerscript  ./wasm/target/wasm32-unknown-unknown/release/shulkerscript_wasm.wasm"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
