@@ -39,11 +39,16 @@ Literal commands are just syntactic sugar for the [`run`](#run) keyword.
 ## Functions
 Functions are blocks of code that can be executed.
 They start with `fn` followed by the name of the function, parenthesis and a block of code.
-Optionally they can be preceeded by annotations.
+Optionally they can be preceeded by annotations. When a function has the `pub` keyword in front of it, it will be accessible from other files.
 ```shulkerscript title="src/main.shu"
 #[tick]
 fn main() {
     /say Hello, world!
+}
+
+#[deobfuscate]
+pub fn hello() {
+    /say I can be called from other files!
 }
 ```
 This code defines a function called `main` that will be executed every tick.
