@@ -18,6 +18,9 @@ export const shulkerscriptGrammar = {
         {
             include: "#functionAnnotation",
         },
+        {
+            include: "#importStatement",
+        }
     ],
     repository: {
         // Groupings
@@ -53,17 +56,20 @@ export const shulkerscriptGrammar = {
             match: "///.*$",
         },
         namespaceKeyword: {
-            name: "keyword.control.namespace.shulkerscript",
+            name: "keyword.other.namespace.shulkerscript",
             match: "\\bnamespace\\b",
         },
         functionDeclaration: {
-            begin: "^\\s*(fn)\\s+(\\w+)\\(\\s*\\)\\s*{",
+            begin: "^\\s*(pub\\s)?(fn)\\s+(\\w+)\\(\\s*\\)\\s*{",
             end: "}",
             captures: {
                 1: {
-                    name: "keyword.control.function.shulkerscript",
+                    name: "keyword.control.public.shulkerscript"
                 },
                 2: {
+                    name: "keyword.control.function.shulkerscript",
+                },
+                3: {
                     name: "entity.name.function.shulkerscript",
                 },
             },
@@ -156,5 +162,16 @@ export const shulkerscriptGrammar = {
             },
             patterns: [{ include: "#functionContents" }],
         },
+        importStatement: {
+            name: "keyword.import.other.shulkerscript",
+            begin: "from\\s",
+            end: "import\\s(\\w+(?:\\s?,\\s?(?:\\w+))*)\\s?,?\\s?",
+            captures: {
+                1: {
+                    name: "entity.name.function.shulkerscript"
+                },
+            },
+            patterns: [{ include: "#stringLiteral" }]
+        }
     },
 };

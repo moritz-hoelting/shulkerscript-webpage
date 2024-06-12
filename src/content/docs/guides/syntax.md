@@ -80,6 +80,37 @@ fn hello() {
 }
 ```
 
+## Imports
+
+Functions from other files can be imported by using the `from`-`import` syntax.
+```shulkerscript title="src/main.shu"
+namespace "foo";
+
+from "./foo" import bar;
+
+#[load]
+fn main() {
+    bar();
+}
+```
+
+```shulkerscript title="src/foo.shu"
+namespace "foo";
+
+pub fn bar() {
+    /say Hello, world!
+}
+```
+
+:::caution[Important]
+Notice the `pub` keyword in front of the function `bar`. This is required to make the function accessible from other files.
+:::
+
+Multiple functions can be imported by separating them with a comma.
+```shulkerscript
+from "./foo" import bar, baz;
+```
+
 ## Conditional Statements
 Conditional statements are used to execute code based on a condition.
 They start with `if` followed by a condition in parenthesis and a block of code.

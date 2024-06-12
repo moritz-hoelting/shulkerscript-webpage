@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "shulkerscript-docs",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
-    "@astrojs/starlight": "^0.21.3",
-    "astro": "^4.3.5",
-    "sharp": "^0.32.5",
+    "@astrojs/starlight": "^0.24.2",
+    "astro": "^4.10.2",
+    "sharp": "^0.32.6",
     "starlight-links-validator": "^0.7.1",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.5"
   }
 }

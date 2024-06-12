@@ -14,13 +14,12 @@ hero:
 import { Steps } from '@astrojs/starlight/components';
 
 <Steps>
-1. **Multi-File Support**\
-    Allow users to split their code into multiple files and import them into each other.
-    This will work something like this:
+1. **Enhanced Multi-File Support**\
+    Allow users to import all public functions from other files without specifying each name.
+    This will work something this:
     ```shulkerscript
     from "path/to/file.shu" import *;
     ```
-    And will import all the public  (`pub`) functions and variables from the file.
 2. **Better Error Reports**\
     Improve the error reports to be more helpful and easier to understand.
 3. **Tag support**\
