@@ -26,12 +26,46 @@ Options:
 ## build
 Build the project at the specified path to the `dist` folder.
 ```bash
-shulkerscript build [PATH]
+shulkerscript build [OPTIONS] [PATH]
 ```
 - `PATH`: The path to the directory where the project is located. Defaults to the current directory.
+
+Options:
+- `--output <OUTPUT>`  The output directory, overrides the `DATAPACK_DIR` environment variable
+
+Environment variables:
+- `DATAPACK_DIR`       The output directory [default: `./dist`]
 
 ## package
 Build and package the project at the specified path to a `.zip` file.
 ```bash
-shulkerscript package [PATH]
+shulkerscript package [OPTIONS] [PATH]
 ```
+
+- `PATH`: The path to the directory where the project is located. Defaults to the current directory.
+
+Options & Environment:
+- Same as `build`
+
+## watch
+```bash
+shulkerscript watch [OPTIONS] [SUBCOMMAND]
+```
+- `SUBCOMMAND`: The command to run when changes have been detected, has to be either `build` or `package` [default: `build`]
+
+Options:
+- `--no-initial`                     Do not run the command initially
+- `--debounce-time <DEBOUNCE_TIME>`  The time to wait in ms after the last change before running the command [default: `2000`]
+
+## clean
+Clean the output directory of the project at the specified path.
+```bash
+shulkerscript clean [OPTIONS] [PATH]
+```
+- `PATH`: The path of the project folder to clean [default: `.`]
+
+Options:
+- `--output <OUTPUT>`  The output directory, overrides the `DATAPACK_DIR` environment variable
+
+Environment variables:
+- `DATAPACK_DIR`       The output directory [default: `./dist`]
