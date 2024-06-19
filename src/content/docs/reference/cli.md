@@ -1,8 +1,6 @@
 ---
 title: Command-line interface reference
 description: Reference for the ShulkerScript command-line tool
-sidebar:
-    label: CLI
 ---
 
 The ShulkerScript CLI is a command-line tool for managing ShulkerScript projects.
@@ -21,6 +19,8 @@ Options:
 - `--name`: The name of the project. Defaults to the name of the directory.
 - `--description`: The description of the project.
 - `--pack-format`: The format of the pack. Defaults to `26`.
+- `--icon`: The path to the icon file. Leave empty for default icon.
+- `--batch`: Do not prompt for input, use default values instead if possible or fail.
 - `--vcs`: The version control system to use. Defaults to `git`.
 
 ## build
@@ -33,6 +33,7 @@ shulkerscript build [OPTIONS] [PATH]
 Options:
 - `--assets <ASSETS>`  The path to the assets directory [default: `./assets`]
 - `--output <OUTPUT>`  The output directory, overrides the `DATAPACK_DIR` environment variable
+- `--no-validate`      Skip validation of the pack format
 - `--zip`              Package the output into a zip file
 
 Environment variables:

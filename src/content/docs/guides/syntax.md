@@ -175,7 +175,7 @@ group {
 ## Run
 The `run` keyword is used to evaluate the following expression and include the resulting command in the output.
 ```shulkerscript
-run "say Hello, world!"
+run "say Hello, world!";
 ```
 
 :::tip
