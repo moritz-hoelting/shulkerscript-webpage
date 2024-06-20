@@ -1,5 +1,9 @@
 import type { Directory, SetState } from "@components/Playground";
 import React, { useState } from "react";
+import {
+    GoChevronDown as ChevDown,
+    GoChevronRight as ChevRight,
+} from "react-icons/go";
 
 export default function FileView({
     root,
@@ -14,28 +18,31 @@ export default function FileView({
 }) {
     return (
         <div className={className}>
-            {Object.entries(root.dirs ?? {}).map(([name, dir]) => {
-                return (
-                    <DirElement
-                        key={name}
-                        name={name}
-                        dir={dir}
-                        fileName={fileName.slice(name.length + 1)}
-                        setSelectedFileName={setSelectedFileName}
-                    />
-                );
-            })}
-            {Object.entries(root.files ?? {}).map(([name, _]) => {
-                return (
-                    <span key={name}>
-                        <FileElement
+            <h3>Explorer</h3>
+            <div className="entries">
+                {Object.entries(root.dirs ?? {}).map(([name, dir]) => {
+                    return (
+                        <DirElement
+                            key={name}
                             name={name}
-                            disabled={fileName == name}
-                            onClick={() => setSelectedFileName(name)}
+                            dir={dir}
+                            fileName={fileName.slice(name.length + 1)}
+                            setSelectedFileName={setSelectedFileName}
                         />
-                    </span>
-                );
-            })}
+                    );
+                })}
+                {Object.entries(root.files ?? {}).map(([name, _]) => {
+                    return (
+                        <span key={name}>
+                            <FileElement
+                                name={name}
+                                disabled={fileName == name}
+                                onClick={() => setSelectedFileName(name)}
+                            />
+                        </span>
+                    );
+                })}
+            </div>
         </div>
     );
 }
@@ -50,7 +57,7 @@ function FileElement({
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
     return (
-        <button disabled={disabled} onClick={onClick}>
+        <button disabled={disabled} onClick={onClick} className="file">
             {name}
         </button>
     );
@@ -75,15 +82,31 @@ function DirElement({
         setSelectedFileName(name + "/" + selected);
     };
 
+    const chevStyles: React.CSSProperties = {
+        marginBottom: "-2px",
+    };
+
+    const hasChildren =
+        Object.keys(currentDir.dirs ?? {}).length > 0 ||
+        Object.keys(currentDir.files ?? {}).length > 0;
+
     return (
-        <div key={name}>
+        <div key={name} className="dir">
             <button
                 style={{ display: "block" }}
                 onClick={() => setCollapsed(!collapsed)}
             >
-                {name}/
+                {collapsed ? (
+                    <ChevRight
+                        aria-description="collapsed"
+                        style={chevStyles}
+                    />
+                ) : (
+                    <ChevDown aria-description="expanded" style={chevStyles} />
+                )}{" "}
+                {name + "/" + (collapsed && hasChildren ? "..." : "")}
             </button>
-            <div style={{ marginLeft: ".25cm" }}>
+            <div style={{ marginLeft: "0.5cm" }} className="dirChildren">
                 {collapsed ? null : (
                     <div>
                         {Object.entries(currentDir.dirs ?? {}).map(

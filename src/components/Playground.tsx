@@ -36,9 +36,9 @@ export default function Playground() {
                     "test.mcfunction": {
                         content: "",
                         language: "mcfunction",
-                    }
-                }
-            }
+                    },
+                },
+            },
         },
         files: {
             "pack.toml": {
