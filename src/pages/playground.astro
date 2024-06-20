@@ -1,0 +1,8 @@
+---
+import PlaygroundComponent from '@components/Playground';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+---
+
+<StarlightPage frontmatter={{ title: 'Playground', template: "splash" }}>
+    <PlaygroundComponent client:only="react" />
+</StarlightPage>

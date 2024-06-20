@@ -1,0 +1,9 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/PageTitle.astro";
+
+const isPlayground = Astro.props.slug === 'playground';
+---
+
+
+{isPlayground ? <></> : <Default {...Astro.props}><slot /></Default>}

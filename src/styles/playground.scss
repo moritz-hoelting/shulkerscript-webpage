@@ -1,0 +1,19 @@
+.playground {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas:
+        "header header"
+        "files editor";
+
+    > header {
+        grid-area: header;
+    }
+    > .file-view {
+        grid-area: files;
+        display: flex;
+        flex-direction: column;
+    }
+    > .editor {
+        grid-area: editor;
+    }
+}

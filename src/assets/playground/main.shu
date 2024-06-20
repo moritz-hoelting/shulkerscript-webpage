@@ -1,0 +1,7 @@
+namespace "my-shulkerscript-pack";
+
+#[tick]
+fn main() {
+    // Change this
+    /say Hello World!
+}
