@@ -1,6 +1,6 @@
 .playground {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: clamp(100px, 15%, 400px) auto;
     grid-template-areas:
         "header header"
         "files editor";

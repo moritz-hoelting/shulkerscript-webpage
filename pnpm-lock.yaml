@@ -29,6 +29,9 @@ dependencies:
   '@mui/material':
     specifier: ^5.15.20
     version: 5.15.20(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+  '@shikijs/monaco':
+    specifier: ^1.7.0
+    version: 1.7.0
   '@types/react':
     specifier: ^18.3.3
     version: 18.3.3
@@ -47,9 +50,15 @@ dependencies:
   sharp:
     specifier: ^0.32.6
     version: 0.32.6
+  shiki:
+    specifier: ^1.7.0
+    version: 1.7.0
   starlight-links-validator:
     specifier: ^0.7.1
     version: 0.7.1(@astrojs/starlight@0.24.2)(astro@4.10.2)
+  tm-themes:
+    specifier: ^1.4.3
+    version: 1.4.3
   typescript:
     specifier: ^5.4.5
     version: 5.4.5
@@ -141,7 +150,7 @@ packages:
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       remark-smartypants: 2.1.0
-      shiki: 1.6.4
+      shiki: 1.7.0
       unified: 11.0.4
       unist-util-remove-position: 5.0.0
       unist-util-visit: 5.0.0
@@ -1131,7 +1140,7 @@ packages:
     resolution: {integrity: sha512-aFQBPepv0zhVXqJFAvfQ4vXYv/meJKiqmEEKSxdjAfwXllIV49PDlnGEXmbGYjR4hUQQjbfDgzAbrbfePc3YVQ==}
     dependencies:
       '@expressive-code/core': 0.35.3
-      shiki: 1.6.4
+      shiki: 1.7.0
     dev: false
 
   /@expressive-code/plugin-text-markers@0.35.3:
@@ -1822,8 +1831,14 @@ packages:
     dev: false
     optional: true
 
-  /@shikijs/core@1.6.4:
-    resolution: {integrity: sha512-WTU9rzZae1p2v6LOxMf6LhtmZOkIHYYW160IuahUyJy7YXPPjyWZLR1ag+SgD22ZMxZtz1gfU6Tccc8t0Il/XA==}
+  /@shikijs/core@1.7.0:
+    resolution: {integrity: sha512-O6j27b7dGmJbR3mjwh/aHH8Ld+GQvA0OQsNO43wKWnqbAae3AYXrhFyScHGX8hXZD6vX2ngjzDFkZY5srtIJbQ==}
+    dev: false
+
+  /@shikijs/monaco@1.7.0:
+    resolution: {integrity: sha512-7wLuwcMhxYShdSOJ0c8z3puiwi0j9EFzCsIDWo8Q4wWc1sX2XrsGg/e4LyydwwydY4Kwc40KDgXBsX/0A211mg==}
+    dependencies:
+      '@shikijs/core': 1.7.0
     dev: false
 
   /@types/acorn@4.0.6:
@@ -2210,7 +2225,7 @@ packages:
       rehype: 13.0.1
       resolve: 1.22.8
       semver: 7.6.2
-      shiki: 1.6.4
+      shiki: 1.7.0
       string-width: 7.1.0
       strip-ansi: 7.1.0
       tsconfck: 3.1.0(typescript@5.4.5)
@@ -4989,10 +5004,10 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /shiki@1.6.4:
-    resolution: {integrity: sha512-X88chM7w8jnadoZtjPTi5ahCJx9pc9f8GfEkZAEYUTlcUZIEw2D/RY86HI/LkkE7Nj8TQWkiBfaFTJ3VJT6ESg==}
+  /shiki@1.7.0:
+    resolution: {integrity: sha512-H5pMn4JA7ayx8H0qOz1k2qANq6mZVCMl1gKLK6kWIrv1s2Ial4EmD4s4jE8QB5Dw03d/oCQUxc24sotuyR5byA==}
     dependencies:
-      '@shikijs/core': 1.6.4
+      '@shikijs/core': 1.7.0
     dev: false
 
   /signal-exit@3.0.7:
@@ -5244,6 +5259,10 @@ packages:
     resolution: {integrity: sha512-TmLJNj6UgX8xcUZo4UDStGQtDiTzF7BzWlzn9g7UWrjkpHr5uJTK1ld16wZ3LXb2vb6jH8qU89dW5whuMdXYdw==}
     dependencies:
       b4a: 1.6.6
+    dev: false
+
+  /tm-themes@1.4.3:
+    resolution: {integrity: sha512-nsUGwktLaWFMyKw2e/hNyDmcTIO+ue6Q2Mvb8L7WQkKSCflOm2TjGSspcJw6q7hi4QxQQNTuGICyvQN1UqtunQ==}
     dev: false
 
   /to-fast-properties@2.0.0:

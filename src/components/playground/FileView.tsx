@@ -90,11 +90,11 @@ function DirElement({
                             ([dirname, dir]) => {
                                 return (
                                     <DirElement
-                                        key={name}
-                                        name={name}
+                                        key={dirname}
+                                        name={dirname}
                                         dir={dir}
                                         fileName={fileName.slice(
-                                            name.length + 1
+                                            dirname.length + 1
                                         )}
                                         setSelectedFileName={
                                             modSetSelectedFileName
@@ -107,8 +107,8 @@ function DirElement({
                             ([currentName, _]) => {
                                 return (
                                     <FileElement
-                                        key={name}
-                                        name={name}
+                                        key={currentName}
+                                        name={currentName}
                                         disabled={fileName == currentName}
                                         onClick={() =>
                                             modSetSelectedFileName(currentName)

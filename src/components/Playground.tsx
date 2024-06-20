@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Editor, { useMonaco, type Monaco } from "@monaco-editor/react";
+import { useMonaco, type Monaco } from "@monaco-editor/react";
 import FileView from "./playground/FileView";
+import Editor from "./playground/Editor";
 
 import "@styles/playground.scss";
 
 import mainFileContent from "@assets/playground/main.shu?raw";
+import packTomlContent from "@assets/playground/pack.toml?raw";
+
 import Header from "./playground/Header";
 
 export type File = {
@@ -24,13 +27,22 @@ export default function Playground() {
                 files: {
                     "main.shu": {
                         content: mainFileContent,
+                        language: "shulkerscript",
                     },
                 },
             },
+            dist: {
+                files: {
+                    "test.mcfunction": {
+                        content: "",
+                        language: "mcfunction",
+                    }
+                }
+            }
         },
         files: {
             "pack.toml": {
-                content: "pack.toml content",
+                content: packTomlContent,
                 language: "toml",
             },
         },
@@ -63,15 +75,7 @@ export default function Playground() {
                     fileName={fileName}
                     setSelectedFileName={setFileName}
                 />
-                <div className="editor">
-                    <Editor
-                        height="60vh"
-                        theme="vs-dark"
-                        path={fileName}
-                        defaultLanguage={file.language}
-                        defaultValue={file.content}
-                    />
-                </div>
+                <Editor fileName={fileName} file={file} />
             </main>
         </>
     );
