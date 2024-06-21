@@ -12,14 +12,14 @@ import { ThemeProvider } from "@mui/material";
 
 import { customTheme } from "@utils/material-ui-theme";
 
-export default function SplitButton({
+export default function DropdownButton({
     options,
-    children,
-    onClick,
+    visible,
+    style,
 }: {
     options: [string, React.MouseEventHandler<HTMLLIElement>][];
-    children: React.ReactNode;
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    visible: [React.ReactNode, React.MouseEventHandler<HTMLButtonElement>][];
+    style?: React.CSSProperties;
 }) {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLDivElement>(null);
@@ -53,10 +53,11 @@ export default function SplitButton({
                 variant="contained"
                 ref={anchorRef}
                 aria-label="Button group with a nested menu"
+                style={style}
             >
-                <Button onClick={onClick}>
-                    {children}
-                </Button>
+                {visible.map(([children, onClick], index) => {
+                    return <Button key={index} onClick={onClick}>{children}</Button>;
+                })}
                 <Button
                     size="small"
                     aria-controls={open ? "split-button-menu" : undefined}

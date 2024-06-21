@@ -13,7 +13,7 @@ export default function Editor({
     file,
 }: {
     fileName: string;
-    file: File;
+    file?: File;
 }) {
     const [highlighter, setHighlighter] = useState<Highlighter | null>(null);
 
@@ -48,8 +48,8 @@ export default function Editor({
                 height="70vh"
                 theme="vs-dark"
                 path={fileName}
-                defaultLanguage={file.language}
-                defaultValue={file.content}
+                defaultLanguage={file?.language}
+                defaultValue={file?.content}
             />
         </div>
     );

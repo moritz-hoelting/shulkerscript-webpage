@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMonaco, type Monaco } from "@monaco-editor/react";
-import { useImmer, type ImmerHook, type Updater } from "use-immer"; 
+import { useImmer, type Updater } from "use-immer";
 
 import "@styles/playground.scss";
 
@@ -20,49 +20,85 @@ export type Directory = {
 };
 export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
+const FILE_STORAGE_KEY = "playground-files";
+const DEFAULT_FILES = {
+    dirs: {
+        src: {
+            files: {
+                "main.shu": {
+                    content: mainFileContent,
+                    language: "shulkerscript",
+                },
+            },
+        },
+        dist: {},
+    },
+    files: {
+        "pack.toml": {
+            content: packTomlContent,
+            language: "toml",
+        },
+    },
+};
+
 export default function Playground() {
-    const [rootDir, updateRootDir] = useImmer({
-        dirs: {
-            src: {
-                files: {
-                    "main.shu": {
-                        content: mainFileContent,
-                        language: "shulkerscript",
-                    },
-                },
-            },
-            dist: {
-                files: {
-                    "test.mcfunction": {
-                        content: "",
-                        language: "mcfunction",
-                    },
-                },
-            },
-        },
-        files: {
-            "pack.toml": {
-                content: packTomlContent,
-                language: "toml",
-            },
-        },
-    } as Directory);
+    const [rootDir, updateRootDir] = useImmer(
+        getStorageOrDefault(FILE_STORAGE_KEY, DEFAULT_FILES) as Directory
+    );
 
     const [fileName, setFileName] = useState("src/main.shu");
-    const file = getFile(rootDir, fileName)!;
+    const file = getFile(rootDir, fileName);
 
-    const onBuild: () => void = () => {
+    const onBuild = () => {
         if (monaco) {
             console.log(getFiles(monaco));
         } else {
             console.error("monaco has not loaded");
         }
     };
-    const onZip: () => void = () => {
+    const onZip = () => {
         if (monaco) {
-            loadFile(monaco, updateRootDir, {content: "zip"}, "dist/pack.zip");
+            loadFile(
+                monaco,
+                updateRootDir,
+                { content: "zip" },
+                "dist/pack.zip"
+            );
         } else {
-        console.error("onZip not set");}
+            console.error("onZip not set");
+        }
+    };
+    const onSave = () => {
+        if (monaco) {
+            const currentFiles = getFiles(monaco);
+            updateRootDir((dir) => {
+                dir.dirs = currentFiles.dirs;
+                dir.files = currentFiles.files;
+            });
+            window.localStorage.setItem(
+                FILE_STORAGE_KEY,
+                JSON.stringify(currentFiles)
+            );
+        }
+    };
+    const onReset = () => {
+        if (monaco) {
+            monaco.editor.getModels().forEach((model) => {
+                if (model.uri.path != "/src/main.shu") {
+                    model.dispose();
+                } else {
+                    model.setValue(mainFileContent);
+                }
+            });
+
+            updateRootDir((dir) => {
+                dir.dirs = DEFAULT_FILES.dirs;
+                dir.files = DEFAULT_FILES.files;
+            });
+
+            loadFiles(monaco, updateRootDir, DEFAULT_FILES);
+            setFileName("src/main.shu");
+        }
     };
 
     const monaco = useMonaco();
@@ -82,14 +118,19 @@ export default function Playground() {
                     marginTop: "0.5cm",
                 }}
             >
-                <Header onBuild={onBuild} onZip={onZip} />
+                <Header
+                    onSave={onSave}
+                    onReset={onReset}
+                    onBuild={onBuild}
+                    onZip={onZip}
+                />
                 <FileView
                     className="file-view"
                     root={rootDir}
                     fileName={fileName}
                     setSelectedFileName={setFileName}
                 />
-                <Editor fileName={fileName} file={file} />
+                <Editor fileName={fileName} file={file ?? undefined} />
             </main>
         </>
     );
@@ -111,7 +152,7 @@ function getFiles(monaco: Monaco): Directory {
                 dir.dirs[part] = {};
             }
 
-            dir = dir.dirs[part].files ?? {};
+            dir = dir.dirs[part];
         }
 
         if (!dir.files) {
@@ -147,12 +188,20 @@ function getFile(root: Directory, path: string): File | null {
     return root.files?.[path] ?? null;
 }
 
-function loadFiles(monaco: Monaco, updater: Updater<Directory>, dir: Directory, prefix = "") {
+function loadFiles(
+    monaco: Monaco,
+    updater: Updater<Directory>,
+    dir: Directory,
+    prefix = ""
+) {
     for (const [name, d] of Object.entries(dir.dirs ?? {})) {
         loadFiles(monaco, updater, d, prefix + name + "/");
-        updater(dir => {
+        updater((dir) => {
             let current = dir;
-            for(const part of [...prefix.split("/").filter(s => s !== ""), name]) {
+            for (const part of [
+                ...prefix.split("/").filter((s) => s !== ""),
+                name,
+            ]) {
                 if (!current.dirs) {
                     current.dirs = {};
                 }
@@ -166,17 +215,21 @@ function loadFiles(monaco: Monaco, updater: Updater<Directory>, dir: Directory, 
     }
 }
 
-function loadFile(monaco: Monaco, updater: Updater<Directory>, file: File, name: string) {
+function loadFile(
+    monaco: Monaco,
+    updater: Updater<Directory>,
+    file: File,
+    name: string
+) {
     const uri = monaco.Uri.parse(name);
     if (!monaco.editor.getModel(uri)) {
         monaco.editor.createModel(file.content, file.language, uri);
     }
-    updater(dir => {
+    updater((dir) => {
         let current = dir;
-        const parts = name.split("/").filter(s => s !== "");
+        const parts = name.split("/").filter((s) => s !== "");
         const last = parts.pop()!;
-        for(const part of parts) {
-            console.log(part);
+        for (const part of parts) {
             if (!current.dirs) {
                 current.dirs = {};
             }
@@ -189,4 +242,11 @@ function loadFile(monaco: Monaco, updater: Updater<Directory>, file: File, name:
     });
 }
 
-
+function getStorageOrDefault(key: string, def: any) {
+    const item = window.localStorage.getItem(key);
+    if (item) {
+        return JSON.parse(item);
+    } else {
+        return def;
+    }
+}
