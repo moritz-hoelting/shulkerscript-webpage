@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import react from "@astrojs/react";
 import starlightLinksValidator from "starlight-links-validator";
 import shikiConfig from './src/utils/shiki';
-import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({

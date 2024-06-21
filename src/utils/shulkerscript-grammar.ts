@@ -67,10 +67,10 @@ export const shulkerscriptGrammar: LanguageInput = {
             end: "}",
             captures: {
                 1: {
-                    name: "keyword.control.public.shulkerscript"
+                    name: "keyword.control.function.shulkerscript",
                 },
                 2: {
-                    name: "keyword.control.function.shulkerscript",
+                    name: "keyword.control.public.shulkerscript",
                 },
                 3: {
                     name: "entity.name.function.shulkerscript",

@@ -10,6 +10,11 @@ import FileView from "./playground/FileView";
 import Editor from "./playground/Editor";
 import Header from "./playground/Header";
 
+import initWasm, {
+    compile,
+    compileZip,
+} from "@wasm/webcompiler/pkg/webcompiler";
+
 export type File = {
     language?: string;
     content: string;
@@ -42,6 +47,10 @@ const DEFAULT_FILES = {
 };
 
 export default function Playground() {
+    initWasm().catch((err) => {
+        console.error(err);
+    });
+
     const [rootDir, updateRootDir] = useImmer(
         getStorageOrDefault(FILE_STORAGE_KEY, DEFAULT_FILES) as Directory
     );
@@ -51,21 +60,29 @@ export default function Playground() {
 
     const onBuild = () => {
         if (monaco) {
-            console.log(getFiles(monaco));
+            const dist = JSON.parse(
+                JSON.stringify(compile(getFiles(monaco)), jsonReplacer)
+            );
+            const withRoot = {
+                dirs: {
+                    dist: dist,
+                },
+            } as Directory;
+            loadFiles(monaco, updateRootDir, withRoot);
         } else {
             console.error("monaco has not loaded");
         }
     };
     const onZip = () => {
         if (monaco) {
-            loadFile(
-                monaco,
-                updateRootDir,
-                { content: "zip" },
-                "dist/pack.zip"
-            );
+            const data =
+                "data:application/zip;base64," + compileZip(getFiles(monaco));
+            const a = document.createElement("a");
+            a.href = data;
+            a.download = "shulkerscript-pack.zip";
+            a.click();
         } else {
-            console.error("onZip not set");
+            console.error("monaco has not loaded");
         }
     };
     const onSave = () => {
@@ -226,19 +243,24 @@ function loadFile(
         monaco.editor.createModel(file.content, file.language, uri);
     }
     updater((dir) => {
-        let current = dir;
-        const parts = name.split("/").filter((s) => s !== "");
-        const last = parts.pop()!;
-        for (const part of parts) {
-            if (!current.dirs) {
-                current.dirs = {};
+        if (dir) {
+            let current = dir;
+            const parts = name.split("/").filter((s) => s !== "");
+            const last = parts.pop()!;
+            for (const part of parts) {
+                if (!current.dirs) {
+                    current.dirs = {};
+                }
+                if (!current.dirs[part]) {
+                    current.dirs[part] = {};
+                }
+                current = current.dirs[part];
             }
-            current = current.dirs[part];
+            if (!current.files) {
+                current.files = {};
+            }
+            current.files[last] = file;
         }
-        if (!current.files) {
-            current.files = {};
-        }
-        current.files[last] = file;
     });
 }
 
@@ -248,5 +270,17 @@ function getStorageOrDefault(key: string, def: any) {
         return JSON.parse(item);
     } else {
         return def;
+    }
+}
+
+function jsonReplacer(key: any, value: any): any {
+    if (value instanceof Map) {
+        const res: { [key: string]: any } = {};
+        for (const [k, v] of value.entries()) {
+            res[k] = v;
+        }
+        return res;
+    } else {
+        return value;
     }
 }
