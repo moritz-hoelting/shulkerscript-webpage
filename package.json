@@ -29,7 +29,8 @@
     "shiki": "^1.7.0",
     "starlight-links-validator": "^0.7.1",
     "tm-themes": "^1.4.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "use-immer": "^0.10.0"
   },
   "devDependencies": {
     "sass": "^1.77.6"

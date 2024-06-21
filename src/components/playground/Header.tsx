@@ -1,12 +1,6 @@
 import SplitButton from "./SplitButton";
 
-export default function Header() {
-    const clickBuild = () => {
-        console.log("build");
-    }
-    const clickZip = () => {
-        console.log("zip");
-    }
+export default function Header({onBuild, onZip}: {onBuild: () => void; onZip: () => void;}){
 
     return (
         <header style={{
@@ -15,7 +9,7 @@ export default function Header() {
             marginBottom: "0.5cm",
         }}>
             <h1 id="_top">Playground</h1>
-            <SplitButton onClick={clickBuild} options={[["Download zip", clickZip]]}>Build</SplitButton>
+            <SplitButton onClick={onBuild} options={[["Download zip", onZip]]}>Build</SplitButton>
         </header>
     );
 }

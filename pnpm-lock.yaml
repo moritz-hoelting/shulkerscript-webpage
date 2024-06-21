@@ -65,6 +65,9 @@ dependencies:
   typescript:
     specifier: ^5.4.5
     version: 5.4.5
+  use-immer:
+    specifier: ^0.10.0
+    version: 0.10.0(immer@10.1.1)(react@18.3.1)
 
 devDependencies:
   sass:
@@ -3278,6 +3281,10 @@ packages:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
     dev: false
 
+  /immer@10.1.1:
+    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
+    dev: false
+
   /immutable@4.3.6:
     resolution: {integrity: sha512-Ju0+lEMyzMVZarkTn/gqRpdqd5dOPaz1mCZ0SH3JV6iFw81PldE/PEB1hWVEA288HPt4WXW8O7AWxB10M+03QQ==}
 
@@ -5488,6 +5495,16 @@ packages:
       browserslist: 4.23.1
       escalade: 3.1.2
       picocolors: 1.0.1
+    dev: false
+
+  /use-immer@0.10.0(immer@10.1.1)(react@18.3.1):
+    resolution: {integrity: sha512-/eVwNR4TG9Tm/dd+aHYLLaI0FLfYKlkTqKMkn78Ah/EYVzWd/zJIgpkdoFEKbhQJOGo8XN7/mWrTx0exp1c+Ug==}
+    peerDependencies:
+      immer: '>=8.0.0'
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0
+    dependencies:
+      immer: 10.1.1
+      react: 18.3.1
     dev: false
 
   /util-deprecate@1.0.2:
