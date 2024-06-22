@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMonaco, type Monaco } from "@monaco-editor/react";
 import { useImmer, type Updater } from "use-immer";
 
@@ -14,16 +14,7 @@ import initWasm, {
     compile,
     compileZip,
 } from "@wasm/webcompiler/pkg/webcompiler";
-
-export type File = {
-    language?: string;
-    content: string;
-};
-export type Directory = {
-    dirs?: { [key: string]: Directory };
-    files?: { [key: string]: File };
-};
-export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+import type { Directory, File, PlaygroundLang } from "@utils/playground";
 
 const FILE_STORAGE_KEY = "playground-files";
 const DEFAULT_FILES = {
@@ -46,7 +37,7 @@ const DEFAULT_FILES = {
     },
 };
 
-export default function Playground() {
+export default function Playground({ lang }: { lang: PlaygroundLang }) {
     initWasm().catch((err) => {
         console.error(err);
     });
@@ -55,32 +46,40 @@ export default function Playground() {
         getStorageOrDefault(FILE_STORAGE_KEY, DEFAULT_FILES) as Directory
     );
 
+    const [theme, setTheme] = useState<"light" | "dark">("dark");
     const [fileName, setFileName] = useState("src/main.shu");
     const file = getFile(rootDir, fileName);
 
     const onBuild = () => {
         if (monaco) {
-            const dist = JSON.parse(
-                JSON.stringify(compile(getFiles(monaco)), jsonReplacer)
-            );
-            const withRoot = {
-                dirs: {
-                    dist: dist,
-                },
-            } as Directory;
-            loadFiles(monaco, updateRootDir, withRoot);
+            const compiled = compile(getFiles(monaco));
+            if (compiled) {
+                const dist = JSON.parse(JSON.stringify(compiled, jsonReplacer));
+                const withRoot = {
+                    dirs: {
+                        dist: dist,
+                    },
+                } as Directory;
+                loadFiles(monaco, updateRootDir, withRoot);
+            } else {
+                alert("Compilation failed");
+            }
         } else {
             console.error("monaco has not loaded");
         }
     };
     const onZip = () => {
         if (monaco) {
-            const data =
-                "data:application/zip;base64," + compileZip(getFiles(monaco));
-            const a = document.createElement("a");
-            a.href = data;
-            a.download = "shulkerscript-pack.zip";
-            a.click();
+            const zipped = compileZip(getFiles(monaco));
+            if (zipped) {
+                const data = "data:application/zip;base64," + zipped;
+                const a = document.createElement("a");
+                a.href = data;
+                a.download = "shulkerscript-pack.zip";
+                a.click();
+            } else {
+                alert("Compilation failed");
+            }
         } else {
             console.error("monaco has not loaded");
         }
@@ -125,6 +124,37 @@ export default function Playground() {
         }
     }, [monaco]);
 
+    useEffect(() => {
+        if (monaco) {
+            let isReadOnly = fileName.startsWith("dist/");
+            monaco.editor.getEditors().forEach((e) =>
+                e.updateOptions({
+                    readOnly: isReadOnly,
+                    readOnlyMessage: {
+                        value: "Generated files are read-only",
+                    },
+                })
+            );
+        }
+    }, [fileName]);
+
+    useEffect(() => {
+        const root = document.querySelector(":root") as HTMLElement;
+        if (root) {
+            function reactToThemeChange() {
+                const selectedTheme = root.getAttribute("data-theme");
+                if (selectedTheme !== theme && selectedTheme !== null) {
+                    setTheme(selectedTheme as "light" | "dark");
+                }
+            }
+            reactToThemeChange();
+
+            root.onchange = () => {
+                reactToThemeChange();
+            };
+        }
+    });
+
     return (
         <>
             <main
@@ -136,6 +166,7 @@ export default function Playground() {
                 }}
             >
                 <Header
+                    lang={lang.header}
                     onSave={onSave}
                     onReset={onReset}
                     onBuild={onBuild}
@@ -146,8 +177,13 @@ export default function Playground() {
                     root={rootDir}
                     fileName={fileName}
                     setSelectedFileName={setFileName}
+                    lang={lang.explorer}
                 />
-                <Editor fileName={fileName} file={file ?? undefined} />
+                <Editor
+                    fileName={fileName}
+                    file={file ?? undefined}
+                    theme={theme}
+                />
             </main>
         </>
     );

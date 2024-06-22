@@ -1,78 +1,114 @@
-import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
 import react from "@astrojs/react";
 import starlightLinksValidator from "starlight-links-validator";
-import shikiConfig from './src/utils/shiki';
+import starlightUtils from "@lorenzo_lewis/starlight-utils";
+import shikiConfig from "./src/utils/shiki";
+
+const playgroundSidebarEntry = {
+    label: "Playground",
+    link: "/playground",
+    translations: { de: "Spielplatz" },
+};
+
+const navLinks = [playgroundSidebarEntry];
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react(), starlight({
-    title: 'ShulkerScript',
-    logo: {
-      src: './src/assets/logo.webp',
-      alt: 'ShulkerScript Logo'
-    },
-    favicon: '/favicon.ico',
-    description: 'A simple and powerful scripting language for Minecraft datapacks.',
-    social: {
-      github: 'https://github.com/moritz-hoelting/shulkerscript-cli'
-    },
-    tableOfContents: {
-      minHeadingLevel: 1,
-      maxHeadingLevel: 3
-    },
-    defaultLocale: 'root',
-    locales: {
-      root: {
-        label: 'English',
-        lang: 'en'
-      },
-      de: {
-        label: 'Deutsch',
-        lang: 'de'
-      }
-    },
-    editLink: {
-      baseUrl: 'https://github.com/moritz-hoelting/shulkerscript-webpage/edit/main'
-    },
-    customCss: ['./src/styles/style.css'],
-    plugins: [starlightLinksValidator({
-      errorOnFallbackPages: false
-    })],
-    expressiveCode: {
-      shiki: shikiConfig
-    },
-    components: {
-      PageTitle: './src/components/override/PageTitle.astro',
-      ContentPanel: './src/components/override/ContentPanel.astro',
-    },
-    sidebar: [{
-      label: 'Guides',
-      autogenerate: {
-        directory: 'guides'
-      },
-      translations: {
-        de: 'Anleitungen'
-      }
-    }, {
-      label: 'Roadmap',
-      link: '/roadmap',
-      translations: {
-        de: 'Zukunftspläne'
-      }
-    }, {
-      label: 'Reference',
-      autogenerate: {
-        directory: 'reference'
-      },
-      collapsed: true,
-      translations: {
-        de: 'Referenz'
-      },
-      badge: {
-        text: 'WIP',
-        variant: 'caution'
-      }
-    }]
-  })]
+    integrations: [
+        react(),
+        starlight({
+            title: "ShulkerScript",
+            logo: {
+                src: "./src/assets/logo.webp",
+                alt: "ShulkerScript Logo",
+            },
+            favicon: "/favicon.ico",
+            description:
+                "A simple and powerful scripting language for Minecraft datapacks.",
+            social: {
+                github: "https://github.com/moritz-hoelting/shulkerscript-cli",
+            },
+            tableOfContents: {
+                minHeadingLevel: 1,
+                maxHeadingLevel: 3,
+            },
+            defaultLocale: "root",
+            locales: {
+                root: {
+                    label: "English",
+                    lang: "en",
+                },
+                de: {
+                    label: "Deutsch",
+                    lang: "de",
+                },
+            },
+            editLink: {
+                baseUrl:
+                    "https://github.com/moritz-hoelting/shulkerscript-webpage/edit/main",
+            },
+            customCss: ["./src/styles/style.css"],
+            plugins: [
+                starlightUtils({
+                    navLinks: {
+                        leading: {
+                            useSidebarLabelled: "leadingNavLinks",
+                        },
+                    },
+                }),
+                starlightLinksValidator({
+                    errorOnFallbackPages: false,
+                }),
+            ],
+            expressiveCode: {
+                shiki: shikiConfig,
+            },
+            components: {
+                PageTitle: "./src/components/override/PageTitle.astro",
+                ContentPanel: "./src/components/override/ContentPanel.astro",
+            },
+            sidebar: [
+                {
+                    label: "leadingNavLinks",
+                    items: navLinks,
+                },
+                {
+                    label: "Guides",
+                    autogenerate: {
+                        directory: "guides",
+                    },
+                    translations: {
+                        de: "Anleitungen",
+                    },
+                },
+                {
+                    label: "More",
+                    translations: {
+                        de: "Mehr",
+                    },
+                    items: [
+                        {
+                            label: "Roadmap",
+                            link: "/roadmap",
+                            translations: {
+                                de: "Zukunftspläne",
+                            },
+                        },
+                        playgroundSidebarEntry
+                    ],
+                },
+                {
+                    label: "Reference",
+                    autogenerate: {
+                        directory: "reference",
+                    },
+                    collapsed: true,
+                    translations: {
+                        de: "Referenz",
+                    },
+                },
+            ],
+        }),
+    ],
 });

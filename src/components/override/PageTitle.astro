@@ -1,8 +1,9 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/PageTitle.astro";
+import { isPlaygroundPage } from '@utils/playground';
 
-const isPlayground = Astro.props.slug === 'playground';
+const isPlayground = isPlaygroundPage(Astro.props.slug, Astro.currentLocale);
 ---
 
 

@@ -1,17 +1,20 @@
-import type { File } from "@components/Playground";
+import type { File } from "@utils/playground";
 import MonacoEditor, { useMonaco } from "@monaco-editor/react";
 import { getHighlighter, type Highlighter } from "shiki";
 import { shikiToMonaco } from "@shikijs/monaco";
 import { useEffect, useState } from "react";
 import darkPlus from "tm-themes/themes/dark-plus.json";
+import lightPlus from "tm-themes/themes/light-plus.json";
 
 import { shulkerscriptGrammar } from "@utils/shulkerscript-grammar";
 import { mcfunctionGrammar } from "@utils/mcfunction-grammar";
 
 export default function Editor({
+    theme,
     fileName,
     file,
 }: {
+    theme: "light" | "dark";
     fileName: string;
     file?: File;
 }) {
@@ -22,9 +25,12 @@ export default function Editor({
         if (monaco) {
             if (highlighter == null) {
                 getHighlighter({
-                    themes: [darkPlus as any],
+                    themes: [darkPlus as any, lightPlus],
                     langs: ["toml", shulkerscriptGrammar, mcfunctionGrammar],
                 }).then((highlighter) => {
+                    highlighter.setTheme(
+                        theme === "dark" ? "dark-plus" : "light-plus"
+                    );
                     setHighlighter(highlighter);
                 });
             } else {
@@ -43,14 +49,13 @@ export default function Editor({
     }, [highlighter]);
 
     return (
-        <div className="editor">
-            <MonacoEditor
-                height="70vh"
-                theme="vs-dark"
-                path={fileName}
-                defaultLanguage={file?.language}
-                defaultValue={file?.content}
-            />
-        </div>
+        <MonacoEditor
+            height="70vh"
+            theme={theme === "dark" ? "dark-plus" : "light-plus"}
+            path={fileName}
+            defaultLanguage={file?.language}
+            defaultValue={file?.content}
+            wrapperProps={{ className: "editor" }}
+        />
     );
 }

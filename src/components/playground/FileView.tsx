@@ -1,4 +1,4 @@
-import type { Directory, SetState } from "@components/Playground";
+import type { Directory, PlaygroundExplorerLang, SetState } from "@utils/playground";
 import React, { useState } from "react";
 import {
     GoChevronDown as ChevDown,
@@ -6,11 +6,13 @@ import {
 } from "react-icons/go";
 
 export default function FileView({
+    lang,
     root,
     fileName,
     setSelectedFileName,
     className,
 }: {
+    lang: PlaygroundExplorerLang;
     root: Directory;
     fileName: string;
     setSelectedFileName: SetState<string>;
@@ -18,7 +20,7 @@ export default function FileView({
 }) {
     return (
         <div className={className}>
-            <h3>Explorer</h3>
+            <h3>{lang.title}</h3>
             <div className="entries">
                 {Object.entries(root.dirs ?? {}).map(([name, dir]) => {
                     return (

@@ -15,6 +15,7 @@
     "@astrojs/starlight": "^0.24.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@lorenzo_lewis/starlight-utils": "^0.1.1",
     "@monaco-editor/react": "^4.6.0",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",

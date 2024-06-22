@@ -62,7 +62,10 @@ impl From<VFolder> for Directory {
         }
 
         for (name, item) in value.get_files() {
-            files.insert(name.to_string(), item.clone().into());
+            files.insert(
+                name.to_string(),
+                File::from(item.clone()).correct_lang(name),
+            );
         }
 
         Self {
@@ -82,5 +85,18 @@ impl From<VFile> for File {
             content,
             language: None,
         }
+    }
+}
+
+impl File {
+    pub fn correct_lang(self, name: &str) -> Self {
+        let language = match name.split('.').last() {
+            Some("shu") => Some("shulkerscript".to_string()),
+            Some("mcfunction") => Some("mcfunction".to_string()),
+            Some("json" | "mcmeta") => Some("json".to_string()),
+            _ => None,
+        };
+
+        Self { language, ..self }
     }
 }

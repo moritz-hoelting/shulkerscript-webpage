@@ -42,10 +42,10 @@ pub fn compile(root_dir: JsValue) -> JsValue {
 
 /// Returns a base64 encoded zip file containing the compiled datapack.
 #[wasm_bindgen(js_name = compileZip)]
-pub fn compile_zip(root_dir: JsValue) -> String {
+pub fn compile_zip(root_dir: JsValue) -> Option<String> {
     let root_dir = VFolder::from(serde_wasm_bindgen::from_value::<Directory>(root_dir).unwrap());
 
-    let datapack = _compile(&root_dir).unwrap();
+    let datapack = _compile(&root_dir).ok()?;
 
     let mut buffer = Cursor::new(Vec::new());
     let mut writer = ZipWriter::new(&mut buffer);
@@ -70,7 +70,7 @@ pub fn compile_zip(root_dir: JsValue) -> String {
 
     writer.finish().unwrap();
 
-    BASE64_STANDARD.encode(buffer.into_inner())
+    Some(BASE64_STANDARD.encode(buffer.into_inner()))
 }
 
 fn _compile(root_dir: &VFolder) -> Result<VFolder> {
