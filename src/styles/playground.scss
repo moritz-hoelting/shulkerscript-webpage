@@ -16,6 +16,10 @@
         overflow-x: hidden;
         overflow-y: auto;
 
+        > h3 {
+            cursor: pointer;
+        }
+
         .entries {
             button {
                 border: none;

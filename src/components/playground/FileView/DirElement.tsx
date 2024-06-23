@@ -1,10 +1,19 @@
-import type { Directory, PlaygroundExplorerLang, SetState } from "@utils/playground";
+import type {
+    Directory,
+    PlaygroundExplorerLang,
+    SetState,
+} from "@utils/playground";
 import React, { useState } from "react";
 import {
     GoChevronDown as ChevDown,
     GoChevronRight as ChevRight,
 } from "react-icons/go";
 import FileElement from "./FileElement";
+import {
+    Menu,
+    MenuItem,
+} from "@mui/material";
+import AddFileDialog from "./AddFileDialog";
 
 export default function DirElement({
     name,
@@ -14,6 +23,7 @@ export default function DirElement({
     selectedFileName,
     lang,
     setSelectedFileName,
+    addFile,
     deleteFile,
     renameFile,
 }: {
@@ -24,6 +34,7 @@ export default function DirElement({
     selectedFileName: string;
     lang: PlaygroundExplorerLang;
     setSelectedFileName: SetState<string>;
+    addFile: (name: string) => void;
     deleteFile: (name: string) => void;
     renameFile: (oldName: string, newName: string) => void;
 }) {
@@ -37,11 +48,32 @@ export default function DirElement({
         Object.keys(currentDir.dirs ?? {}).length > 0 ||
         Object.keys(currentDir.files ?? {}).length > 0;
 
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const contextOpen = Boolean(anchorEl);
+    const handleContext = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+        setAnchorEl(event.currentTarget);
+    };
+    const handleContextClose = () => {
+        setAnchorEl(null);
+    };
+
+    const [addOpen, setAddOpen] = React.useState(false);
+
+    const handleAddClose = () => {
+        setAddOpen(false);
+    };
+
+    const onDelete = () => {
+        deleteFile(fullPath + "/");
+    };
+
     return (
         <div key={name} className="dir">
             <button
                 style={{ display: "block" }}
                 onClick={() => setCollapsed(!collapsed)}
+                onContextMenu={handleContext}
             >
                 {collapsed ? (
                     <ChevRight
@@ -53,6 +85,30 @@ export default function DirElement({
                 )}{" "}
                 {name + "/" + (collapsed && hasChildren ? "..." : "")}
             </button>
+            <Menu
+                anchorEl={anchorEl}
+                open={contextOpen}
+                onClose={handleContextClose}
+            >
+                <MenuItem
+                    disabled={(fullPath + "/").startsWith("dist/")}
+                    onClick={() => {
+                        handleContextClose();
+                        setAddOpen(true);
+                    }}
+                >
+                    {lang.menu.add}
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        handleContextClose();
+                        onDelete?.();
+                    }}
+                >
+                    {lang.menu.delete}
+                </MenuItem>
+            </Menu>
+            <AddFileDialog lang={lang} defaultPath={fullPath + "/"} open={addOpen} addFile={addFile} handleClose={handleAddClose} />
             <div style={{ marginLeft: "0.5cm" }} className="dirChildren">
                 {collapsed ? null : (
                     <div>
@@ -66,6 +122,7 @@ export default function DirElement({
                                         dir={dir}
                                         selectedFileName={selectedFileName}
                                         lang={lang}
+                                        addFile={addFile}
                                         setSelectedFileName={
                                             setSelectedFileName
                                         }
@@ -77,20 +134,21 @@ export default function DirElement({
                         )}
                         {Object.entries(currentDir.files ?? {}).map(
                             ([currentName, _]) => {
-                                const currentPath = fullPath + "/" + currentName;
+                                const currentPath =
+                                    fullPath + "/" + currentName;
                                 return (
                                     <FileElement
                                         key={currentName}
                                         fullPath={currentPath}
                                         name={currentName}
-                                        isSelected={selectedFileName == currentPath}
+                                        isSelected={
+                                            selectedFileName == currentPath
+                                        }
                                         lang={lang}
                                         onClick={() =>
                                             setSelectedFileName(currentPath)
                                         }
-                                        onDelete={() =>
-                                            deleteFile(currentPath)
-                                        }
+                                        onDelete={() => deleteFile(currentPath)}
                                         renameFile={renameFile}
                                     />
                                 );

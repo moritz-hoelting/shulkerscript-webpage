@@ -177,18 +177,31 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                     root={rootDir}
                     selectedFileName={fileName}
                     setSelectedFileName={setFileName}
+                    addFile={(name) => {
+                        if (monaco) {
+                            loadFile(
+                                monaco,
+                                updateRootDir,
+                                { content: "" },
+                                name
+                            );
+                        }
+                    }}
                     deleteFile={(name) => {
                         if (monaco) {
-                            console.log(name);
-                            deleteFile(monaco, updateRootDir, name);
-                            if (name === fileName) {
-                                const newFile = monaco.editor
-                                    .getModels()[0]
-                                    ?.uri.path.slice(1);
-                                if (newFile) {
-                                    setFileName(newFile);
-                                } else {
-                                    setFileName("");
+                            if (name.endsWith("/")) {
+                                deleteDir(monaco, updateRootDir, name);
+                            } else {
+                                deleteFile(monaco, updateRootDir, name);
+                                if (name === fileName) {
+                                    const newFile = monaco.editor
+                                        .getModels()[0]
+                                        ?.uri.path.slice(1);
+                                    if (newFile) {
+                                        setFileName(newFile);
+                                    } else {
+                                        setFileName("");
+                                    }
                                 }
                             }
                         }
@@ -384,7 +397,56 @@ function deleteFile(monaco: Monaco, updater: Updater<Directory>, name: string) {
     });
 }
 
-function renameFile(monaco: Monaco, updater: Updater<Directory>, oldName: string, newName: string) {
+function deleteDir(monaco: Monaco, updater: Updater<Directory>, path: string) {
+    const parts = path.split("/").filter((s) => s !== "");
+    const last = parts.pop()!;
+
+    let current = getFiles(monaco);
+    for (const part of parts) {
+        if (!current.dirs) {
+            current.dirs = {};
+        }
+        if (!current.dirs[part]) {
+            current.dirs[part] = {};
+        }
+        current = current.dirs[part];
+    }
+
+    if (current.dirs) {
+        for (const [name, _] of Object.entries(current.dirs ?? {})) {
+            deleteDir(monaco, updater, path + name + "/");
+        }
+        for (const [name, _] of Object.entries(current.files ?? {})) {
+            deleteFile(monaco, updater, path + name);
+        }
+
+        delete current.dirs[last];
+    }
+    
+    updater((dir) => {
+        let current = dir;
+        for (const part of parts) {
+            if (!current.dirs) {
+                current.dirs = {};
+            }
+            if (!current.dirs[part]) {
+                current.dirs[part] = {};
+            }
+            current = current.dirs[part];
+        }
+
+        if (current.dirs) {
+            delete current.dirs[last];
+        }
+    });
+}
+
+function renameFile(
+    monaco: Monaco,
+    updater: Updater<Directory>,
+    oldName: string,
+    newName: string
+) {
     const file = getFile(getFiles(monaco), oldName);
     if (file) {
         deleteFile(monaco, updater, oldName);

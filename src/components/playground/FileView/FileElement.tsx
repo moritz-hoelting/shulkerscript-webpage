@@ -1,4 +1,14 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem, TextField } from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Menu,
+    MenuItem,
+    TextField,
+} from "@mui/material";
 import type { PlaygroundExplorerLang } from "@utils/playground";
 import React from "react";
 import { useState } from "react";
@@ -50,10 +60,11 @@ export default function FileElement({
                 onClose={handleContextClose}
             >
                 <MenuItem
-                    onClick={(ev) => {
+                    onClick={() => {
                         handleContextClose();
                         setRenameOpen(true);
                     }}
+                    disabled={fullPath.startsWith("dist/")}
                 >
                     {lang.menu.rename}
                 </MenuItem>
@@ -85,7 +96,9 @@ export default function FileElement({
                     },
                 }}
             >
-                <DialogTitle>{lang.menu.rename} - {fullPath}</DialogTitle>
+                <DialogTitle>
+                    {lang.menu.rename} - {fullPath}
+                </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         {lang.menu.renamePrompt.message}
@@ -104,7 +117,9 @@ export default function FileElement({
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleRenameClose}>{lang.menu.cancel}</Button>
+                    <Button onClick={handleRenameClose}>
+                        {lang.menu.cancel}
+                    </Button>
                     <Button type="submit">{lang.menu.rename}</Button>
                 </DialogActions>
             </Dialog>

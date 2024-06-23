@@ -15,6 +15,11 @@ export type PlaygroundHeaderLang = {
 export type PlaygroundExplorerLang = {
     title: string;
     menu: {
+        add: string;
+        addPrompt: {
+            message: string;
+            label: string;
+        }
         rename: string;
         renamePrompt: {
             message: string;
