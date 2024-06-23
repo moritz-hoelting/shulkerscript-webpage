@@ -4,85 +4,30 @@ import {
     GoChevronDown as ChevDown,
     GoChevronRight as ChevRight,
 } from "react-icons/go";
+import FileElement from "./FileElement";
 
-export default function FileView({
-    lang,
-    root,
-    fileName,
-    setSelectedFileName,
-    className,
-}: {
-    lang: PlaygroundExplorerLang;
-    root: Directory;
-    fileName: string;
-    setSelectedFileName: SetState<string>;
-    className?: string;
-}) {
-    return (
-        <div className={className}>
-            <h3>{lang.title}</h3>
-            <div className="entries">
-                {Object.entries(root.dirs ?? {}).map(([name, dir]) => {
-                    return (
-                        <DirElement
-                            key={name}
-                            name={name}
-                            dir={dir}
-                            fileName={fileName.slice(name.length + 1)}
-                            setSelectedFileName={setSelectedFileName}
-                        />
-                    );
-                })}
-                {Object.entries(root.files ?? {}).map(([name, _]) => {
-                    return (
-                        <span key={name}>
-                            <FileElement
-                                name={name}
-                                disabled={fileName == name}
-                                onClick={() => setSelectedFileName(name)}
-                            />
-                        </span>
-                    );
-                })}
-            </div>
-        </div>
-    );
-}
-
-function FileElement({
+export default function DirElement({
     name,
-    disabled,
-    onClick,
-}: {
-    name: string;
-    disabled: boolean;
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
-}) {
-    return (
-        <button disabled={disabled} onClick={onClick} className="file">
-            {name}
-        </button>
-    );
-}
-
-function DirElement({
-    name,
+    fullPath,
     dir: currentDir,
     collapsed: pCollapsed,
-    fileName,
+    selectedFileName,
+    lang,
     setSelectedFileName,
+    deleteFile,
+    renameFile,
 }: {
     name: string;
+    fullPath: string;
     dir: Directory;
     collapsed?: boolean;
-    fileName: string;
+    selectedFileName: string;
+    lang: PlaygroundExplorerLang;
     setSelectedFileName: SetState<string>;
+    deleteFile: (name: string) => void;
+    renameFile: (oldName: string, newName: string) => void;
 }) {
     const [collapsed, setCollapsed] = useState(pCollapsed ?? false);
-
-    const modSetSelectedFileName: SetState<string> = (selected) => {
-        setSelectedFileName(name + "/" + selected);
-    };
 
     const chevStyles: React.CSSProperties = {
         marginBottom: "-2px",
@@ -117,27 +62,36 @@ function DirElement({
                                     <DirElement
                                         key={dirname}
                                         name={dirname}
+                                        fullPath={fullPath + "/" + dirname}
                                         dir={dir}
-                                        fileName={fileName.slice(
-                                            dirname.length + 1
-                                        )}
+                                        selectedFileName={selectedFileName}
+                                        lang={lang}
                                         setSelectedFileName={
-                                            modSetSelectedFileName
+                                            setSelectedFileName
                                         }
+                                        deleteFile={deleteFile}
+                                        renameFile={renameFile}
                                     />
                                 );
                             }
                         )}
                         {Object.entries(currentDir.files ?? {}).map(
                             ([currentName, _]) => {
+                                const currentPath = fullPath + "/" + currentName;
                                 return (
                                     <FileElement
                                         key={currentName}
+                                        fullPath={currentPath}
                                         name={currentName}
-                                        disabled={fileName == currentName}
+                                        isSelected={selectedFileName == currentPath}
+                                        lang={lang}
                                         onClick={() =>
-                                            modSetSelectedFileName(currentName)
+                                            setSelectedFileName(currentPath)
                                         }
+                                        onDelete={() =>
+                                            deleteFile(currentPath)
+                                        }
+                                        renameFile={renameFile}
                                     />
                                 );
                             }

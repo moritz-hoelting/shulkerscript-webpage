@@ -14,6 +14,15 @@ export type PlaygroundHeaderLang = {
 };
 export type PlaygroundExplorerLang = {
     title: string;
+    menu: {
+        rename: string;
+        renamePrompt: {
+            message: string;
+            label: string;
+        }
+        delete: string;
+        cancel: string;
+    }
 };
 
 export type File = {

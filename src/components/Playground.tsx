@@ -175,8 +175,32 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                 <FileView
                     className="file-view"
                     root={rootDir}
-                    fileName={fileName}
+                    selectedFileName={fileName}
                     setSelectedFileName={setFileName}
+                    deleteFile={(name) => {
+                        if (monaco) {
+                            console.log(name);
+                            deleteFile(monaco, updateRootDir, name);
+                            if (name === fileName) {
+                                const newFile = monaco.editor
+                                    .getModels()[0]
+                                    ?.uri.path.slice(1);
+                                if (newFile) {
+                                    setFileName(newFile);
+                                } else {
+                                    setFileName("");
+                                }
+                            }
+                        }
+                    }}
+                    renameFile={(oldName, newName) => {
+                        if (monaco) {
+                            renameFile(monaco, updateRootDir, oldName, newName);
+                            if (oldName === fileName) {
+                                setFileName(newName);
+                            }
+                        }
+                    }}
                     lang={lang.explorer}
                 />
                 <Editor
@@ -274,9 +298,20 @@ function loadFile(
     file: File,
     name: string
 ) {
+    let extension = name.split(".").pop()!;
+    let lang = undefined;
+    if (extension === "shu") {
+        lang = "shulkerscript";
+    } else if (extension === "toml") {
+        lang = "toml";
+    } else if (extension === "mcfunction") {
+        lang = "mcfunction";
+    } else if (extension === "json") {
+        lang = "json";
+    }
     const uri = monaco.Uri.parse(name);
     if (!monaco.editor.getModel(uri)) {
-        monaco.editor.createModel(file.content, file.language, uri);
+        monaco.editor.createModel(file.content, lang, uri);
     }
     updater((dir) => {
         if (dir) {
@@ -295,7 +330,10 @@ function loadFile(
             if (!current.files) {
                 current.files = {};
             }
-            current.files[last] = file;
+            current.files[last] = {
+                content: file.content,
+                language: lang,
+            };
         }
     });
 }
@@ -318,5 +356,38 @@ function jsonReplacer(key: any, value: any): any {
         return res;
     } else {
         return value;
+    }
+}
+
+function deleteFile(monaco: Monaco, updater: Updater<Directory>, name: string) {
+    const uri = monaco.Uri.parse(name);
+    const model = monaco.editor.getModel(uri);
+    if (model) {
+        model.dispose();
+    }
+    updater((dir) => {
+        let current = dir;
+        const parts = name.split("/").filter((s) => s !== "");
+        const last = parts.pop()!;
+        for (const part of parts) {
+            if (!current.dirs) {
+                current.dirs = {};
+            }
+            if (!current.dirs[part]) {
+                current.dirs[part] = {};
+            }
+            current = current.dirs[part];
+        }
+        if (current.files) {
+            delete current.files[last];
+        }
+    });
+}
+
+function renameFile(monaco: Monaco, updater: Updater<Directory>, oldName: string, newName: string) {
+    const file = getFile(getFiles(monaco), oldName);
+    if (file) {
+        deleteFile(monaco, updater, oldName);
+        loadFile(monaco, updater, file, newName);
     }
 }
