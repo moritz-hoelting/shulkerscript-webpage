@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.92"
-shulkerscript = { git = "https://github.com/moritz-hoelting/shulkerscript-lang.git", default-features = false, features = ["serde", "shulkerbox", "lua"], rev = "af544ac79eea4498ef4563acfb7e8dd14ec5c84e" }
+shulkerscript = { git = "https://github.com/moritz-hoelting/shulkerscript-lang.git", default-features = false, features = ["serde", "shulkerbox"], rev = "af544ac79eea4498ef4563acfb7e8dd14ec5c84e" }
 serde = "1.0"
 serde-wasm-bindgen = "0.6.5"
 anyhow = "1.0.86"
