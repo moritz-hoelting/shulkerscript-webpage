@@ -3,9 +3,10 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
+    "dev": "pnpm build-wasm && astro dev",
+    "start": "pnpm build-wasm && astro dev",
+    "build-wasm": "cargo build --manifest-path ./src/wasm/webcompiler/Cargo.toml --release --target wasm32-unknown-unknown --target-dir ./target_rust && wasm-bindgen --target web --out-dir ./src/wasm/webcompiler/pkg/ --out-name webcompiler ./target_rust/wasm32-unknown-unknown/release/webcompiler.wasm",
+    "build": "pnpm build-wasm && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
