@@ -9,10 +9,8 @@ import {
     GoChevronRight as ChevRight,
 } from "react-icons/go";
 import FileElement from "./FileElement";
-import {
-    Menu,
-    MenuItem,
-} from "@mui/material";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import AddFileDialog from "./AddFileDialog";
 
 export default function DirElement({
@@ -108,7 +106,13 @@ export default function DirElement({
                     {lang.menu.delete}
                 </MenuItem>
             </Menu>
-            <AddFileDialog lang={lang} defaultPath={fullPath + "/"} open={addOpen} addFile={addFile} handleClose={handleAddClose} />
+            <AddFileDialog
+                lang={lang}
+                defaultPath={fullPath + "/"}
+                open={addOpen}
+                addFile={addFile}
+                handleClose={handleAddClose}
+            />
             <div style={{ marginLeft: "0.5cm" }} className="dirChildren">
                 {collapsed ? null : (
                     <div>

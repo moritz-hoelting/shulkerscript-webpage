@@ -5,7 +5,8 @@ import type {
 } from "@utils/playground";
 import DirElement from "./DirElement";
 import FileElement from "./FileElement";
-import { Menu, MenuItem } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 import React, { useState } from "react";
 import AddFileDialog from "./AddFileDialog";
 

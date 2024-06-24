@@ -8,9 +8,6 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import { ThemeProvider } from "@mui/material";
-
-import { customTheme } from "@utils/material-ui-theme";
 
 export default function DropdownButton({
     options,
@@ -48,7 +45,7 @@ export default function DropdownButton({
     };
 
     return (
-        <ThemeProvider theme={customTheme}>
+        <>
             <ButtonGroup
                 variant="contained"
                 ref={anchorRef}
@@ -56,7 +53,11 @@ export default function DropdownButton({
                 style={style}
             >
                 {visible.map(([children, onClick], index) => {
-                    return <Button key={index} onClick={onClick}>{children}</Button>;
+                    return (
+                        <Button key={index} onClick={onClick}>
+                            {children}
+                        </Button>
+                    );
                 })}
                 <Button
                     size="small"
@@ -111,6 +112,6 @@ export default function DropdownButton({
                     </Grow>
                 )}
             </Popper>
-        </ThemeProvider>
+        </>
     );
 }

@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMonaco, type Monaco } from "@monaco-editor/react";
 import { useImmer, type Updater } from "use-immer";
-
-import "@styles/playground.scss";
-
-import mainFileContent from "@assets/playground/main.shu?raw";
-import packTomlContent from "@assets/playground/pack.toml?raw";
 import FileView from "./playground/FileView";
 import Editor from "./playground/Editor";
 import Header from "./playground/Header";
@@ -15,6 +10,13 @@ import initWasm, {
     compileZip,
 } from "@wasm/webcompiler/pkg/webcompiler";
 import type { Directory, File, PlaygroundLang } from "@utils/playground";
+import { customTheme } from "@utils/material-ui-theme";
+
+import "@styles/playground.scss";
+
+import mainFileContent from "@assets/playground/main.shu?raw";
+import packTomlContent from "@assets/playground/pack.toml?raw";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 const FILE_STORAGE_KEY = "playground-files";
 const DEFAULT_FILES = {
@@ -156,7 +158,7 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
     });
 
     return (
-        <>
+        <ThemeProvider theme={customTheme(theme)}>
             <main
                 className="playground not-content"
                 style={{
@@ -222,7 +224,7 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                     theme={theme}
                 />
             </main>
-        </>
+        </ThemeProvider>
     );
 }
 
@@ -360,7 +362,7 @@ function getStorageOrDefault(key: string, def: any) {
     }
 }
 
-function jsonReplacer(key: any, value: any): any {
+function jsonReplacer(_key: any, value: any): any {
     if (value instanceof Map) {
         const res: { [key: string]: any } = {};
         for (const [k, v] of value.entries()) {
@@ -422,7 +424,7 @@ function deleteDir(monaco: Monaco, updater: Updater<Directory>, path: string) {
 
         delete current.dirs[last];
     }
-    
+
     updater((dir) => {
         let current = dir;
         for (const part of parts) {
