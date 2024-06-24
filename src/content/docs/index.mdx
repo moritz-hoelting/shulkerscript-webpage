@@ -3,36 +3,39 @@ title: Welcome to the ShulkerScript docs
 description: Get started writing your datapacks with ShulkerScript
 template: splash
 hero:
-  tagline: Intro to getting started with ShulkerScript
-  image:
-    file: ../../assets/logo.webp
-  actions:
-    - text: Get started
-      link: guides/getting-started/
-      icon: right-arrow
-      variant: primary
-    - text: Contribute
-      link: https://github.com/moritz-hoelting/shulkerscript-cli
-      icon: external
+    tagline: Intro to getting started with ShulkerScript
+    image:
+        file: ../../assets/logo.webp
+    actions:
+        - text: Get started
+          link: guides/getting-started/
+          icon: right-arrow
+          variant: primary
+        - text: Contribute
+          link: https://github.com/moritz-hoelting/shulkerscript-cli
+          icon: external
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
-
+import { Card, LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 <CardGrid stagger>
-	<Card title="Simple Syntax" icon="seti:html">
-		The syntax is similar to other programming languages, making it easy to learn, 
-		while at the same time providing powerful features not found in `.mcfunction` files.
-	</Card>
-	<Card title="Easy Functions" icon="add-document">
-		Generate multiple function files from a single source file, and call them from Minecraft or other ShulkerScript files.
-	</Card>
-	<Card title="Written in Rust" icon="seti:rust">
-		Fast compile times and a small binary size make ShulkerScript a great choice for your next project.
-	</Card>
-	<Card title="Contribute to this project" icon="github">
-		Contribute to [the CLI](https://github.com/moritz-hoelting/shulkerscript-cli) or [the compiler](https://github.com/moritz-hoelting/shulkerscript-lang).
-	</Card>
+    <Card title="Simple Syntax" icon="seti:html">
+        The syntax is similar to other programming languages, making it easy to
+        learn, while at the same time providing powerful features not found in
+        `.mcfunction` files.
+    </Card>
+    <Card title="Easy Functions" icon="add-document">
+        Generate multiple function files from a single source file, and call
+        them from Minecraft or other ShulkerScript files.
+    </Card>
+    <Card title="Written in Rust" icon="seti:rust">
+        Fast compile times and a small binary size make ShulkerScript a great
+        choice for your next project.
+    </Card>
+    <Card title="Contribute to this project" icon="github">
+        Contribute to [the
+        CLI](https://github.com/moritz-hoelting/shulkerscript-cli) or [the
+        compiler](https://github.com/moritz-hoelting/shulkerscript-lang).
+    </Card>
+    <LinkCard title="Online Playground" href="./playground" description="Get started without downloading anything" />
 </CardGrid>
-
-
