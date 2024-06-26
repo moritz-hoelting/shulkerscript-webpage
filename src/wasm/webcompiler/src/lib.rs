@@ -29,6 +29,8 @@ extern "C" {
 /// Compiles the given directory into datapack files.
 #[wasm_bindgen]
 pub fn compile(root_dir: JsValue) -> JsValue {
+    console_error_panic_hook::set_once();
+
     let root_dir = VFolder::from(serde_wasm_bindgen::from_value::<Directory>(root_dir).unwrap());
 
     log("Compiling...");
@@ -43,6 +45,8 @@ pub fn compile(root_dir: JsValue) -> JsValue {
 /// Returns a base64 encoded zip file containing the compiled datapack.
 #[wasm_bindgen(js_name = compileZip)]
 pub fn compile_zip(root_dir: JsValue) -> Option<String> {
+    console_error_panic_hook::set_once();
+
     let root_dir = VFolder::from(serde_wasm_bindgen::from_value::<Directory>(root_dir).unwrap());
 
     let datapack = _compile(&root_dir).ok()?;
