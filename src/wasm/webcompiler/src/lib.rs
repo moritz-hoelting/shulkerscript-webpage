@@ -1,8 +1,8 @@
 use std::{
-    cell::Cell,
     fmt::Display,
     io::{Cursor, Write},
     path::PathBuf,
+    sync::Mutex,
 };
 
 use anyhow::Result;
@@ -24,6 +24,9 @@ extern "C" {
     fn log(s: &str);
     #[wasm_bindgen(js_namespace = console, js_name = error)]
     fn log_err(s: &str);
+
+    #[wasm_bindgen(js_namespace = ["window", "playground"], js_name = showError)]
+    fn show_err(s: &str);
 }
 
 /// Compiles the given directory into datapack files.
@@ -57,38 +60,38 @@ pub fn compile_zip(root_dir: JsValue) -> Option<String> {
 
     // write each file to the zip archive
     for (path, file) in virtual_files {
-        writer
-            .start_file(path, SimpleFileOptions::default())
-            .unwrap();
+        writer.start_file(path, SimpleFileOptions::default()).ok()?;
         match file {
             VFile::Text(text) => {
-                writer.write_all(text.as_bytes()).unwrap();
+                writer.write_all(text.as_bytes()).ok()?;
             }
             VFile::Binary(data) => {
-                writer.write_all(data).unwrap();
+                writer.write_all(data).ok()?;
             }
         }
     }
 
     writer.set_comment("Data pack created with Shulkerscript web compiler");
 
-    writer.finish().unwrap();
+    writer.finish().ok()?;
 
     Some(BASE64_STANDARD.encode(buffer.into_inner()))
 }
 
 fn _compile(root_dir: &VFolder) -> Result<VFolder> {
+    colored::control::set_override(true);
     let printer = Printer::new();
-    util::compile(&printer, root_dir, &get_script_paths(root_dir))
+    let res = util::compile(&printer, root_dir, &get_script_paths(root_dir));
+    printer.display();
+    res
 }
 
 struct Printer {
-    printed: Cell<bool>,
+    queue: Mutex<Vec<String>>,
 }
 impl<T: Display> Handler<T> for Printer {
     fn receive<E: Into<T>>(&self, error: E) {
-        log_err(&error.into().to_string());
-        self.printed.set(true);
+        self.queue.lock().unwrap().push(format!("{}", error.into()));
     }
 
     fn has_received(&self) -> bool {
@@ -99,12 +102,23 @@ impl Printer {
     /// Creates a new [`Printer`].
     fn new() -> Self {
         Self {
-            printed: Cell::new(false),
+            queue: Mutex::new(Vec::new()),
         }
     }
 
+    fn display(self) {
+        let queue = self
+            .queue
+            .into_inner()
+            .unwrap()
+            .into_iter()
+            .map(|el| ansi_to_html::convert(&el).unwrap())
+            .collect::<Vec<_>>();
+        show_err(&queue.join("\n\n"));
+    }
+
     fn has_printed(&self) -> bool {
-        self.printed.get()
+        !self.queue.lock().unwrap().is_empty()
     }
 }
 

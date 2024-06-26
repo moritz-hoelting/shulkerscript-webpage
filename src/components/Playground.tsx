@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useMonaco, type Monaco } from "@monaco-editor/react";
 import { useImmer, type Updater } from "use-immer";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import ErrorDisplay from "./playground/ErrorDisplay";
 import FileView from "./playground/FileView";
 import Editor from "./playground/Editor";
 import Header from "./playground/Header";
@@ -16,7 +18,6 @@ import "@styles/playground.scss";
 
 import mainFileContent from "@assets/playground/main.shu?raw";
 import packTomlContent from "@assets/playground/pack.toml?raw";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 const FILE_STORAGE_KEY = "playground-files";
 const DEFAULT_FILES = {
@@ -40,6 +41,18 @@ const DEFAULT_FILES = {
 };
 
 export default function Playground({ lang }: { lang: PlaygroundLang }) {
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+    useEffect(() => {
+        (window as any).playground = {
+            showError: (message: string) => {
+                if (message.length > 0) {
+                    setErrorMsg(message);
+                }
+            },
+        };
+    }, []);
+
     initWasm().catch((err) => {
         console.error(err);
     });
@@ -63,8 +76,6 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                     },
                 } as Directory;
                 loadFiles(monaco, updateRootDir, withRoot);
-            } else {
-                alert("Compilation failed");
             }
         } else {
             console.error("monaco has not loaded");
@@ -79,8 +90,6 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                 a.href = data;
                 a.download = "shulkerscript-pack.zip";
                 a.click();
-            } else {
-                alert("Compilation failed");
             }
         } else {
             console.error("monaco has not loaded");
@@ -167,6 +176,7 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                     marginTop: "0.5cm",
                 }}
             >
+                <ErrorDisplay error={errorMsg} setError={setErrorMsg} />
                 <Header
                     lang={lang.header}
                     onSave={onSave}
