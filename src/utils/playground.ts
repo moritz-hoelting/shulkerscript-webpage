@@ -1,6 +1,7 @@
 export type PlaygroundLang = {
     header: PlaygroundHeaderLang;
     explorer: PlaygroundExplorerLang;
+    errorDisplay: PlaygroundErrorDisplayLang;
 };
 
 export type PlaygroundHeaderLang = {
@@ -29,6 +30,12 @@ export type PlaygroundExplorerLang = {
         cancel: string;
     }
 };
+export type PlaygroundErrorDisplayLang = {
+    title: string;
+    buttons: {
+        close: string;
+    }
+}
 
 export type File = {
     language?: string;

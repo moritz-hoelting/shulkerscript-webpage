@@ -176,7 +176,7 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                     marginTop: "0.5cm",
                 }}
             >
-                <ErrorDisplay error={errorMsg} setError={setErrorMsg} />
+                <ErrorDisplay lang={lang.errorDisplay} error={errorMsg} setError={setErrorMsg} />
                 <Header
                     lang={lang.header}
                     onSave={onSave}
@@ -277,7 +277,7 @@ function getFile(root: Directory, path: string): File | null {
         let last = split.pop()!;
 
         for (const dirName of split) {
-            if (dir.dirs) {
+            if (dir && dir.dirs) {
                 dir = dir.dirs[dirName];
             } else {
                 return null;
@@ -335,7 +335,10 @@ function loadFile(
         lang = "json";
     }
     const uri = monaco.Uri.parse(name);
-    if (!monaco.editor.getModel(uri)) {
+    let prevModel = monaco.editor.getModel(uri);
+    if (prevModel) {
+        prevModel.setValue(file.content);
+    } else {
         monaco.editor.createModel(file.content, lang, uri);
     }
     updater((dir) => {
@@ -386,6 +389,7 @@ function jsonReplacer(_key: any, value: any): any {
 
 function deleteFile(monaco: Monaco, updater: Updater<Directory>, name: string) {
     const uri = monaco.Uri.parse(name);
+    console.log(uri);
     const model = monaco.editor.getModel(uri);
     if (model) {
         model.dispose();
@@ -403,6 +407,7 @@ function deleteFile(monaco: Monaco, updater: Updater<Directory>, name: string) {
             }
             current = current.dirs[part];
         }
+        console.log("file", current);
         if (current.files) {
             delete current.files[last];
         }
@@ -423,6 +428,7 @@ function deleteDir(monaco: Monaco, updater: Updater<Directory>, path: string) {
         }
         current = current.dirs[part];
     }
+    console.log(current);
 
     if (current.dirs) {
         for (const [name, _] of Object.entries(current.dirs ?? {})) {
@@ -465,3 +471,4 @@ function renameFile(
         loadFile(monaco, updater, file, newName);
     }
 }
+

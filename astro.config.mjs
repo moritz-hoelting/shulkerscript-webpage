@@ -59,6 +59,7 @@ export default defineConfig({
                 }),
                 starlightLinksValidator({
                     errorOnFallbackPages: false,
+                    errorOnRelativeLinks: false,
                 }),
             ],
             expressiveCode: {
@@ -95,7 +96,13 @@ export default defineConfig({
                                 de: "Zukunftspläne",
                             },
                         },
-                        playgroundSidebarEntry
+                        {
+                            ...playgroundSidebarEntry,
+                            badge: {
+                                text: "WIP",
+                                variant: "caution",
+                            },
+                        },
                     ],
                 },
                 {
