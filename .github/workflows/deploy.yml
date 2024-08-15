@@ -23,7 +23,7 @@ jobs:
             - name: Install Rust
               uses: dtolnay/rust-toolchain@stable
               with:
-                    targets: wasm32-unknown-unknown
+                  targets: wasm32-unknown-unknown
             - name: Install wasm-bindgen-cli
               uses: jetli/wasm-bindgen-action@v0.2.0
             - name: Install, build, and upload your site output

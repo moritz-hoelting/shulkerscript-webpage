@@ -43,3 +43,30 @@
         grid-area: editor;
     }
 }
+
+.error-terminal-display {
+    background-color: black;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 1.2em;
+    line-height: 0.8em;
+
+    --red: #ff0000;
+    --cyan: #00d6d6;
+    
+    code {
+        white-space: break-spaces;
+        font-family: monospace;
+    }
+}
+
+:root[data-theme="light"] {
+    .error-terminal-display {
+        background-color: lightgray;
+        
+        --red: #ff3f3f;
+        --cyan: #00a6a6;
+        --black: lightgray;
+        --white: #4f4f4f;
+    }
+}

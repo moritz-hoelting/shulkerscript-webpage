@@ -18,25 +18,16 @@ export default function ErrorDisplay({
         <Dialog open={error !== null} onClose={() => setError(null)}>
             <DialogTitle>{lang.title}</DialogTitle>
             <DialogContent>
-                <div
-                    style={{
-                        backgroundColor: "black",
-                        padding: "15px",
-                        borderRadius: "15px",
-                        fontSize: "1.2em",
-                    }}
-                >
+                <div className="error-terminal-display">
                     <code
-                        style={{
-                            whiteSpace: "break-spaces",
-                            fontFamily: "monospace",
-                        }}
                         dangerouslySetInnerHTML={{ __html: error ?? "" }}
                     ></code>
                 </div>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => setError(null)}>{lang.buttons.close}</Button>
+                <Button onClick={() => setError(null)}>
+                    {lang.buttons.close}
+                </Button>
             </DialogActions>
         </Dialog>
     );
