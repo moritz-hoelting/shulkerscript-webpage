@@ -68,6 +68,7 @@ export default defineConfig({
             components: {
                 PageTitle: "./src/components/override/PageTitle.astro",
                 ContentPanel: "./src/components/override/ContentPanel.astro",
+                Pagination: "./src/components/override/Pagination.astro",
             },
             sidebar: [
                 {

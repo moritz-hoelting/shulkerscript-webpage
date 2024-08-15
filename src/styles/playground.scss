@@ -1,6 +1,6 @@
 .playground {
     display: grid;
-    grid-template-columns: clamp(100px, 15%, 400px) auto;
+    grid-template-columns: clamp(200px, 15%, 500px) auto;
     grid-template-areas:
         "header header"
         "files editor";
@@ -14,13 +14,18 @@
         flex-direction: column;
         margin-right: 0.5cm;
         overflow-x: hidden;
-        overflow-y: auto;
+        overflow-y: hidden;
+        max-height: 70vh;
 
         > h3 {
             cursor: pointer;
         }
 
         .entries {
+            overflow-y: auto;
+            overflow-x: hidden;
+            word-wrap: break-word;
+
             button {
                 border: none;
                 width: 100%;
@@ -41,6 +46,10 @@
     }
     > .editor {
         grid-area: editor;
+
+        .monaco-editor {
+            padding-block: 10px;
+        }
     }
 }
 
@@ -53,7 +62,7 @@
 
     --red: #ff0000;
     --cyan: #00d6d6;
-    
+
     code {
         white-space: break-spaces;
         font-family: monospace;
@@ -63,7 +72,7 @@
 :root[data-theme="light"] {
     .error-terminal-display {
         background-color: lightgray;
-        
+
         --red: #ff3f3f;
         --cyan: #00a6a6;
         --black: lightgray;
