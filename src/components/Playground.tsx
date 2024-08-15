@@ -176,7 +176,11 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
                     marginTop: "0.5cm",
                 }}
             >
-                <ErrorDisplay lang={lang.errorDisplay} error={errorMsg} setError={setErrorMsg} />
+                <ErrorDisplay
+                    lang={lang.errorDisplay}
+                    error={errorMsg}
+                    setError={setErrorMsg}
+                />
                 <Header
                     lang={lang.header}
                     onSave={onSave}
@@ -389,10 +393,11 @@ function jsonReplacer(_key: any, value: any): any {
 
 function deleteFile(monaco: Monaco, updater: Updater<Directory>, name: string) {
     const uri = monaco.Uri.parse(name);
-    console.log(uri);
     const model = monaco.editor.getModel(uri);
     if (model) {
         model.dispose();
+    } else {
+        console.error("Model not found: ", name);
     }
     updater((dir) => {
         let current = dir;
@@ -407,7 +412,6 @@ function deleteFile(monaco: Monaco, updater: Updater<Directory>, name: string) {
             }
             current = current.dirs[part];
         }
-        console.log("file", current);
         if (current.files) {
             delete current.files[last];
         }
@@ -415,48 +419,69 @@ function deleteFile(monaco: Monaco, updater: Updater<Directory>, name: string) {
 }
 
 function deleteDir(monaco: Monaco, updater: Updater<Directory>, path: string) {
-    const parts = path.split("/").filter((s) => s !== "");
-    const last = parts.pop()!;
-
-    let current = getFiles(monaco);
-    for (const part of parts) {
-        if (!current.dirs) {
-            current.dirs = {};
-        }
-        if (!current.dirs[part]) {
-            current.dirs[part] = {};
-        }
-        current = current.dirs[part];
+    const parts = path.split("/");
+    const firstCheck = parts.at(0);
+    if (firstCheck != undefined && firstCheck == "") {
+        parts.splice(0, 1);
     }
-    console.log(current);
+    const lastCheck = parts.at(-1);
+    if (lastCheck != undefined && lastCheck == "") {
+        parts.pop();
+    }
 
-    if (current.dirs) {
-        for (const [name, _] of Object.entries(current.dirs ?? {})) {
-            deleteDir(monaco, updater, path + name + "/");
+    let current = getFiles(monaco) as Directory | null;
+    for (let part of parts) {
+        if (current?.dirs) {
+            current = current.dirs[part];
         }
-        for (const [name, _] of Object.entries(current.files ?? {})) {
-            deleteFile(monaco, updater, path + name);
-        }
-
-        delete current.dirs[last];
+    }
+    if (current) {
+        destroyModels(monaco, path, current);
     }
 
     updater((dir) => {
+        const last = parts.pop();
+        if (!last) return;
         let current = dir;
+
         for (const part of parts) {
-            if (!current.dirs) {
-                current.dirs = {};
+            if (current.dirs) {
+                current = current.dirs[part];
+                if (!current) return;
+            } else {
+                return;
             }
-            if (!current.dirs[part]) {
-                current.dirs[part] = {};
-            }
-            current = current.dirs[part];
         }
 
         if (current.dirs) {
             delete current.dirs[last];
         }
     });
+}
+
+function destroyModels(monaco: Monaco, path: string, dir: Directory) {
+    if (!path.endsWith("/")) {
+        path += "/";
+    }
+    if (dir.files) {
+        for (const file of Object.keys(dir.files)) {
+            const filepath = path + file;
+            const uri = monaco.Uri.parse(filepath);
+            const model = monaco.editor.getModel(uri);
+            if (model) {
+                model.dispose();
+            } else {
+                console.error("Model not found: ", filepath);
+            }
+        }
+    }
+    if (dir.dirs) {
+        for (const dirname of Object.keys(dir.dirs)) {
+            const dirpath = path + dirname;
+            const subdir = dir.dirs[dirname];
+            destroyModels(monaco, dirpath, subdir);
+        }
+    }
 }
 
 function renameFile(
@@ -471,4 +496,3 @@ function renameFile(
         loadFile(monaco, updater, file, newName);
     }
 }
-
