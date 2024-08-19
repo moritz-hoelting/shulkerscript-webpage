@@ -30,7 +30,6 @@ const DEFAULT_FILES = {
                 },
             },
         },
-        dist: {},
     },
     files: {
         "pack.toml": {

@@ -3,6 +3,3 @@ name = "my-shulkerscript-pack"
 description = "A Minecraft datapack created with shulkerscript"
 format = 48
 version = "0.1.0"
-
-[compiler]
-# assets = "./assets"
