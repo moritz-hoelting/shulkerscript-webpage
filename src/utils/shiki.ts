@@ -1,9 +1,12 @@
-import type { PluginShikiOptions } from "@astrojs/starlight/expressive-code";
 import { shulkerscriptGrammar } from "./shulkerscript-grammar";
+import { mcfunctionGrammar } from "./mcfunction-grammar";
+import { mcscriptGrammar } from "./mcscript-grammar";
 
-const config: PluginShikiOptions = {
+const config = {
     langs: [
         shulkerscriptGrammar,
+        mcfunctionGrammar,
+        mcscriptGrammar,
     ],
 };
 

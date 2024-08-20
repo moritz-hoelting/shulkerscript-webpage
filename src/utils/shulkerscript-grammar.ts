@@ -1,5 +1,6 @@
+import type { LanguageInput } from "shiki";
 
-export const shulkerscriptGrammar = {
+export const shulkerscriptGrammar: LanguageInput = {
     name: "shulkerscript",
     aliases: ["shu"],
     displayName: "ShulkerScript",
@@ -23,6 +24,8 @@ export const shulkerscriptGrammar = {
         }
     ],
     repository: {
+        "$base": {},
+        "$self": {},
         // Groupings
         functionContents: {
             patterns: [
