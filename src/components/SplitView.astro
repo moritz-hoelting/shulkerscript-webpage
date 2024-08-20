@@ -1,0 +1,23 @@
+---
+export interface Props {
+    gap: string
+}
+const { gap = "0px" } = Astro.props;
+---
+
+<div class="split-view" style={`gap: ${gap}`}>
+    <slot name="left" />
+    <slot name="right" />
+</div>
+
+<style>
+    .split-view {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .split-view > :global(*) {
+        overflow: hidden;
+        margin-top: 0 !important;
+    }
+</style>

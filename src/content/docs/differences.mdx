@@ -1,0 +1,313 @@
+---
+title: Differences to other languages
+description: See how ShulkerScript compares to similar languages.
+---
+
+import { Tabs, TabItem, Aside } from "@astrojs/starlight/components";
+import SplitView from "@components/SplitView.astro";
+
+This page will highlight the differences of ShulkerScript and vanilla mcfunction and mcscript.
+
+:::note[Credits to mcscript]
+I came into contact with [mcscript](https://mcscript.stevertus.com/) by Stevertus a few years ago. I wrote some datapacks
+with it myself and it was mostly great, but I came across some of its flaws. This inspired me to write my own
+language, even if it is years later. This comparison should not be seen as too critical, as it seems to be not
+under active development anymore. If you are interested, check out his new project [objD](https://objd.stevertus.com).
+:::
+
+## Functions
+
+The first difference you can see is that ShulkerScript takes a much different approach to functions than mcfunction and mcscript.
+The following example declares two functions and calls them second from the first one.
+
+<SplitView gap="10px">
+    <Tabs slot="left">
+        <TabItem label="ShulkerScript">
+            ```shulkerscript
+            // functions.shu
+            #[load]
+            fn first() {
+                second();
+            }
+
+            fn second() {
+                /say Hello, world!
+            }
+            ```
+        </TabItem>
+    </Tabs>
+    <Tabs slot="right" syncKey="comparisonLang" style="margin-top: 0">
+        <TabItem label="mcfunction">
+            ```mcfunction
+            # functions/first.mcfunction
+            function functions:second
+            ```
+            ```mcfunction
+            # functions/second.mcfunction
+            say Hello, world!
+            ```
+        </TabItem>
+        <TabItem label="mcscript">
+            ```mcscript
+            // functions.mcscript
+            #file: first
+            /function functions:second
+
+            #file: second
+            /say Hello, world!
+            ```
+            or alternatively
+            ```mcscript
+            // functions.mcscript
+            #file: first
+            run function second {
+                /say Hello, world!
+            }
+            ```
+        </TabItem>
+    </Tabs>
+
+</SplitView>
+
+## Comments
+
+Comments can be expressed differently in all three languages. ShulkerScript uses `//` for single-line comments and `/* */` for multi-line comments.
+
+<SplitView gap="10px">
+    <Tabs slot="left">
+        <TabItem label="ShulkerScript">
+            ```shulkerscript
+            // comments.shu
+            // this is a comment
+            fn hello() {
+                /// this comment will be included in the compiled output
+                /*
+                    this is a
+                    multi-line comment
+                */
+                /say Hello, world!
+            }
+            ```
+        </TabItem>
+    </Tabs>
+    <Tabs slot="right" syncKey="comparisonLang" style="margin-top: 0">
+        <TabItem label="mcfunction">
+            ```mcfunction
+            # comments.mcfunction
+            # this is a comment
+            # multiline comments have to be done manually
+            say Hello, world!
+            ```
+        </TabItem>
+        <TabItem label="mcscript">
+            ```mcscript
+            // comments.mcscript
+            // this is a regular comment
+            # this comment will be included in the compiled output
+            /*
+                this is a
+                multi-line comment
+            */
+            /say Hello, world!
+            ```
+        </TabItem>
+    </Tabs>
+</SplitView>
+
+## Execute Command
+
+Both ShulkerScript and mcfunction offer an easier way for using execute commands, as they are common when building datapacks.
+
+<SplitView gap="10px">
+    <Tabs slot="left">
+        <TabItem label="ShulkerScript">
+            ```shulkerscript
+            // execute.shu
+            fn execute() {
+                as("@a"), at("@s") {
+                    /setblock ~ ~-1 ~ minecraft:stone
+                }
+            }
+            ```
+        </TabItem>
+    </Tabs>
+    <Tabs slot="right" syncKey="comparisonLang" style="margin-top: 0">
+        <TabItem label="mcfunction">
+            ```mcfunction
+            # execute.mcfunction
+            execute as @a at @s run setblock ~ ~-1 ~ minecraft:stone
+            ```
+        </TabItem>
+        <TabItem label="mcscript">
+            ```mcscript
+            // execute.mcscript
+            as(@a), at(@s) {
+                /setblock ~ ~-1 ~ minecraft:stone
+            }
+            ```
+        </TabItem>
+    </Tabs>
+</SplitView>
+
+:::tip
+ShulkerScript and mcscript each offer a shortcut for `as(...), at("@s")`, which is `asat(@a)`.
+:::
+
+## If-Else Statements
+
+ShulkerScript and mcscript offer a more convenient way to write if-else statements.
+
+<SplitView gap="10px">
+    <Tabs slot="left">
+        <TabItem label="ShulkerScript">
+            ```shulkerscript
+            // conditionals.shu
+            fn conditional() {
+                if("entity @p[distance=..5]") {
+                    /say You are close!
+                } else {
+                    /say You are far away!
+                }
+            }
+            ```
+        </TabItem>
+    </Tabs>
+    <div slot="right">
+        <Tabs syncKey="comparisonLang" style="margin-top: 0">
+            <TabItem label="mcfunction">
+                ```mcfunction
+                # conditionals.mcfunction
+                execute if entity @p[distance=..5] run say You are close!
+                execute unless entity @p[distance=..5] run say You are far away!
+                ```
+            </TabItem>
+            <TabItem label="mcscript">
+                ```mcscript
+                // conditionals.mcscript
+                if('entity @p[distance=..5]') {
+                    /say You are close!
+                } else {
+                    /say You are far away!
+                }
+                ```
+            </TabItem>
+        </Tabs>
+        <Aside type="caution" title="This does not always work!">
+            When working with else statements and/or commands that could affect the condition, 
+            both the mcfunction and mcscript approach could lead to unexpected results as explained [here](#interfering-with-conditions).
+        </Aside>
+    </div>
+</SplitView>
+
+### Logical operators
+
+Both in ShulkerScript and mcscript, logical operators can be used to combine multiple conditions. 
+In the following code examples, the conditions are represented by `A`, `B`, etc. as placeholders for real conditions.
+
+<SplitView gap="10px">
+    <div slot="left">
+        <Tabs>
+            <TabItem label="ShulkerScript">
+                ```shulkerscript
+                // logical-operators.shu
+                fn logical() {
+                    if("A" && "B" || "C") {
+                        /say A and B or C
+                    }
+                }
+                ```
+            </TabItem>
+        </Tabs>
+        The AND operator takes precedence over the OR operator, so the above code is equivalent to `A && (B || C)`. 
+        The code is compiled in such a way, that regardless in which way the expression is true, the command will only run once.
+    </div>
+    <div slot="right">
+        <Tabs syncKey="comparisonLang" style="margin-top: 0">
+            <TabItem label="mcfunction">
+                ```mcfunction
+                # logical-operators.mcfunction
+                execute if A if B run say A and B or C
+                execute if C run say A and B or C
+                ```
+                <Aside>
+                    This leads to a lot of repetition, especially when combining AND and OR operators.
+                </Aside>
+            </TabItem>
+            <TabItem label="mcscript">
+                ```mcscript
+                // logical-operators.mcscript
+                if(('A' && 'B') || 'C') {
+                    /say A and B or C
+                }
+                ```
+            </TabItem>
+        </Tabs>
+        <Aside type="caution" title="">
+            If both `A && B` and `C` are true, the command will run two times!
+        </Aside>
+    </div>
+</SplitView>
+
+### Interfering with conditions
+
+The difference between ShulkerScript and the other two languages is that ShulkerScript compiles to a version
+where it is not possible to trigger both the if and the else statement at the same time.
+This could be possible when using the trivial approach to translate the following to mcfunction:
+
+```shulkerscript
+// this-works.shu
+fn thisWorks() {
+    if("block ~ ~-1 ~ minecraft:stone") {
+        /setblock ~ ~-1 ~ minecraft:cobblestone
+    } else {
+        /say Not on stone
+    }
+}
+```
+
+Here the second command will always be executed, because if the condition is true, the command runs and falsifies the condition.
+When the inverted condition is checked in the second command, it will always be true.
+ShulkerScript fixes this by using a mix of anonymous functions and data stores.
+
+```mcfunction
+# this-is-incorrect.mcfunction
+execute if block ~ ~-1 ~ minecraft:stone run setblock ~ ~-1 ~ minecraft:cobblestone
+# this will always execute because after the first command the block cannot be stone
+execute unless block ~ ~-1 ~ minecraft:stone run say Not on stone
+```
+
+## Embedded Programming Language
+
+ShulkerScript allows running Lua code during compilation and running the returned output in Minecraft, mcscript offers JavaScript modals._createMdxContent
+
+<SplitView gap="10px">
+    <Tabs slot="left">
+        <TabItem label="ShulkerScript">
+            ```shulkerscript
+            // lua.shu
+            fn execute() {
+                run lua() {
+                    return "say hi";
+                };
+            }
+            ```
+        </TabItem>
+    </Tabs>
+    <Tabs slot="right" syncKey="comparisonLang" style="margin-top: 0">
+        <TabItem label="mcfunction">
+            <Aside>
+                Vanilla mcfunction does not support embedded programming languages.
+            </Aside>
+        </TabItem>
+        <TabItem label="mcscript">
+            ```mcscript
+            // javascript.mcscript
+            modaljs newModal(){
+                return "say hi";
+            }
+
+            newModal()
+            ```
+        </TabItem>
+    </Tabs>
+</SplitView>

@@ -5,6 +5,7 @@ import shikiConfig from './src/utils/shiki';
 
 // https://astro.build/config
 export default defineConfig({
+	site: "https://shulkerscript.hoelting.dev",
 	integrations: [
 		starlight({
 			title: 'ShulkerScript',
@@ -48,6 +49,13 @@ export default defineConfig({
 					translations: {
 						de: 'Anleitungen',
 					}
+				},
+				{
+					label: 'Differences to other languages',
+					link: '/differences',
+					translations: {
+						de: 'Unterschiede zu anderen Sprachen',
+					},
 				},
 				{
 					label: 'Roadmap',
