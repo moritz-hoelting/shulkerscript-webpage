@@ -172,7 +172,7 @@ ShulkerScript and mcscript offer a more convenient way to write if-else statemen
             ```
         </TabItem>
     </Tabs>
-    <div slot="right">
+    <Fragment slot="right">
         <Tabs syncKey="comparisonLang" style="margin-top: 0">
             <TabItem label="mcfunction">
                 ```mcfunction
@@ -196,7 +196,7 @@ ShulkerScript and mcscript offer a more convenient way to write if-else statemen
             When working with else statements and/or commands that could affect the condition, 
             both the mcfunction and mcscript approach could lead to unexpected results as explained [here](#interfering-with-conditions).
         </Aside>
-    </div>
+    </Fragment>
 </SplitView>
 
 ### Logical operators
@@ -205,7 +205,7 @@ Both in ShulkerScript and mcscript, logical operators can be used to combine mul
 In the following code examples, the conditions are represented by `A`, `B`, etc. as placeholders for real conditions.
 
 <SplitView gap="10px">
-    <div slot="left">
+    <Fragment slot="left">
         <Tabs>
             <TabItem label="ShulkerScript">
                 ```shulkerscript
@@ -220,8 +220,8 @@ In the following code examples, the conditions are represented by `A`, `B`, etc.
         </Tabs>
         The AND operator takes precedence over the OR operator, so the above code is equivalent to `A && (B || C)`. 
         The code is compiled in such a way, that regardless in which way the expression is true, the command will only run once.
-    </div>
-    <div slot="right">
+    </Fragment>
+    <Fragment slot="right">
         <Tabs syncKey="comparisonLang" style="margin-top: 0">
             <TabItem label="mcfunction">
                 ```mcfunction
@@ -245,7 +245,7 @@ In the following code examples, the conditions are represented by `A`, `B`, etc.
         <Aside type="caution" title="">
             If both `A && B` and `C` are true, the command will run two times!
         </Aside>
-    </div>
+    </Fragment>
 </SplitView>
 
 ### Interfering with conditions
@@ -278,7 +278,7 @@ execute unless block ~ ~-1 ~ minecraft:stone run say Not on stone
 
 ## Embedded Programming Language
 
-ShulkerScript allows running Lua code during compilation and running the returned output in Minecraft, mcscript offers JavaScript modals._createMdxContent
+ShulkerScript allows running Lua code during compilation and running the returned output in Minecraft, mcscript offers JavaScript modals.
 
 <SplitView gap="10px">
     <Tabs slot="left">
