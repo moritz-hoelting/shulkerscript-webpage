@@ -32,7 +32,7 @@ fn parse(printer: &Printer, file_provider: &impl FileProvider, path: &Path) -> R
 
     let mut parser = Parser::new(&tokens);
     let program = parser.parse_program(printer).ok_or(Error::Other(
-        "An error occured while parsing the source code.",
+        "An error occurred while parsing the source code.",
     ))?;
 
     if printer.has_printed() {
