@@ -6,7 +6,7 @@ use shulkerscript::{
     lexical::token_stream::TokenStream,
     shulkerbox::{datapack::Datapack, util::compile::CompileOptions, virtual_fs::VFolder},
     syntax::{parser::Parser, syntax_tree::program::ProgramFile},
-    transpile::transpiler::Transpiler,
+    transpile::Transpiler,
 };
 
 use crate::Printer;

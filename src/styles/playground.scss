@@ -1,21 +1,42 @@
 .playground {
     display: grid;
-    grid-template-columns: clamp(200px, 15%, 500px) auto;
+    grid-template-columns: 1fr;
     grid-template-areas:
-        "header header"
-        "files editor";
+        "header"
+        "files"
+        "editor";
+
+    @media only screen and (min-width: 640px) {
+        grid-template-columns: clamp(200px, 15%, 500px) auto;
+        grid-template-areas:
+            "header header"
+            "files editor";
+    }
 
     > header {
         grid-area: header;
+        display: flex;
+        margin-bottom: 0.5cm;
+        flex-direction: column;
+        max-width: 95dvw;
+
+        @media only screen and (min-width: 450px) {
+            justify-content: space-between;
+            flex-direction: row;
+        }
     }
+
     > .file-view {
         grid-area: files;
         display: flex;
         flex-direction: column;
-        margin-right: 0.5cm;
         overflow-x: hidden;
         overflow-y: hidden;
         max-height: 70vh;
+
+        @media only screen and (min-width: 640px) {
+            margin-right: 0.5cm;
+        }
 
         > h3 {
             cursor: pointer;
@@ -46,6 +67,10 @@
     }
     > .editor {
         grid-area: editor;
+
+        @media only screen and (max-width: 640px) {
+            max-width: 100%;
+        }
 
         .monaco-editor {
             padding-block: 10px;

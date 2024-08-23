@@ -15,17 +15,11 @@ export default function Header({
     onZip: () => void;
 }) {
     return (
-        <header
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginBottom: "0.5cm",
-            }}
-        >
+        <header>
             <h1 id="_top">{lang.title}</h1>
             <div className="buttons" style={{ height: "100%" }}>
                 <DropdownButton
-                    style={{ height: "100%", marginRight: "0.5cm"}}
+                    style={{ height: "100%", marginRight: "0.5cm" }}
                     visible={[[lang.buttons.save, onSave]]}
                     options={[[lang.buttons.reset, onReset]]}
                 />
