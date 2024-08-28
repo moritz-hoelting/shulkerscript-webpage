@@ -16,15 +16,21 @@ fn tokenize(
     printer: &Printer,
     file_provider: &impl FileProvider,
     path: &Path,
+    identifier: String,
 ) -> Result<TokenStream> {
-    let source_file = SourceFile::load(path, file_provider)?;
+    let source_file = SourceFile::load(path, identifier, file_provider)?;
 
     Ok(TokenStream::tokenize(&source_file, printer))
 }
 
 /// Parses the source code at the given path.
-fn parse(printer: &Printer, file_provider: &impl FileProvider, path: &Path) -> Result<ProgramFile> {
-    let tokens = tokenize(printer, file_provider, path)?;
+fn parse(
+    printer: &Printer,
+    file_provider: &impl FileProvider,
+    path: &Path,
+    identifier: String,
+) -> Result<ProgramFile> {
+    let tokens = tokenize(printer, file_provider, path, identifier)?;
 
     if printer.has_printed() {
         return Err(Error::Other("An error occurred while tokenizing the source code.").into());
@@ -55,9 +61,14 @@ where
     let programs = script_paths
         .iter()
         .map(|(program_identifier, path)| {
-            let program = parse(printer, file_provider, path.as_ref())?;
+            let program = parse(
+                printer,
+                file_provider,
+                path.as_ref(),
+                program_identifier.clone(),
+            )?;
 
-            Ok((program_identifier, program))
+            Ok(program)
         })
         .collect::<Vec<_>>();
 
