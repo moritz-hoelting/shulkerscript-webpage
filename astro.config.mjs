@@ -16,7 +16,7 @@ export default defineConfig({
 			favicon: '/favicon.ico',
 			description: 'A simple and powerful scripting language for Minecraft datapacks.',
 			social: {
-				github: 'https://github.com/moritz-hoelting/shulkerscript-cli',
+				email: 'mailto:shulkerscript@hoelting.dev',
 			},
 			tableOfContents: { minHeadingLevel: 1, maxHeadingLevel: 3 },
 			defaultLocale: 'root',
@@ -39,6 +39,9 @@ export default defineConfig({
 			})],
 			expressiveCode: {
 				shiki: shikiConfig,
+			},
+			components: {
+				SocialIcons: './src/components/override/SocialIcons.astro',
 			},
 			sidebar: [
 				{

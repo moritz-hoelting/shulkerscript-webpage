@@ -1,10 +1,6 @@
 ---
 title: Syntax
 description: Learn the syntax of ShulkerScript
-sidebar:
-    badge:
-        text: WIP
-        variant: caution
 ---
 
 ## Comments
@@ -158,6 +154,8 @@ if ("block ~ ~-1 ~ minecraft:stone") {
 }
 ```
 
+To learn more about how to combine or negate conditions, refer to the [if-else statement reference](/reference/conditionals).
+
 ## Execute Blocks
 Execute blocks are used to execute a block of code in a specific context.
 They consist of the keyword you would pass to the `/execute` command followed the argument as a string in parenthesis and a block of code.
@@ -190,12 +188,19 @@ positioned ("0 0 0"), in ("minecraft:overworld") {
 - `at`
 - `asat`
 - `facing`
+- [`if`](#conditional-statements)
 - `in`
 - `on`
 - `positioned`
 - `rotated`
 - `store`
 - `summon`
+
+:::note
+When using the summon execute block with multiple commands in it, only one entity will be summoned and all commands will be executed on that entity. If you want to summon multiple entities, you have to use multiple summon execute blocks.
+:::
+
+For general information on the execute command, refer to the [Minecraft Wiki](https://minecraft.wiki/w/Commands/execute).
 
 ## Groupings
 Groupings are used to group multiple commands into one `mcfunction` file without declaring a new function.

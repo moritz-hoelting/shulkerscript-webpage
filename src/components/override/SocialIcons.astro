@@ -1,0 +1,26 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/SocialIcons.astro";
+import { Icon } from "@astrojs/starlight/components";
+
+const localePrefix = Astro.currentLocale === "en" ? "" : `/${Astro.currentLocale}`;
+---
+
+<>
+    <Default {...Astro.props} />
+    <a href={`${localePrefix}/github`} rel="me" class="sl-flex">
+        <span class="sr-only">GitHub</span>
+        <Icon name="github" />
+    </a>
+</>
+
+<style>
+    a {
+        color: var(--sl-color-text-accent);
+        padding: 0.5em;
+        margin: -0.5em;
+    }
+    a:hover {
+        opacity: 0.66;
+    }
+</style>

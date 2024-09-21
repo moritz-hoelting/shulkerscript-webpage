@@ -20,3 +20,18 @@ run lua() {
     return "Hello, Lua!";
 };
 ```
+
+## Globals
+The following globals are available in the Lua environment:
+- `shu_location`: The relative filepath of the script being executed
+
+After variables are introduced in ShulkerScript, it is planned to make them available in the Lua environment as well.
+
+:::note
+If you can think of any other globals that should be available in the Lua environment, please let us know! This could include:
+- variables with values (like `shu_location`)
+- functions that calculate/modify values (general utility things not provided by Lua or specific to ShulkerScript)
+- functions that interact with the ShulkerScript environment (flags to set for the compiler to alter the build process)
+
+Please either write a mail or open an issue on GitHub. The links can be found in the upper right corner of the page.
+:::

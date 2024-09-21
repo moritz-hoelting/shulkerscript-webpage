@@ -1,0 +1,53 @@
+---
+title: GitHub
+description: View and contribute to the source code of ShulkerScript on GitHub.
+---
+
+import { CardGrid, LinkCard, Aside } from "@astrojs/starlight/components";
+
+The source code of this project is hosted on GitHub. You can view and contribute to the project by visiting the repositories.
+
+## Organization
+
+The project is split into multiple repositories:
+
+<LinkCard
+    title="shulkerscript-cli"
+    href="https://github.com/moritz-hoelting/shulkerscript-cli"
+    target="_blank"
+    description="This is the program you can download and use to compile the <code>.shu</code> files. 
+        It is a wrapper for the library and depends on the other two repositories to do the actual work."
+/>
+<LinkCard
+    title="shulkerscript-lang"
+    href="https://github.com/moritz-hoelting/shulkerscript-lang"
+    target="_blank"
+    description="Library for parsing the syntax and transpiling to an intermediate representation. 
+        Can be used in other rust programs to embed the language."
+/>
+<LinkCard
+    title="shulkerbox"
+    href="https://github.com/moritz-hoelting/shulkerbox"
+    target="_blank"
+    description="Library for compiling the intermediate representation to a datapack that can be read by Minecraft. 
+        Also, provides an interface for constructing datapacks programatically in rust."
+/>
+
+<Aside type="note" title="Keep in mind">
+    Please raise issues in the respective repositories if it is related to a specific part of the project.
+    If you are unsure where to raise an issue, you can get help by contacting us via the email on the top right.
+</Aside>
+
+
+## Contributing
+
+First off, thanks for taking the time to contribute! ❤️
+
+All types of contributions are encouraged and valued. The community looks forward to your contributions. 🎉
+
+<Aside type="tip" title="Other ways to support this project...">
+    And if you like the project, but just don't have the time or knowledge to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
+    - Star the project
+    - Refer this project in your project's readme
+    - Mention the project at local meetups and tell your friends/colleagues
+</Aside>

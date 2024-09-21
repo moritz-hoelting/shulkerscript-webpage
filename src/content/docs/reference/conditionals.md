@@ -21,6 +21,10 @@ if ("block ~ ~-1 ~ minecraft:grass_block") {
 }
 ```
 
+:::note
+Conditional statements are implemented to work atomically. This means that only the if or the else block will be executed, not both and only once, regardless of more than one condition being true. If either one is chosen, all commands in this block are run, even when a command before changes the state so the condition would be false. More about this can be found [here](/differences#interfering-with-conditions).
+:::
+
 ## Logical Operators
 
 Logical operators can be used to combine multiple conditions. The following logical operators are supported:
