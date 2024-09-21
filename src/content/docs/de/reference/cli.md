@@ -33,5 +33,5 @@ shulkerscript build [PATH]
 ## package
 Baut und verpackt das Projekt im angegebenen Pfad in eine `.zip`-Datei.
 ```bash
-shulkerscript package [PATH]
+shulkerscript build --zip [PATH]
 ```

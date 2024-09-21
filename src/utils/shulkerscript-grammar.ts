@@ -21,11 +21,14 @@ export const shulkerscriptGrammar: LanguageInput = {
         },
         {
             include: "#importStatement",
-        }
+        },
+        {
+            include: "#tagDeclaration",
+        },
     ],
     repository: {
-        "$base": {},
-        "$self": {},
+        $base: {},
+        $self: {},
         // Groupings
         functionContents: {
             patterns: [
@@ -67,7 +70,7 @@ export const shulkerscriptGrammar: LanguageInput = {
             end: "}",
             captures: {
                 1: {
-                    name: "keyword.control.public.shulkerscript"
+                    name: "keyword.control.public.shulkerscript",
                 },
                 2: {
                     name: "keyword.control.function.shulkerscript",
@@ -99,7 +102,29 @@ export const shulkerscriptGrammar: LanguageInput = {
                 1: {
                     name: "entity.name.function.shulkerscript",
                 },
-            }
+            },
+        },
+        tagDeclaration: {
+            begin: '^\\s*(tag)\\s+("\\w+")\\s+(?:(of)\\s+("\\w+")\\s+)?(?:(replace)\\s+)?\\[',
+            end: "]",
+            patterns: [{ include: "#stringLiteral" }],
+            captures: {
+                1: {
+                    name: "keyword.control.tag.shulkerscript",
+                },
+                2: {
+                    name: "string.quoted.double.shulkerscript",
+                },
+                3: {
+                    name: "keyword.control.of.shulkerscript",
+                },
+                4: {
+                    name: "string.quoted.double.shulkerscript",
+                },
+                5: {
+                    name: "keyword.control.replace.shulkerscript",
+                },
+            },
         },
         binaryOperator: {
             name: "punctuation.operator.binary.shulkerscript",
@@ -171,10 +196,10 @@ export const shulkerscriptGrammar: LanguageInput = {
             end: "import\\s(\\w+(?:\\s?,\\s?(?:\\w+))*)\\s?,?\\s?",
             captures: {
                 1: {
-                    name: "entity.name.function.shulkerscript"
+                    name: "entity.name.function.shulkerscript",
                 },
             },
-            patterns: [{ include: "#stringLiteral" }]
-        }
+            patterns: [{ include: "#stringLiteral" }],
+        },
     },
 };

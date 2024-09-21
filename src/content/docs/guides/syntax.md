@@ -111,6 +111,41 @@ Multiple functions can be imported by separating them with a comma.
 from "./foo" import bar, baz;
 ```
 
+## Tags
+In Minecraft, tags are used to group multiple items, blocks, entities, etc. together.
+In ShulkerScript, tags can be defined right in the code, where they are needed.
+```shulkerscript
+tag "foo" of "block" [
+    "minecraft:stone",
+    "minecraft:dirt"
+]
+```
+
+This will result in a tag of type `block` with the name `foo` containing the blocks `minecraft:stone` and `minecraft:dirt`.
+
+If you want the tag to replace, instead of append to the existing tag, you can use the `replace` keyword.
+```shulkerscript
+tag "foo" of "block" replace [
+    "minecraft:stone",
+    "minecraft:dirt"
+]
+```
+
+The type has to be the name of the subfolder in the `tags` folder of the data pack. Most often you will use tags with
+the types:
+- `function`
+- `block`
+- `item`
+- `entity_type`
+- `fluid`
+- `game_event`
+
+But you can also use custom types, refer to [this page](https://minecraft.wiki/w/Tag) for more information.
+
+:::tip
+`of "[type]"` can be omitted and will default to `"function"`.
+:::
+
 ## Conditional Statements
 Conditional statements are used to execute code based on a condition.
 They start with `if` followed by a condition in parenthesis and a block of code.
