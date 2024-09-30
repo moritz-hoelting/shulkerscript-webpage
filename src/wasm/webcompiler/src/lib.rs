@@ -16,7 +16,7 @@ use wasm_bindgen::prelude::*;
 use zip::{write::SimpleFileOptions, ZipWriter};
 
 mod fs;
-mod util;
+mod pack_toml;
 
 #[wasm_bindgen]
 extern "C" {
@@ -81,11 +81,31 @@ pub fn compile_zip(root_dir: JsValue) -> Option<String> {
 fn _compile(root_dir: &VFolder) -> Result<VFolder> {
     colored::control::set_override(true);
     let printer = Printer::new();
-    let res = util::compile(&printer, root_dir, &get_script_paths(root_dir));
+
+    let pack_format = {
+        let pack_toml = root_dir.get_file("pack.toml").ok_or_else(|| {
+            printer.receive_str("Could not find pack.toml. Make sure it is in the root directory.");
+            anyhow::anyhow!("Could not find pack.toml. Make sure it is in the root directory.")
+        })?;
+        toml::from_str::<pack_toml::PackToml>(pack_toml.as_text().unwrap())
+            .map_err(|e| {
+                printer.receive_str(&format!("Error parsing pack.toml: {}", e));
+                anyhow::anyhow!("Error parsing pack.toml: {}", e)
+            })
+            .map(|toml| toml.pack.format)
+    };
+
+    let res = pack_format.and_then(|pack_format| {
+        shulkerscript::compile(&printer, root_dir, pack_format, &get_script_paths(root_dir))
+            .map_err(|e| e.into())
+    });
+
     printer.display();
+
     res
 }
 
+#[derive(Debug)]
 struct Printer {
     queue: Mutex<Vec<String>>,
 }
@@ -119,6 +139,10 @@ impl Printer {
 
     fn has_printed(&self) -> bool {
         !self.queue.lock().unwrap().is_empty()
+    }
+
+    fn receive_str(&self, error: &str) {
+        <Printer as Handler<&str>>::receive::<&str>(self, error);
     }
 }
 
