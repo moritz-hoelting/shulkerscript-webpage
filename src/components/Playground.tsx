@@ -7,7 +7,7 @@ import FileView from "./playground/FileView";
 import Editor from "./playground/Editor";
 import Header from "./playground/Header";
 
-import initWasm, {
+import {
     compile,
     compileZip,
 } from "@wasm/webcompiler/pkg/webcompiler";
@@ -51,10 +51,6 @@ export default function Playground({ lang }: { lang: PlaygroundLang }) {
             },
         };
     }, []);
-
-    initWasm().catch((err) => {
-        console.error(err);
-    });
 
     const [rootDir, updateRootDir] = useImmer(
         getStorageOrDefault(FILE_STORAGE_KEY, DEFAULT_FILES) as Directory

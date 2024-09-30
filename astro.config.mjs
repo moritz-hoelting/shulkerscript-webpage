@@ -3,6 +3,8 @@ import starlight from "@astrojs/starlight";
 import react from "@astrojs/react";
 import starlightLinksValidator from "starlight-links-validator";
 import starlightUtils from "@lorenzo_lewis/starlight-utils";
+import wasm from "vite-plugin-wasm";
+
 import shikiConfig from "./src/utils/shiki";
 
 const playgroundSidebarEntry = {
@@ -119,4 +121,9 @@ export default defineConfig({
             ],
         }),
     ],
+    vite: {
+        plugins: [
+            wasm(),
+        ],
+    }
 });

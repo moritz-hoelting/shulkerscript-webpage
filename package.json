@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "pnpm build-wasm && astro dev",
     "start": "pnpm build-wasm && astro dev",
-    "build-wasm": "cargo build --manifest-path ./src/wasm/webcompiler/Cargo.toml --release --target wasm32-unknown-unknown --target-dir ./target_rust && wasm-bindgen --target web --out-dir ./src/wasm/webcompiler/pkg/ --out-name webcompiler ./target_rust/wasm32-unknown-unknown/release/webcompiler.wasm",
+    "build-wasm": "wasm-pack build --release ./src/wasm/webcompiler -- --features wee_alloc",
     "build": "pnpm build-wasm && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -32,7 +32,8 @@
     "starlight-links-validator": "^0.7.1",
     "tm-themes": "^1.4.3",
     "typescript": "^5.4.5",
-    "use-immer": "^0.10.0"
+    "use-immer": "^0.10.0",
+    "vite-plugin-wasm": "^3.3.0"
   },
   "devDependencies": {
     "sass": "^1.77.6"

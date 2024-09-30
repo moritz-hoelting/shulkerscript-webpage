@@ -13,28 +13,28 @@ importers:
         version: 0.5.10(typescript@5.4.5)
       '@astrojs/react':
         specifier: ^3.6.0
-        version: 3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(vite@5.2.13)
+        version: 3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.13(sass@1.77.6))
       '@astrojs/starlight':
         specifier: ^0.24.2
-        version: 0.24.2(astro@4.10.2)
+        version: 0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
       '@emotion/react':
         specifier: ^11.11.4
         version: 11.11.4(@types/react@18.3.3)(react@18.3.1)
       '@emotion/styled':
         specifier: ^11.11.5
-        version: 11.11.5(@emotion/react@11.11.4)(@types/react@18.3.3)(react@18.3.1)
+        version: 11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
       '@lorenzo_lewis/starlight-utils':
         specifier: ^0.1.1
-        version: 0.1.1(@astrojs/starlight@0.24.2)(astro@4.10.2)
+        version: 0.1.1(@astrojs/starlight@0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5)))(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
       '@monaco-editor/react':
         specifier: ^4.6.0
-        version: 4.6.0(monaco-editor@0.49.0)(react-dom@18.3.1)(react@18.3.1)
+        version: 4.6.0(monaco-editor@0.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mui/icons-material':
         specifier: ^5.15.20
-        version: 5.15.20(@mui/material@5.15.20)(@types/react@18.3.3)(react@18.3.1)
+        version: 5.15.20(@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
       '@mui/material':
         specifier: ^5.15.20
-        version: 5.15.20(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+        version: 5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@shikijs/monaco':
         specifier: ^1.7.0
         version: 1.7.0
@@ -64,7 +64,7 @@ importers:
         version: 1.7.0
       starlight-links-validator:
         specifier: ^0.7.1
-        version: 0.7.1(@astrojs/starlight@0.24.2)(astro@4.10.2)
+        version: 0.7.1(@astrojs/starlight@0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5)))(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
       tm-themes:
         specifier: ^1.4.3
         version: 1.4.3
@@ -74,6 +74,9 @@ importers:
       use-immer:
         specifier: ^0.10.0
         version: 0.10.0(immer@10.1.1)(react@18.3.1)
+      vite-plugin-wasm:
+        specifier: ^3.3.0
+        version: 3.3.0(vite@5.2.13(sass@1.77.6))
     devDependencies:
       sass:
         specifier: ^1.77.6
@@ -2823,6 +2826,11 @@ packages:
   vfile@6.0.1:
     resolution: {integrity: sha512-1bYqc7pt6NIADBJ98UiG0Bn/CHIVOoZ/IyEkqIruLg0mE1BKzkOXY2D6CSqQIcKqgadppE5lrxgWXJmXd7zZJw==}
 
+  vite-plugin-wasm@3.3.0:
+    resolution: {integrity: sha512-tVhz6w+W9MVsOCHzxo6SSMSswCeIw4HTrXEi6qL3IRzATl83jl09JVO1djBqPSwfjgnpVHNLYcaMbaDX5WB/pg==}
+    peerDependencies:
+      vite: ^2 || ^3 || ^4 || ^5
+
   vite@5.2.13:
     resolution: {integrity: sha512-SSq1noJfY9pR3I1TUENL3rQYDQCFqgD+lM6fTRAM8Nv6Lsg5hDLaXkjETVeBt+7vZBCMoibD+6IWnT2mJ+Zb/A==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -3082,7 +3090,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@3.1.0(astro@4.10.2)':
+  '@astrojs/mdx@3.1.0(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))':
     dependencies:
       '@astrojs/markdown-remark': 5.1.0
       '@mdx-js/mdx': 3.0.1
@@ -3107,11 +3115,11 @@ snapshots:
     dependencies:
       prismjs: 1.29.0
 
-  '@astrojs/react@3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(vite@5.2.13)':
+  '@astrojs/react@3.6.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@5.2.13(sass@1.77.6))':
     dependencies:
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
-      '@vitejs/plugin-react': 4.3.1(vite@5.2.13)
+      '@vitejs/plugin-react': 4.3.1(vite@5.2.13(sass@1.77.6))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       ultrahtml: 1.5.3
@@ -3125,15 +3133,15 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.8
 
-  '@astrojs/starlight@0.24.2(astro@4.10.2)':
+  '@astrojs/starlight@0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))':
     dependencies:
-      '@astrojs/mdx': 3.1.0(astro@4.10.2)
+      '@astrojs/mdx': 3.1.0(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
       '@astrojs/sitemap': 3.1.5
       '@pagefind/default-ui': 1.1.0
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       astro: 4.10.2(sass@1.77.6)(typescript@5.4.5)
-      astro-expressive-code: 0.35.3(astro@4.10.2)
+      astro-expressive-code: 0.35.3(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.1
       hast-util-select: 6.0.2
@@ -3403,9 +3411,10 @@ snapshots:
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.3.1)
       '@emotion/utils': 1.2.1
       '@emotion/weak-memoize': 0.3.1
-      '@types/react': 18.3.3
       hoist-non-react-statics: 3.3.2
       react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.3
     transitivePeerDependencies:
       - supports-color
 
@@ -3419,7 +3428,7 @@ snapshots:
 
   '@emotion/sheet@1.2.2': {}
 
-  '@emotion/styled@11.11.5(@emotion/react@11.11.4)(@types/react@18.3.3)(react@18.3.1)':
+  '@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
       '@emotion/babel-plugin': 11.11.0
@@ -3428,8 +3437,9 @@ snapshots:
       '@emotion/serialize': 1.1.4
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.3.1)
       '@emotion/utils': 1.2.1
-      '@types/react': 18.3.3
       react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.3
     transitivePeerDependencies:
       - supports-color
 
@@ -3615,7 +3625,7 @@ snapshots:
       '@floating-ui/core': 1.6.2
       '@floating-ui/utils': 0.2.2
 
-  '@floating-ui/react-dom@2.1.0(react-dom@18.3.1)(react@18.3.1)':
+  '@floating-ui/react-dom@2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/dom': 1.6.5
       react: 18.3.1
@@ -3722,11 +3732,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@lorenzo_lewis/starlight-utils@0.1.1(@astrojs/starlight@0.24.2)(astro@4.10.2)':
+  '@lorenzo_lewis/starlight-utils@0.1.1(@astrojs/starlight@0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5)))(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))':
     dependencies:
-      '@astrojs/starlight': 0.24.2(astro@4.10.2)
+      '@astrojs/starlight': 0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
       astro: 4.10.2(sass@1.77.6)(typescript@5.4.5)
-      astro-integration-kit: 0.13.3(astro@4.10.2)
+      astro-integration-kit: 0.13.3(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
     transitivePeerDependencies:
       - '@astrojs/db'
 
@@ -3763,46 +3773,45 @@ snapshots:
       monaco-editor: 0.49.0
       state-local: 1.0.7
 
-  '@monaco-editor/react@4.6.0(monaco-editor@0.49.0)(react-dom@18.3.1)(react@18.3.1)':
+  '@monaco-editor/react@4.6.0(monaco-editor@0.49.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@monaco-editor/loader': 1.4.0(monaco-editor@0.49.0)
       monaco-editor: 0.49.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@mui/base@5.0.0-beta.40(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)':
+  '@mui/base@5.0.0-beta.40(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
-      '@floating-ui/react-dom': 2.1.0(react-dom@18.3.1)(react@18.3.1)
+      '@floating-ui/react-dom': 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mui/types': 7.2.14(@types/react@18.3.3)
       '@mui/utils': 5.15.20(@types/react@18.3.3)(react@18.3.1)
       '@popperjs/core': 2.11.8
-      '@types/react': 18.3.3
       clsx: 2.1.1
       prop-types: 15.8.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.3
 
   '@mui/core-downloads-tracker@5.15.20': {}
 
-  '@mui/icons-material@5.15.20(@mui/material@5.15.20)(@types/react@18.3.3)(react@18.3.1)':
+  '@mui/icons-material@5.15.20(@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
-      '@mui/material': 5.15.20(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@types/react': 18.3.3
+      '@mui/material': 5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.3
 
-  '@mui/material@5.15.20(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)':
+  '@mui/material@5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
-      '@emotion/react': 11.11.4(@types/react@18.3.3)(react@18.3.1)
-      '@emotion/styled': 11.11.5(@emotion/react@11.11.4)(@types/react@18.3.3)(react@18.3.1)
-      '@mui/base': 5.0.0-beta.40(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@mui/base': 5.0.0-beta.40(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mui/core-downloads-tracker': 5.15.20
-      '@mui/system': 5.15.20(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.3.3)(react@18.3.1)
+      '@mui/system': 5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
       '@mui/types': 7.2.14(@types/react@18.3.3)
       '@mui/utils': 5.15.20(@types/react@18.3.3)(react@18.3.1)
-      '@types/react': 18.3.3
       '@types/react-transition-group': 4.4.10
       clsx: 2.1.1
       csstype: 3.1.3
@@ -3810,53 +3819,61 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
-      react-transition-group: 4.4.5(react-dom@18.3.1)(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    optionalDependencies:
+      '@emotion/react': 11.11.4(@types/react@18.3.3)(react@18.3.1)
+      '@emotion/styled': 11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
+      '@types/react': 18.3.3
 
   '@mui/private-theming@5.15.20(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
       '@mui/utils': 5.15.20(@types/react@18.3.3)(react@18.3.1)
-      '@types/react': 18.3.3
       prop-types: 15.8.1
       react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.3
 
-  '@mui/styled-engine@5.15.14(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(react@18.3.1)':
+  '@mui/styled-engine@5.15.14(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
       '@emotion/cache': 11.11.0
-      '@emotion/react': 11.11.4(@types/react@18.3.3)(react@18.3.1)
-      '@emotion/styled': 11.11.5(@emotion/react@11.11.4)(@types/react@18.3.3)(react@18.3.1)
       csstype: 3.1.3
       prop-types: 15.8.1
       react: 18.3.1
+    optionalDependencies:
+      '@emotion/react': 11.11.4(@types/react@18.3.3)(react@18.3.1)
+      '@emotion/styled': 11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
 
-  '@mui/system@5.15.20(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.3.3)(react@18.3.1)':
+  '@mui/system@5.15.20(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
-      '@emotion/react': 11.11.4(@types/react@18.3.3)(react@18.3.1)
-      '@emotion/styled': 11.11.5(@emotion/react@11.11.4)(@types/react@18.3.3)(react@18.3.1)
       '@mui/private-theming': 5.15.20(@types/react@18.3.3)(react@18.3.1)
-      '@mui/styled-engine': 5.15.14(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(react@18.3.1)
+      '@mui/styled-engine': 5.15.14(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)
       '@mui/types': 7.2.14(@types/react@18.3.3)
       '@mui/utils': 5.15.20(@types/react@18.3.3)(react@18.3.1)
-      '@types/react': 18.3.3
       clsx: 2.1.1
       csstype: 3.1.3
       prop-types: 15.8.1
       react: 18.3.1
+    optionalDependencies:
+      '@emotion/react': 11.11.4(@types/react@18.3.3)(react@18.3.1)
+      '@emotion/styled': 11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
+      '@types/react': 18.3.3
 
   '@mui/types@7.2.14(@types/react@18.3.3)':
-    dependencies:
+    optionalDependencies:
       '@types/react': 18.3.3
 
   '@mui/utils@5.15.20(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.24.7
       '@types/prop-types': 15.7.12
-      '@types/react': 18.3.3
       prop-types: 15.8.1
       react: 18.3.1
       react-is: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.3
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -4029,7 +4046,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@4.3.1(vite@5.2.13)':
+  '@vitejs/plugin-react@4.3.1(vite@5.2.13(sass@1.77.6))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.24.7)
@@ -4149,12 +4166,12 @@ snapshots:
 
   astring@1.8.6: {}
 
-  astro-expressive-code@0.35.3(astro@4.10.2):
+  astro-expressive-code@0.35.3(astro@4.10.2(sass@1.77.6)(typescript@5.4.5)):
     dependencies:
       astro: 4.10.2(sass@1.77.6)(typescript@5.4.5)
       rehype-expressive-code: 0.35.3
 
-  astro-integration-kit@0.13.3(astro@4.10.2):
+  astro-integration-kit@0.13.3(astro@4.10.2(sass@1.77.6)(typescript@5.4.5)):
     dependencies:
       astro: 4.10.2(sass@1.77.6)(typescript@5.4.5)
       pathe: 1.1.2
@@ -4220,7 +4237,7 @@ snapshots:
       unist-util-visit: 5.0.0
       vfile: 6.0.1
       vite: 5.2.13(sass@1.77.6)
-      vitefu: 0.2.5(vite@5.2.13)
+      vitefu: 0.2.5(vite@5.2.13(sass@1.77.6))
       which-pm: 2.2.0
       yargs-parser: 21.1.1
       zod: 3.23.8
@@ -5780,7 +5797,7 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-transition-group@4.4.5(react-dom@18.3.1)(react@18.3.1):
+  react-transition-group@4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.24.7
       dom-helpers: 5.2.1
@@ -6129,9 +6146,9 @@ snapshots:
 
   sprintf-js@1.0.3: {}
 
-  starlight-links-validator@0.7.1(@astrojs/starlight@0.24.2)(astro@4.10.2):
+  starlight-links-validator@0.7.1(@astrojs/starlight@0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5)))(astro@4.10.2(sass@1.77.6)(typescript@5.4.5)):
     dependencies:
-      '@astrojs/starlight': 0.24.2(astro@4.10.2)
+      '@astrojs/starlight': 0.24.2(astro@4.10.2(sass@1.77.6)(typescript@5.4.5))
       astro: 4.10.2(sass@1.77.6)(typescript@5.4.5)
       github-slugger: 2.0.0
       hast-util-from-html: 2.0.1
@@ -6262,7 +6279,7 @@ snapshots:
   trough@2.2.0: {}
 
   tsconfck@3.1.0(typescript@5.4.5):
-    dependencies:
+    optionalDependencies:
       typescript: 5.4.5
 
   tslib@2.6.3: {}
@@ -6420,57 +6437,66 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
+  vite-plugin-wasm@3.3.0(vite@5.2.13(sass@1.77.6)):
+    dependencies:
+      vite: 5.2.13(sass@1.77.6)
+
   vite@5.2.13(sass@1.77.6):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.18.0
-      sass: 1.77.6
     optionalDependencies:
       fsevents: 2.3.3
+      sass: 1.77.6
 
-  vitefu@0.2.5(vite@5.2.13):
-    dependencies:
+  vitefu@0.2.5(vite@5.2.13(sass@1.77.6)):
+    optionalDependencies:
       vite: 5.2.13(sass@1.77.6)
 
   volar-service-css@0.0.45(@volar/language-service@2.2.5):
     dependencies:
-      '@volar/language-service': 2.2.5
       vscode-css-languageservice: 6.2.14
       vscode-languageserver-textdocument: 1.0.11
       vscode-uri: 3.0.8
+    optionalDependencies:
+      '@volar/language-service': 2.2.5
 
   volar-service-emmet@0.0.45(@volar/language-service@2.2.5):
     dependencies:
       '@emmetio/css-parser': 0.4.0
       '@emmetio/html-matcher': 1.3.0
-      '@volar/language-service': 2.2.5
       '@vscode/emmet-helper': 2.9.3
+    optionalDependencies:
+      '@volar/language-service': 2.2.5
 
   volar-service-html@0.0.45(@volar/language-service@2.2.5):
     dependencies:
-      '@volar/language-service': 2.2.5
       vscode-html-languageservice: '@johnsoncodehk/vscode-html-languageservice@5.2.0-34a5462'
       vscode-languageserver-textdocument: 1.0.11
       vscode-uri: 3.0.8
+    optionalDependencies:
+      '@volar/language-service': 2.2.5
 
   volar-service-prettier@0.0.45(@volar/language-service@2.2.5):
     dependencies:
-      '@volar/language-service': 2.2.5
       vscode-uri: 3.0.8
+    optionalDependencies:
+      '@volar/language-service': 2.2.5
 
   volar-service-typescript-twoslash-queries@0.0.45(@volar/language-service@2.2.5):
-    dependencies:
+    optionalDependencies:
       '@volar/language-service': 2.2.5
 
   volar-service-typescript@0.0.45(@volar/language-service@2.2.5):
     dependencies:
-      '@volar/language-service': 2.2.5
       path-browserify: 1.0.1
       semver: 7.6.2
       typescript-auto-import-cache: 0.3.2
       vscode-languageserver-textdocument: 1.0.11
       vscode-nls: 5.2.0
+    optionalDependencies:
+      '@volar/language-service': 2.2.5
 
   vscode-css-languageservice@6.2.14:
     dependencies:

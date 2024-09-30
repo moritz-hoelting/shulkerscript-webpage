@@ -7,7 +7,10 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [profile.release]
-opt-level = "s"
+opt-level = "z"
+
+[features]
+wee_alloc = ["dep:wee_alloc"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -15,11 +18,13 @@ opt-level = "s"
 ansi-to-html = "0.2.1"
 anyhow = "1.0.86"
 base64 = "0.22.1"
+cfg-if = "1.0.0"
 colored = "2.1.0"
 console_error_panic_hook = "0.1.7"
 serde = "1.0"
 serde-wasm-bindgen = "0.6.5"
 shulkerscript = { git = "https://github.com/moritz-hoelting/shulkerscript-lang.git", default-features = false, features = ["serde", "shulkerbox"], rev = "a9a8aff13b0ad0986ee1bdf3d44b74676385dfcd" }
 toml = "0.8.19"
-wasm-bindgen = "0.2.92"
+wasm-bindgen = "0.2.93"
+wee_alloc = { version = "0.4.5", optional = true }
 zip = { version = "2.1.3", default-features = false, features = ["deflate"] }
