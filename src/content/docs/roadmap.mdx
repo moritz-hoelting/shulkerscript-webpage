@@ -1,8 +1,8 @@
 ---
 title: Roadmap
-description: Our Plans for the future of ShulkerScript.
+description: Our Plans for the future of Shulkerscript.
 hero: 
-    tagline: Our Plans for the future of ShulkerScript.
+    tagline: Our Plans for the future of Shulkerscript.
     image:
         file: ../../assets/logo.webp
     actions:
@@ -24,7 +24,11 @@ import { Steps } from '@astrojs/starlight/components';
     Add support for variables and constants. Constants can be any type (string, number, etc.) and 
     can be passed from function to function. They will be processed by the compiler. Variables will be
     mutable and can be changed at any time, and are stored as entries in minecraft scoreboards.
-3. **Your Ideas**\
-    Do you have an idea for a feature that should be added to ShulkerScript?
+3. **Improved Migration**\
+    The migration tool will detect that a function is contained in `tick`/`load` tag and will automatically 
+    add the corresponding annotation to the function declaration. Execute commands will be converted to
+    execute blocks and `function` commands will be converted to function invocations.
+4. **Your Ideas**\
+    Do you have an idea for a feature that should be added to Shulkerscript?
     Let us know by opening an issue on GitHub or writing a mail! Links can be found in the upper right corner of the page.
 </Steps>

@@ -3,7 +3,7 @@ import type { LanguageInput } from "shiki";
 export const shulkerscriptGrammar: LanguageInput = {
     name: "shulkerscript",
     aliases: ["shu"],
-    displayName: "ShulkerScript",
+    displayName: "Shulkerscript",
     fileTypes: ["shu"],
     scopeName: "source.shulkerscript",
     patterns: [

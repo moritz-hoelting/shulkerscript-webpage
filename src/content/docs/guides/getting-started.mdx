@@ -1,19 +1,64 @@
 ---
 title: Getting Started
-description: Get started with ShulkerScript
+description: Get started with Shulkerscript
 ---
-import { Steps, FileTree } from '@astrojs/starlight/components';
+import { Steps, FileTree, Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## Installation
 
-To get started with ShulkerScript, you need to install the ShulkerScript CLI.
+To get started with Shulkerscript, you need to install the Shulkerscript CLI.
 You can either [download](#download-from-github) the latest release from the GitHub releases page or [build it from source](#building-from-source).
+
+{/* :::tip
+Before you install the CLI, you can try it out in your browser by using the [online playground](/playground).
+::: */}
+
+### Quickinstall script *(recommended)*
+<Steps>
+1. <Tabs>
+        <TabItem label="Windows" icon="seti:windows">
+            Open a PowerShell terminal and run
+            ```powershell
+            iex (iwr "https://raw.githubusercontent.com/moritz-hoelting/shulkerscript-cli/main/install.ps1").Content
+            ```
+        </TabItem>
+        <TabItem label="Linux / macOS" icon="linux">
+            Open a bash terminal and run
+            ```bash
+            curl -sfSL https://raw.githubusercontent.com/moritz-hoelting/shulkerscript-cli/main/install.sh | bash
+            ```
+        </TabItem>
+    </Tabs>
+2. Test the installation by running
+    ```bash
+    shulkerscript --version
+    ```
+</Steps>
+
+:::note[Info]
+The script will check if you have cargo-binstall installed and use it if available. 
+Otherwise it will download the binary from GitHub if available for your platform.
+As a fallback it will build the CLI from source if Rust is installed.
+:::
+
+### Download with cargo-binstall
+<Steps>
+1. Make sure you have [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) installed. If not, follow the [installation instructions](https://github.com/cargo-bins/cargo-binstall?tab=readme-ov-file#installation).
+2. Run
+    ```bash
+    cargo-binstall --git https://github.com/moritz-hoelting/shulkerscript-cli shulkerscript-cli
+    ```
+3. Test the installation by running
+    ```bash
+    shulkerscript --version
+    ```
+</Steps>
 
 ### Download from GitHub
 <Steps>
 1. Go to the [GitHub releases page](https://github.com/moritz-hoelting/shulkerscript-cli/releases) and download the latest release for your platform.
 2. Extract the downloaded archive.
-3. Move the extracted binary to a directory in your PATH.
+3. Move the extracted binary to a directory in your [PATH](https://en.wikipedia.org/wiki/PATH_(variable)) *(required for the CLI to be accessible from anywhere)*.
 4. Test the installation by running
     ```bash
     shulkerscript --version
@@ -22,11 +67,14 @@ You can either [download](#download-from-github) the latest release from the Git
 </Steps>
 
 ### Building from source
+:::caution
+This method takes the longest. If you have no reason to build from source, you may want to take a look at the other installation methods.
+:::
 <Steps>
 1. Make sure you have [Rust and Cargo](https://rustup.rs) installed.
 2. Install the CLI by running
     ```bash
-    cargo install --git https://github.com/moritz-hoelting/shulkerscript-cli.git
+    cargo install --git https://github.com/moritz-hoelting/shulkerscript-cli
     ```
 3. Test the installation by running
     ```bash
@@ -42,7 +90,7 @@ You can either [download](#download-from-github) the latest release from the Git
     ```bash
     shulkerscript init
     ```
-    This will create a new ShulkerScript project in the current directory.
+    This will create a new Shulkerscript project in the current directory.
 4. Open the `pack.toml` file in your favorite text editor and configure the project to your liking.
 </Steps>
 

@@ -8,10 +8,10 @@ export default defineConfig({
 	site: "https://shulkerscript.hoelting.dev",
 	integrations: [
 		starlight({
-			title: 'ShulkerScript',
+			title: 'Shulkerscript',
 			logo: {
 				src: './src/assets/logo.webp',
-				alt: 'ShulkerScript Logo',
+				alt: 'Shulkerscript Logo',
 			},
 			favicon: '/favicon.ico',
 			description: 'A simple and powerful scripting language for Minecraft datapacks.',

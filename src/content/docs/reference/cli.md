@@ -1,9 +1,9 @@
 ---
 title: Command-line interface reference
-description: Reference for the ShulkerScript command-line tool
+description: Reference for the Shulkerscript command-line tool
 ---
 
-The ShulkerScript CLI is a command-line tool for managing ShulkerScript projects.
+The Shulkerscript CLI is a command-line tool for managing Shulkerscript projects.
 
 
 ## init
@@ -48,7 +48,9 @@ shulkerscript watch [OPTIONS] [PATH]
 Options:
 - `--no-initial`                     Do not run the command initially
 - `--debounce-time <DEBOUNCE_TIME>`  The time to wait in ms after the last change before running the command [default: `2000`]
-- `--execute <COMMAND>`              The commands (cli subcommands or shell commands) to execute in the project  when changes have been detected [multi-arg, default: `build`]
+- `--execute <COMMAND>`              The shulkerscript commands to execute in the project when changes have been detected [multi-arg, default: `build .`]
+- `--no-execute`                     Do not execute any predefined shulkerscript commands
+- `--shell`                          The shell commands to execute in the project when changes have been detected [multi-arg]
 
 ## clean
 Clean the output directory of the project at the specified path.

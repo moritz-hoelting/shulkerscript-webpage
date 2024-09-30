@@ -10,7 +10,7 @@ The project is configured in the `pack.toml` file at the root of the project. It
 # The name of the datapack
 name = "shulkerpack"
 # The description of the datapack
-description = "I created this datapack with ShulkerScript"
+description = "I created this datapack with Shulkerscript"
 # The pack format of the datapack (https://minecraft.wiki/w/Data_pack#Pack_format)
 pack_format = 26
 # The version of the datapack (currently not used)

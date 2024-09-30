@@ -1,6 +1,6 @@
 ---
 title: Syntax
-description: Learn the syntax of ShulkerScript
+description: Learn the syntax of Shulkerscript
 ---
 
 ## Comments
@@ -50,7 +50,7 @@ pub fn hello() {
 This code defines a function called `main` that will be executed every tick.
 
 :::note
-ShulkerScript always requires at least one function annotated with `tick`, `load` or `deobfuscate`. 
+Shulkerscript always requires at least one function annotated with `tick`, `load` or `deobfuscate`. 
 Otherwise no `.mcfunction` files will be generated.
 :::
 
@@ -109,7 +109,7 @@ from "./foo" import bar, baz;
 
 ## Tags
 In Minecraft, tags are used to group multiple items, blocks, entities, etc. together.
-In ShulkerScript, tags can be defined right in the code, where they are needed.
+In Shulkerscript, tags can be defined right in the code, where they are needed.
 ```shulkerscript
 tag "foo" of "block" [
     "minecraft:stone",
@@ -223,7 +223,7 @@ In most cases, you can use [literal commands](#literal-commands) instead of the 
 :::
 
 ## Lua Code
-The `lua` keyword is used to embed Lua code in your ShulkerScript code. It can be combined with the `run` keyword to include the result of the Lua code in the output.
+The `lua` keyword is used to embed Lua code in your Shulkerscript code. It can be combined with the `run` keyword to include the result of the Lua code in the output.
 ```shulkerscript
 run lua() {
     -- Lua code goes here

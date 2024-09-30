@@ -1,12 +1,12 @@
 ---
 title: Differences to other languages
-description: See how ShulkerScript compares to similar languages.
+description: See how Shulkerscript compares to similar languages.
 ---
 
 import { Tabs, TabItem, Aside } from "@astrojs/starlight/components";
 import SplitView from "@components/SplitView.astro";
 
-This page will highlight the differences of ShulkerScript and vanilla mcfunction and mcscript.
+This page will highlight the differences of Shulkerscript and vanilla mcfunction and mcscript.
 
 :::note[Credits to mcscript]
 I came into contact with [mcscript](https://mcscript.stevertus.com/) by Stevertus a few years ago. I wrote some datapacks
@@ -17,12 +17,12 @@ under active development anymore. If you are interested, check out his new proje
 
 ## Functions
 
-The first difference you can see is that ShulkerScript takes a much different approach to functions than mcfunction and mcscript.
+The first difference you can see is that Shulkerscript takes a much different approach to functions than mcfunction and mcscript.
 The following example declares two functions and calls them second from the first one.
 
 <SplitView gap="10px">
     <Tabs slot="left">
-        <TabItem label="ShulkerScript">
+        <TabItem label="Shulkerscript">
             ```shulkerscript
             // functions.shu
             #[load]
@@ -71,11 +71,11 @@ The following example declares two functions and calls them second from the firs
 
 ## Comments
 
-Comments can be expressed differently in all three languages. ShulkerScript uses `//` for single-line comments and `/* */` for multi-line comments.
+Comments can be expressed differently in all three languages. Shulkerscript uses `//` for single-line comments and `/* */` for multi-line comments.
 
 <SplitView gap="10px">
     <Tabs slot="left">
-        <TabItem label="ShulkerScript">
+        <TabItem label="Shulkerscript">
             ```shulkerscript
             // comments.shu
             // this is a comment
@@ -116,11 +116,11 @@ Comments can be expressed differently in all three languages. ShulkerScript uses
 
 ## Execute Command
 
-Both ShulkerScript and mcfunction offer an easier way for using execute commands, as they are common when building datapacks.
+Both Shulkerscript and mcfunction offer an easier way for using execute commands, as they are common when building datapacks.
 
 <SplitView gap="10px">
     <Tabs slot="left">
-        <TabItem label="ShulkerScript">
+        <TabItem label="Shulkerscript">
             ```shulkerscript
             // execute.shu
             fn execute() {
@@ -150,16 +150,16 @@ Both ShulkerScript and mcfunction offer an easier way for using execute commands
 </SplitView>
 
 :::tip
-ShulkerScript and mcscript each offer a shortcut for `as(...), at("@s")`, which is `asat(@a)`.
+Shulkerscript and mcscript each offer a shortcut for `as(...), at("@s")`, which is `asat(@a)`.
 :::
 
 ## If-Else Statements
 
-ShulkerScript and mcscript offer a more convenient way to write if-else statements.
+Shulkerscript and mcscript offer a more convenient way to write if-else statements.
 
 <SplitView gap="10px">
     <Tabs slot="left">
-        <TabItem label="ShulkerScript">
+        <TabItem label="Shulkerscript">
             ```shulkerscript
             // conditionals.shu
             fn conditional() {
@@ -201,13 +201,13 @@ ShulkerScript and mcscript offer a more convenient way to write if-else statemen
 
 ### Logical operators
 
-Both in ShulkerScript and mcscript, logical operators can be used to combine multiple conditions. 
+Both in Shulkerscript and mcscript, logical operators can be used to combine multiple conditions. 
 In the following code examples, the conditions are represented by `A`, `B`, etc. as placeholders for real conditions.
 
 <SplitView gap="10px">
     <Fragment slot="left">
         <Tabs>
-            <TabItem label="ShulkerScript">
+            <TabItem label="Shulkerscript">
                 ```shulkerscript
                 // logical-operators.shu
                 fn logical() {
@@ -250,7 +250,7 @@ In the following code examples, the conditions are represented by `A`, `B`, etc.
 
 ### Interfering with conditions
 
-The difference between ShulkerScript and the other two languages is that ShulkerScript compiles to a version
+The difference between Shulkerscript and the other two languages is that Shulkerscript compiles to a version
 where it is not possible to trigger both the if and the else statement at the same time.
 This could be possible when using the trivial approach to translate the following to mcfunction:
 
@@ -267,7 +267,7 @@ fn thisWorks() {
 
 Here the second command will always be executed, because if the condition is true, the command runs and falsifies the condition.
 When the inverted condition is checked in the second command, it will always be true.
-ShulkerScript fixes this by using a mix of anonymous functions and data stores.
+Shulkerscript fixes this by using a mix of anonymous functions and data stores.
 
 ```mcfunction
 # this-is-incorrect.mcfunction
@@ -278,11 +278,11 @@ execute unless block ~ ~-1 ~ minecraft:stone run say Not on stone
 
 ## Embedded Programming Language
 
-ShulkerScript allows running Lua code during compilation and running the returned output in Minecraft, mcscript offers JavaScript modals.
+Shulkerscript allows running Lua code during compilation and running the returned output in Minecraft, mcscript offers JavaScript modals.
 
 <SplitView gap="10px">
     <Tabs slot="left">
-        <TabItem label="ShulkerScript">
+        <TabItem label="Shulkerscript">
             ```shulkerscript
             // lua.shu
             fn execute() {
