@@ -16,8 +16,7 @@ hero:
       icon: external
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
-
+import { Card, LinkCard, CardGrid } from "@astrojs/starlight/components";
 
 <CardGrid stagger>
 	<Card title="Simple Syntax" icon="seti:html">
@@ -33,6 +32,5 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 	<Card title="Contribute to this project" icon="github">
 		Contribute to [the CLI](https://github.com/moritz-hoelting/shulkerscript-cli) or [the compiler](https://github.com/moritz-hoelting/shulkerscript-lang).
 	</Card>
+	<LinkCard title="Online Playground" href="./playground" description="Get started without downloading anything" />
 </CardGrid>
-
-

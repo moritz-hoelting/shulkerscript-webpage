@@ -16,7 +16,10 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
-secrets.env
+*.env
 
 # macOS-specific files
 .DS_Store
+
+# wasm build files
+/target_rust

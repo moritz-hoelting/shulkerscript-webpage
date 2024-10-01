@@ -1,0 +1,50 @@
+---
+import PlaygroundComponent from "@components/Playground";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import type { PlaygroundLang } from "@utils/playground";
+
+const lang: PlaygroundLang = {
+    header: {
+        title: "Spielplatz",
+        buttons: {
+            build: "Bauen",
+            zip: "Als Zip herunterladen",
+            save: "Speichern",
+            reset: "Zurücksetzen",
+        },
+    },
+    explorer: {
+        title: "Dateien",
+        menu: {
+            add: "Datei hinzufügen",
+            addPrompt: {
+                label: "Dateipfad",
+                message: "Pfad eingeben, an dem die Datei erstellt werden soll."
+            },
+            delete: "Löschen",
+            rename: "Umbenennen",
+            renamePrompt: {
+                label: "Neuer Dateipfad",
+                message: "Pfad eingeben, zu dem die Datei umbenannt/verschoben werden soll."
+            },
+			cancel: "Abbrechen",
+        }
+    },
+    errorDisplay: {
+        title: "Fehler beim kompilieren!",
+        buttons: {
+            close: "Schließen",
+        },
+    }
+};
+---
+
+<StarlightPage frontmatter={{ title: "Playground", template: "splash" }}>
+    <PlaygroundComponent client:only="react" {lang} />
+</StarlightPage>
+
+<style is:global>
+    .pagination-links {
+        display: none;
+    }
+</style>

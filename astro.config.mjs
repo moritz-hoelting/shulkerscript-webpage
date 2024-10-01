@@ -1,12 +1,25 @@
-import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
-import starlightLinksValidator from "starlight-links-validator";
-import shikiConfig from './src/utils/shiki';
+import { defineConfig } from "astro/config";
+import starlight from "@astrojs/starlight";
+import react from "@astrojs/react";
+// import starlightLinksValidator from "starlight-links-validator";
+import starlightUtils from "@lorenzo_lewis/starlight-utils";
+import wasm from "vite-plugin-wasm";
+
+import shikiConfig from "./src/utils/shiki";
+
+const playgroundSidebarEntry = {
+    label: 'Playground',
+    link: '/playground',
+    translations: { de: 'Spielplatz' },
+};
+
+const navLinks = [playgroundSidebarEntry];
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://shulkerscript.hoelting.dev",
 	integrations: [
+        react(),
 		starlight({
 			title: 'Shulkerscript',
 			logo: {
@@ -34,16 +47,31 @@ export default defineConfig({
 				baseUrl: 'https://github.com/moritz-hoelting/shulkerscript-webpage/edit/main',
 			},
 			customCss: ['./src/styles/style.css'],
-			plugins: [starlightLinksValidator({
-				errorOnFallbackPages: false,
-			})],
+			plugins: [starlightUtils({
+                navLinks: {
+                    leading: {
+                        useSidebarLabelled: "leadingNavLinks",
+                    },
+                },
+            }),
+            // starlightLinksValidator({
+			// 	errorOnFallbackPages: false,
+			// })
+            ],
 			expressiveCode: {
 				shiki: shikiConfig,
 			},
 			components: {
+                PageTitle: "./src/components/override/PageTitle.astro",
+                ContentPanel: "./src/components/override/ContentPanel.astro",
+                Pagination: "./src/components/override/Pagination.astro",
 				SocialIcons: './src/components/override/SocialIcons.astro',
 			},
 			sidebar: [
+                {
+                    label: "leadingNavLinks",
+                    items: navLinks,
+                },
 				{
 					label: 'Guides',
 					autogenerate: {
@@ -53,20 +81,35 @@ export default defineConfig({
 						de: 'Anleitungen',
 					}
 				},
-				{
-					label: 'Differences to other languages',
-					link: '/differences',
-					translations: {
-						de: 'Unterschiede zu anderen Sprachen',
-					},
-				},
-				{
-					label: 'Roadmap',
-					link: '/roadmap',
-					translations: {
-						de: 'Zukunftspläne',
-					},
-				},
+                {
+                    label: "More",
+                    translations: {
+                        de: "Mehr",
+                    },
+                    items: [
+                        {
+                            label: "Roadmap",
+                            link: "/roadmap",
+                            translations: {
+                                de: "Zukunftspläne",
+                            },
+                        },
+                        {
+                            label: 'Differences to other languages',
+                            link: '/differences',
+                            translations: {
+                                de: 'Unterschiede zu anderen Sprachen',
+                            },
+                        },
+                        {
+                            ...playgroundSidebarEntry,
+                            badge: {
+                                text: "WIP",
+                                variant: "caution",
+                            },
+                        },
+                    ],
+                },
 				{
 					label: 'Reference',
 					autogenerate: {
@@ -84,4 +127,9 @@ export default defineConfig({
 			]
 		}),
 	],
+    vite: {
+        plugins: [
+            wasm(),
+        ],
+    }
 });

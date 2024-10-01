@@ -1,22 +1,42 @@
 {
-  "name": "shulkerscript-docs",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.9.3",
-    "@astrojs/starlight": "^0.28.2",
-    "astro": "^4.15.9",
-    "sharp": "^0.33.5",
-    "shiki": "^1.14.1",
-    "starlight-links-validator": "^0.12.1",
-    "typescript": "^5.4.5"
-  },
-  "packageManager": "pnpm@9.7.0+"
+    "name": "shulkerscript-docs",
+    "type": "module",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "pnpm build-wasm && astro dev",
+        "start": "pnpm build-wasm && astro dev",
+        "build-wasm": "wasm-pack build --release --no-pack ./src/wasm/webcompiler -- --features wee_alloc",
+        "build": "pnpm build-wasm && astro check && astro build",
+        "preview": "astro preview",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "@astrojs/check": "^0.9.3",
+        "@astrojs/react": "^3.6.0",
+        "@astrojs/starlight": "^0.28.2",
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.5",
+        "@lorenzo_lewis/starlight-utils": "^0.1.1",
+        "@monaco-editor/react": "^4.6.0",
+        "@mui/icons-material": "^6.1.1",
+        "@mui/material": "^6.1.1",
+        "@shikijs/monaco": "^1.7.0",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "^18.3.0",
+        "astro": "^4.15.9",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-icons": "^5.2.1",
+        "sharp": "^0.33.5",
+        "shiki": "^1.7.0",
+        "starlight-links-validator": "^0.12.1",
+        "tm-themes": "^1.4.3",
+        "typescript": "^5.4.5",
+        "use-immer": "^0.10.0",
+        "vite-plugin-wasm": "^3.3.0"
+    },
+    "devDependencies": {
+        "sass": "^1.77.6"
+    },
+    "packageManager": "pnpm@9.7.0+"
 }

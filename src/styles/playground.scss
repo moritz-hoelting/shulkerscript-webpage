@@ -1,0 +1,106 @@
+.playground {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "header"
+        "files"
+        "editor";
+
+    @media only screen and (min-width: 640px) {
+        grid-template-columns: clamp(200px, 15%, 500px) auto;
+        grid-template-areas:
+            "header header"
+            "files editor";
+    }
+
+    > header {
+        grid-area: header;
+        display: flex;
+        margin-bottom: 0.5cm;
+        flex-direction: column;
+        max-width: 95dvw;
+
+        @media only screen and (min-width: 450px) {
+            justify-content: space-between;
+            flex-direction: row;
+        }
+    }
+
+    > .file-view {
+        grid-area: files;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        max-height: 70vh;
+
+        @media only screen and (min-width: 640px) {
+            margin-right: 0.5cm;
+        }
+
+        > h3 {
+            cursor: pointer;
+        }
+
+        .entries {
+            overflow-y: auto;
+            overflow-x: hidden;
+            word-wrap: break-word;
+
+            button {
+                border: none;
+                width: 100%;
+                text-align: left;
+                background-color: transparent;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: var(--sl-color-gray-5);
+                }
+
+                &.selected {
+                    color: var(--sl-color-text);
+                    background-color: var(--sl-color-gray-6);
+                }
+            }
+        }
+    }
+    > .editor {
+        grid-area: editor;
+
+        @media only screen and (max-width: 640px) {
+            max-width: 100%;
+        }
+
+        .monaco-editor {
+            padding-block: 10px;
+        }
+    }
+}
+
+.error-terminal-display {
+    background-color: black;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 1.2em;
+    line-height: 0.8em;
+
+    --red: #ff0000;
+    --cyan: #00d6d6;
+
+    code {
+        white-space: break-spaces;
+        font-family: monospace;
+    }
+}
+
+:root[data-theme="light"] {
+    .error-terminal-display {
+        background-color: lightgray;
+
+        --red: #ff3f3f;
+        --cyan: #00a6a6;
+        --black: lightgray;
+        --white: #4f4f4f;
+    }
+}

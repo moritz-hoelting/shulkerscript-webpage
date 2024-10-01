@@ -1,0 +1,17 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/ContentPanel.astro";
+import { isPlaygroundPage } from '@utils/playground';
+
+const isPlayground = isPlaygroundPage(Astro.props.slug, Astro.currentLocale);
+---
+
+{
+    isPlayground ? (
+        <slot />
+    ) : (
+        <Default {...Astro.props}>
+            <slot />
+        </Default>
+    )
+}
