@@ -103,7 +103,7 @@ fn _compile(root_dir: &VFolder) -> Result<VFolder> {
     };
 
     let res = pack_format.and_then(|pack_format| {
-        shulkerscript::compile(&printer, root_dir, pack_format, &get_script_paths(root_dir))
+        shulkerscript::compile(&printer, root_dir, "main", pack_format, &get_script_paths(root_dir))
             .map_err(|e| e.into())
     });
 

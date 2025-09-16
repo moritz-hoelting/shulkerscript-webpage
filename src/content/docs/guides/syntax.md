@@ -29,7 +29,7 @@ They start with a `/` and are followed by the command.
 This will result in `say Hello, world!` being included in the `.mcfunction` file.
 
 :::note
-Literal commands are just syntactic sugar for the [`run`](#run) keyword.
+If you want to use [function arguments](#parameters), take a look at [macro strings](#macro-strings) in combination with the [`run`](#run) keyword, as literal commands are just syntactic sugar.
 :::
 
 ## Functions
@@ -98,6 +98,30 @@ Currently, the following annotations are supported:
 - `#[deobfuscate]`: The function will keep the original name in the output (path of the `.shu`-file followed by the function name).
 - `#[deobfuscate = "path/to/function"]`: The function will be named as specified in the argument.
 
+### Parameters
+
+Functions can be defined with parameters by specifying them in the parenthesis. When calling the function, the arguments have to be passed in the same order.
+
+```shulkerscript
+fn hello(macro greeting, macro name) {
+    run `say $(greeting), $(name)!`;
+}
+
+#[load]
+fn main() {
+    hello("Hello", "world");
+}
+```
+
+Keep in mind that if a function has parameters, they cannot be used with the annotations `#[tick]` or `#[load]`, as arguments cannot be provided in that case.
+
+:::caution[Important]
+Due to limitations in the way Minecraft macros work, together with the handling of complex statements like groups and if-else statements, special care has to be taken when using the escapement character `\` in the arguments.
+
+This happens because Minecraft inserts the macro text literally into the slot, thereby losing one level of escaping when it is passed to another function. If you absolutely need to use the `\` character in your arguments, compile the datapack, observe how and where it is passed and adjust the escaping accordingly.
+:::
+
+
 ### Provided functions
 !since[0.2.0]
 
@@ -118,12 +142,12 @@ fn load() {
 }
 ```
 
-## Macro Strings
+## Template Strings
 !since[0.2.0]
 
-When inside a function that has a macro as a parameter, this can be used inside strings by using the macro string format.
+To use variables inside of strings, template strings can be used.
 Instead of normal quotation marks `"`, the backtick `` ` `` is used for this type of string.
-Inside a macro string, `$(MACRO NAME)` can be used to place the value of the macro at that position in the string.
+Inside a template string, `$(VAR_NAME)` can be used to place the value of the variable at that position in the string.
 
 When wanting to use it in a regular command, use the run syntax.
 
@@ -133,6 +157,10 @@ fn macroFunction(macro name) {
 }
 ```
 
+:::tip
+You can use template strings in most places inside functions where you would use a string.
+This includes execute blocks and conditional statements.
+:::
 
 ## Imports
 

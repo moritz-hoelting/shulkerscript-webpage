@@ -24,7 +24,8 @@ console_error_panic_hook = "0.1.7"
 lol_alloc = { version = "0.4.1", optional = true }
 serde = "1.0.219"
 serde-wasm-bindgen = "0.6.5"
-shulkerscript = { version = "0.1.0", default-features = false, features = ["serde", "shulkerbox"] }
+# shulkerscript = { version = "0.1.0", default-features = false, features = ["serde", "shulkerbox"] }
+shulkerscript = { git = "https://github.com/moritz-hoelting/shulkerscript-lang.git", default-features = false, features = ["serde", "shulkerbox"], rev = "d988a10d9dee222d16ec2b30da202fb8a9a1f051" }
 toml = "0.9.5"
 wasm-bindgen = "0.2.100"
 zip = { version = "4.3.0", default-features = false, features = ["deflate"] }

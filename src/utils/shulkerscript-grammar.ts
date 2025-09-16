@@ -39,6 +39,7 @@ export const shulkerscriptGrammar: LanguageInput = {
                 { include: "#lua" },
                 { include: "#groupBlock" },
                 { include: "#stringLiteral" },
+                { include: "#templateStringLiteral" },
                 { include: "#binaryOperator" },
                 { include: "#executeKeyword" },
                 { include: "#elseKeyword" },
@@ -66,7 +67,7 @@ export const shulkerscriptGrammar: LanguageInput = {
             match: "\\bnamespace\\b",
         },
         functionDeclaration: {
-            begin: "^\\s*(pub\\s)?(fn)\\s+(\\w+)\\(\\s*\\)\\s*{",
+            begin: "^\\s*(pub\\s)?(fn)\\s+(\\w+)\\(\\s*(?:\\w+\\s*(?:,\\s*\\w+\\s*)*)?\\)\\s*{",
             end: "}",
             captures: {
                 1: {
@@ -97,7 +98,7 @@ export const shulkerscriptGrammar: LanguageInput = {
             },
         },
         functionCall: {
-            match: "(\\w+)\\s*\\(\\s*(?:\\w+\\s*)?\\)",
+            match: "(\\w+)\\s*\\(\\s*(?:.*?)?\\)",
             captures: {
                 1: {
                     name: "entity.name.function.shulkerscript",
@@ -162,6 +163,26 @@ export const shulkerscriptGrammar: LanguageInput = {
                 {
                     name: "constant.character.escape.shulkerscript",
                     match: "\\\\.",
+                },
+            ],
+        },
+        templateStringLiteral: {
+            name: "string.quoted.macro.shulkerscript",
+            begin: "`",
+            end: "`",
+            patterns: [
+                {
+                    name: "constant.character.escape.shulkerscript",
+                    match: "\\\\.",
+                },
+                {
+                    name: "punctuation.interpolation.shulkerscript",
+                    match: "\\$\\((\\w+)\\)",
+                    captures: {
+                        1: {
+                            name: "variable.other.shulkerscript",
+                        },
+                    },
                 },
             ],
         },

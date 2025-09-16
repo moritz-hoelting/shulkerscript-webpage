@@ -12,9 +12,12 @@ name = "shulkerpack"
 # The description of the datapack
 description = "I created this datapack with Shulkerscript"
 # The pack format of the datapack (https://minecraft.wiki/w/Data_pack#Pack_format)
-pack_format = 26
+pack_format = 81
 # The version of the datapack (currently not used)
 version = "0.1.0"
+# Optional set the main namespace of the datapack
+# Otherwise derived from the name
+main-namespace  = "shulkerpack"
 
 [compiler] # optional
 # path to the folder to use as a datapack template
