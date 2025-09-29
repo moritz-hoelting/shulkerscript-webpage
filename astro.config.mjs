@@ -6,6 +6,7 @@ import starlightUtils from "@lorenzo_lewis/starlight-utils";
 import wasm from "vite-plugin-wasm";
 
 import shikiConfig from "./src/utils/shiki";
+import remarkVersionBadges from "./src/remark-plugins/version-badges";
 
 const playgroundSidebarEntry = {
     label: 'Playground',
@@ -67,6 +68,9 @@ export default defineConfig({
                 Pagination: "./src/components/override/Pagination.astro",
 				SocialIcons: './src/components/override/SocialIcons.astro',
 			},
+			customCss: [
+				'./src/remark-plugins/version-badges.css',
+			],
 			sidebar: [
                 {
                     label: "leadingNavLinks",
@@ -131,5 +135,10 @@ export default defineConfig({
         plugins: [
             wasm(),
         ],
-    }
+    },
+	markdown: {
+		remarkPlugins: [
+			remarkVersionBadges,
+		],
+	},
 });

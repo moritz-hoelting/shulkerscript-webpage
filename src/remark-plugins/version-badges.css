@@ -1,0 +1,55 @@
+.version-badges {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5em 0 !important;
+    margin-bottom: 0 !important;
+    flex-wrap: wrap;
+}
+
+.version-badges + p {
+    margin-top: 0.5rem !important;
+}
+
+.version-badges span {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+html[data-theme='light'] .version-badges .since-badge {
+    background-color: #e0f7fa;
+    color: #00796b;
+    border-color: #b2ebf2;
+}
+
+html[data-theme='light'] .version-badges .changed-badge {
+    background-color: #fff8e1;
+    color: #795548;
+    border-color: #ffe082;
+}
+
+html[data-theme='light'] .version-badges .deprecated-badge {
+    background-color: #ffebee;
+    color: #b71c1c;
+    border-color: #ffcdd2;
+}
+
+html[data-theme='dark'] .version-badges .since-badge {
+    background-color: #004d40;
+    color: #b2dfdb;
+    border-color: #00695c;
+}
+
+html[data-theme='dark'] .version-badges .changed-badge {
+    background-color: #3e2723;
+    color: #ffe0b2;
+    border-color: #6d5037;
+}
+
+html[data-theme='dark'] .version-badges .deprecated-badge {
+    background-color: #4a0000;
+    color: #ffcdd2;
+    border-color: #b71c1c;
+}
