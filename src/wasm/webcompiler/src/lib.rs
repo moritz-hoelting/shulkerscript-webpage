@@ -19,9 +19,9 @@ mod fs;
 mod pack_toml;
 
 cfg_if::cfg_if! {
-    if #[cfg(feature = "wee_alloc")] {
+    if #[cfg(feature = "lol_alloc")] {
         #[global_allocator]
-        static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+        static ALLOC: lol_alloc::LockedAllocator<lol_alloc::FreeListAllocator> = lol_alloc::LockedAllocator::new(lol_alloc::FreeListAllocator::new());
     }
 }
 

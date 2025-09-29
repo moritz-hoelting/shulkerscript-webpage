@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "pnpm build-wasm && astro dev",
         "start": "pnpm build-wasm && astro dev",
-        "build-wasm": "wasm-pack build --release --no-pack ./src/wasm/webcompiler -- --features wee_alloc",
+        "build-wasm": "wasm-pack build --release --no-pack ./src/wasm/webcompiler -- --features lol_alloc",
         "build": "pnpm build-wasm && astro check && astro build",
         "preview": "astro preview",
         "astro": "astro"

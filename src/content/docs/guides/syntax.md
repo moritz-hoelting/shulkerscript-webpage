@@ -5,7 +5,7 @@ description: Learn the syntax of Shulkerscript
 
 ## Comments
 Single-line comments start with `//` and continue until the end of the line.
-Multiline comments start with `/*` and end with `*/`.
+Multi-line comments start with `/*` and end with `*/`.
 
 ```shulkerscript
 // This is a single line comment
@@ -33,9 +33,11 @@ Literal commands are just syntactic sugar for the [`run`](#run) keyword.
 :::
 
 ## Functions
+!changed[0.2.0]
+
 Functions are blocks of code that can be executed.
-They start with `fn` followed by the name of the function, parenthesis and a block of code.
-Optionally they can be preceeded by annotations. When a function has the `pub` keyword in front of it, it will be accessible from other files.
+They start with `fn` followed by the name of the function, [arguments](../../reference/functions/#arguments) in parentheses and a block of code.
+Optionally they can be preceded by annotations. When a function has the `pub` keyword in front of it, it will be accessible from other files.
 ```shulkerscript title="src/main.shu"
 #[tick]
 fn main() {
@@ -43,15 +45,48 @@ fn main() {
 }
 
 #[deobfuscate]
-pub fn hello() {
+pub fn hello(macro name) {
     /say I can be called from other files!
+    run `say Hello $(name)`;
 }
 ```
 This code defines a function called `main` that will be executed every tick.
 
 :::note
 Shulkerscript always requires at least one function annotated with `tick`, `load` or `deobfuscate`. 
-Otherwise no `.mcfunction` files will be generated.
+Otherwise, no `.mcfunction` files will be generated.
+:::
+
+### Function calls
+Functions can be called by using their name followed by parenthesis.
+Arguments can be specified in the parenthesis separated by commas.
+```shulkerscript
+#[tick]
+fn main() {
+    hello("World");
+}
+
+fn hello(macro name) {
+    run `say Hello, $(name)!`;
+}
+```
+
+### Return
+!since[0.2.0]
+
+To early end a function execution or to return a value, the `return` command was added in Minecraft 1.20.
+Similarly, the `return` statement is available in Shulkerscript.
+
+```shulkerscript
+#[deobfuscate = "returns_value"]
+fn returnsValue() {
+    return 5;
+}
+```
+
+:::caution[Important]
+This should be always preferred over using the raw `/return` command.
+Special handling is done to make returning work in combination with conditionals, groups, etc.
 :::
 
 ### Annotations
@@ -63,22 +98,45 @@ Currently, the following annotations are supported:
 - `#[deobfuscate]`: The function will keep the original name in the output (path of the `.shu`-file followed by the function name).
 - `#[deobfuscate = "path/to/function"]`: The function will be named as specified in the argument.
 
-### Function calls
-Functions can be called by using their name followed by parenthesis.
-```shulkerscript
-#[tick]
-fn main() {
-    hello();
-}
+### Provided functions
+!since[0.2.0]
 
-fn hello() {
-    /say Hello, world!
+Shulkerscript provides some internal functions.
+These can be called like user-defined functions, but have access to the compilation process and therefore greater possibilities.
+
+| Function | Description |
+| -------- | ----------- |
+| `print`  | Allows to print a string or macro string to the chat. Variables in the macro string are substituted at runtime. |
+
+Example:
+
+```shulkerscript
+#[load]
+fn load() {
+    int x = 5;
+    print(`Value of x=$(x)`);
 }
 ```
 
+## Macro Strings
+!since[0.2.0]
+
+When inside a function that has a macro as a parameter, this can be used inside strings by using the macro string format.
+Instead of normal quotation marks `"`, the backtick `` ` `` is used for this type of string.
+Inside a macro string, `$(MACRO NAME)` can be used to place the value of the macro at that position in the string.
+
+When wanting to use it in a regular command, use the run syntax.
+
+```shulkerscript
+fn macroFunction(macro name) {
+    run `say Hello $(name)`;
+}
+```
+
+
 ## Imports
 
-Functions from other files can be imported by using the `from`-`import` syntax.
+Functions and global variables from other files can be imported by using the `from`-`import` syntax.
 ```shulkerscript title="src/main.shu"
 namespace "foo";
 
@@ -108,10 +166,12 @@ from "./foo" import bar, baz;
 ```
 
 ## Tags
+!changed[0.2.0]
+
 In Minecraft, tags are used to group multiple items, blocks, entities, etc. together.
 In Shulkerscript, tags can be defined right in the code, where they are needed.
 ```shulkerscript
-tag "foo" of "block" [
+tag<"block"> "foo" [
     "minecraft:stone",
     "minecraft:dirt"
 ]
@@ -121,7 +181,7 @@ This will result in a tag of type `block` with the name `foo` containing the blo
 
 If you want the tag to replace, instead of append to the existing tag, you can use the `replace` keyword.
 ```shulkerscript
-tag "foo" of "block" replace [
+tag<"block"> "foo" replace [
     "minecraft:stone",
     "minecraft:dirt"
 ]
@@ -139,12 +199,12 @@ the types:
 But you can also use custom types, refer to [this page](https://minecraft.wiki/w/Tag) for more information.
 
 :::tip
-`of "[type]"` can be omitted and will default to `"function"`.
+`<"[type]">` can be omitted and will default to `"function"`.
 :::
 
 ## Conditional Statements
 Conditional statements are used to execute code based on a condition.
-They start with `if` followed by a condition in parenthesis and a block of code.
+They start with `if` followed by a condition in parentheses and a block of code.
 Optionally they can be followed by an `else` block.
 ```shulkerscript
 if ("block ~ ~-1 ~ minecraft:stone") {
@@ -158,7 +218,7 @@ To learn more about how to combine or negate conditions, refer to the [if-else s
 
 ## Execute Blocks
 Execute blocks are used to execute a block of code in a specific context.
-They consist of the keyword you would pass to the `/execute` command followed the argument as a string in parenthesis and a block of code.
+They consist of the keyword you would pass to the `/execute` command followed the argument as a string in parentheses and a block of code.
 ```shulkerscript
 as ("@a") { // execute as all players
     /say Hello, world!
@@ -177,7 +237,7 @@ positioned ("0 0 0"), in ("minecraft:overworld") {
 ```
 
 :::tip[Did you know?]
-[Conditionals](#conditional-statements) are also implemented as execute blocks.Therefore you can chain them together with other execute blocks. Keep in mind that an if-else statement can only be used as the last execute block in a chain.
+[Conditionals](#conditional-statements) are also implemented as execute blocks. Therefore, you can chain them together with other execute blocks. Keep in mind that an if-else statement can only be used as the last execute block in a chain.
 :::
 
 ### Supported Execute Blocks
@@ -211,6 +271,36 @@ group {
     /say World
 }
 ```
+
+## Variables
+!since[0.2.0]
+
+Variables can be used to store values.
+There are different types available, and they differ in how they are stored, 
+what data can be stored in them and how they can be used.
+
+| Keyword | Storage method  | Usage |
+| ------- | --------------- | ----- |
+| `int`   | Scoreboard      | Single integer values |
+| `bool`  | Data Storage    | Single boolean values |
+| `val`   | Compiler memory | Can store any data type, but has to be known at compile time |
+| `int[NUMBER]` | Scoreboard | Array of `NUMBER` integers |
+| `bool[NUMBER]` | Data Storage | Array of `NUMBER` booleans |
+| `int[]` | Scoreboard      | Map of integers       |
+| `bool[]` | Entity tag     | Map of booleans (keys have to be valid entities in the world) |
+
+```shulkerscript
+int x = 5;
+bool y = true;
+
+int z = x + 2;
+
+int[2] arr;
+arr[0] = 1;
+arr[1] = 2;
+```
+
+Read more in the [reference](../../reference/variables).
 
 ## Run
 The `run` keyword is used to evaluate the following expression and include the resulting command in the output.
