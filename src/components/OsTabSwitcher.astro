@@ -1,0 +1,31 @@
+<script defer>
+    const isLinux = /Linux/.test(window.navigator.platform) || ["Macintosh", "MacIntel", "MacPOC", "Mac68K"].indexOf(window.navigator.platform) !== -1;
+    if (isLinux) {
+        (async () => {
+            function waitForElements(selector) {
+                return new Promise(resolve => {
+                    if (document.querySelectorAll(selector).length > 0) {
+                        return resolve(document.querySelectorAll(selector));
+                    }
+
+                    const observer = new MutationObserver(mutations => {
+                        if (document.querySelector(selector)) {
+                            observer.disconnect();
+                            resolve(document.querySelectorAll(selector));
+                        }
+                    });
+
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                });
+            }
+            waitForElements("starlight-tabs a").then(() => {
+                setTimeout(() => {
+                    document.querySelectorAll("starlight-tabs a").values().filter(el => el.innerText === "Linux / macOS").forEach(el => el.click());
+                }, 1000);
+            });
+        })()
+    }
+</script>
