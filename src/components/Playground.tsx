@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMonaco, type Monaco } from "@monaco-editor/react";
 import { useImmer, type Updater } from "use-immer";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import { ThemeProvider } from "@mui/material/styles";
 import ErrorDisplay from "./playground/ErrorDisplay";
 import FileView from "./playground/FileView";
 import Editor from "./playground/Editor";

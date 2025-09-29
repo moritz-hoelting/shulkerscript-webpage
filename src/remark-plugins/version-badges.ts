@@ -1,7 +1,7 @@
 import { visit } from 'unist-util-visit';
 import type { Plugin } from 'unified';
 import type { Parent } from 'unist';
-import type { Paragraph, Text } from 'mdast';
+import type { Paragraph } from 'mdast';
 
 const INLINE_REGEX = /!(since|changed|deprecated)\[([^\]]+)\]/g;
 

@@ -1,6 +1,6 @@
 import type { File } from "@utils/playground";
 import MonacoEditor, { useMonaco } from "@monaco-editor/react";
-import { getHighlighter, type Highlighter } from "shiki";
+import { createHighlighter, type Highlighter } from "shiki";
 import { shikiToMonaco } from "@shikijs/monaco";
 import { useEffect, useState } from "react";
 import darkPlus from "tm-themes/themes/dark-plus.json";
@@ -24,7 +24,7 @@ export default function Editor({
     useEffect(() => {
         if (monaco) {
             if (highlighter == null) {
-                getHighlighter({
+                createHighlighter({
                     themes: [darkPlus as any, lightPlus],
                     langs: ["toml", shulkerscriptGrammar, mcfunctionGrammar],
                 }).then((highlighter) => {

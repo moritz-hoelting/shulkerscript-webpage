@@ -29,9 +29,9 @@ export default defineConfig({
 			},
 			favicon: '/favicon.ico',
 			description: 'A simple and powerful scripting language for Minecraft datapacks.',
-			social: {
-				email: 'mailto:shulkerscript@hoelting.dev',
-			},
+			social: [
+				{ icon: 'email', label: 'E-Mail', href: 'mailto:shulkerscript@hoelting.dev' },
+			],
 			tableOfContents: { minHeadingLevel: 1, maxHeadingLevel: 3 },
 			defaultLocale: 'root',
 			locales: {
