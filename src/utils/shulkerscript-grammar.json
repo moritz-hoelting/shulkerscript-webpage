@@ -1,0 +1,206 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "shulkerscript",
+    "aliases": ["shu"],
+    "displayName": "Shulkerscript",
+    "fileTypes": ["shu"],
+    "scopeName": "source.shulkerscript",
+    "patterns": [
+        { "include": "#comments" },
+        { "include": "#commandLiteral" },
+        { "include": "#luaBlock" },
+        { "include": "#declarationKeywords" },
+        { "include": "#flowKeywords" },
+        { "include": "#generalKeywords" },
+        { "include": "#executeKeywords" },
+        { "include": "#types" },
+        { "include": "#functions" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#annotations" },
+        { "include": "#operators" },
+        { "include": "#punctuation" }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.line.doc.shulkerscript",
+                    "match": "///.*$"
+                },
+                {
+                    "name": "comment.line.double-slash.shulkerscript",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.block.shulkerscript",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                }
+            ]
+        },
+        "declarationKeywords": {
+            "patterns": [
+                {
+                    "name": "keyword.declaration.shulkerscript",
+                    "match": "\\b(namespace|fn|pub|val|tag)\\b"
+                }
+            ]
+        },
+        "flowKeywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.flow.shulkerscript",
+                    "match": "\\b(if|else|return|group)\\b"
+                }
+            ]
+        },
+        "generalKeywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.shulkerscript",
+                    "match": "\\b(from|import|replace|run)\\b"
+                }
+            ]
+        },
+        "executeKeywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.execute.shulkerscript",
+                    "match": "\\b(align|anchored|as|asat|at|facing|in|on|positioned|rotated|store|summon)\\b"
+                }
+            ]
+        },
+        "types": {
+            "patterns": [
+                {
+                    "name": "storage.type.shulkerscript",
+                    "match": "\\b(int|bool|macro)\\b"
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "entity.name.function.shulkerscript",
+                    "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()"
+                }
+            ]
+        },
+        "strings": {
+            "patterns": [
+                {
+                    "name": "string.quoted.double.shulkerscript",
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "constant.character.escape.shulkerscript",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
+                    "name": "string.interpolated.shulkerscript",
+                    "begin": "`",
+                    "end": "`",
+                    "patterns": [
+                        {
+                            "name": "variable.interpolation.shulkerscript",
+                            "begin": "\\$\\(",
+                            "end": "\\)",
+                            "beginCaptures": {
+                                "0": {
+                                    "name": "punctuation.interpolation.begin.shulkerscript"
+                                }
+                            },
+                            "endCaptures": {
+                                "0": {
+                                    "name": "punctuation.interpolation.end.shulkerscript"
+                                }
+                            },
+                            "patterns": [
+                                { "include": "$self" },
+                                {
+                                    "name": "variable.interpolation.shulkerscript",
+                                    "match": ".+?"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "numbers": {
+            "patterns": [
+                {
+                    "name": "constant.numeric.shulkerscript",
+                    "match": "\\b[0-9]+\\b"
+                }
+            ]
+        },
+        "annotations": {
+            "patterns": [
+                {
+                    "name": "meta.annotation.shulkerscript",
+                    "begin": "#\\[",
+                    "end": "\\]",
+                    "patterns": [
+                        { "include": "#declarationKeywords" },
+                        { "include": "#flowKeywords" },
+                        { "include": "#generalKeywords" },
+                        { "include": "#strings" },
+                        { "include": "#numbers" }
+                    ]
+                }
+            ]
+        },
+        "operators": {
+            "patterns": [
+                {
+                    "name": "keyword.operator.shulkerscript",
+                    "match": "(\\+|\\-|\\*|\\/|%|==|!=|<=|>=|<|>|&&|\\|\\||=|!)"
+                }
+            ]
+        },
+        "punctuation": {
+            "patterns": [
+                {
+                    "name": "punctuation.separator.shulkerscript",
+                    "match": "[,;]"
+                },
+                {
+                    "name": "punctuation.brackets.shulkerscript",
+                    "match": "[\\[\\]\\(\\)\\{\\}]"
+                },
+                {
+                    "name": "punctuation.accessor.shulkerscript",
+                    "match": "\\."
+                }
+            ]
+        },
+        "commandLiteral": {
+            "name": "string.commandliteral.shulkerscript",
+            "match": "^\\s*(/\\w+)(.*)$",
+            "captures": {
+                "1": {
+                    "name": "keyword.other.commandliteral.shulkerscript"
+                },
+                "2": {
+                    "name": "string.command.shulkerscript"
+                }
+            }
+        },
+        "luaBlock": {
+            "name": "meta.embedded.lua.shulkerscript",
+            "begin": "(lua)\\s*\\(\\s*((\\w+\\s*,\\s*)*\\w+?\\s*)?\\)\\s*\\{",
+            "end": "\\}",
+            "beginCaptures": {
+                "1": {
+                    "name": "keyword.control.lua.shulkerscript"
+                }
+            },
+            "patterns": [{ "include": "source.lua" }]
+        }
+    }
+}

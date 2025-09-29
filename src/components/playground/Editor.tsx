@@ -3,8 +3,8 @@ import MonacoEditor, { useMonaco } from "@monaco-editor/react";
 import { createHighlighter, type Highlighter } from "shiki";
 import { shikiToMonaco } from "@shikijs/monaco";
 import { useEffect, useState } from "react";
-import darkPlus from "tm-themes/themes/dark-plus.json";
-import lightPlus from "tm-themes/themes/light-plus.json";
+import darkPlus from "tm-themes/themes/dark-plus.json" with { type: 'json' };
+import lightPlus from "tm-themes/themes/light-plus.json" with { type: 'json' };
 
 import { shulkerscriptGrammar } from "@utils/shulkerscript-grammar";
 import { mcfunctionGrammar } from "@utils/mcfunction-grammar";
