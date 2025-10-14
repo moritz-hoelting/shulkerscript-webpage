@@ -26,6 +26,8 @@ int myScore[];
 myScore["@p"] = 42;
 ```
 
+The scoreboard objective can be accessed with `myInt.objective` and the target/targets with `myInt.target`/`myInts.targets`.
+
 ### Operations
 
 You can perform operations on integer variables, such as addition, subtraction, multiplication, and division.
@@ -54,3 +56,5 @@ bool manyBools[5] = [true, false, true, false, true];
 // Create an entity-boolean map/tag and set the value of the nearest player to true at the same time
 bool myScore["@p"] = true;
 ```
+
+The tag or storage name can be accessed with `myBool.name` and the storage path with `myBools.path`.

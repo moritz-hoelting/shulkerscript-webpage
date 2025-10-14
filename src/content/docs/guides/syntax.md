@@ -330,6 +330,35 @@ arr[1] = 2;
 
 Read more in the [reference](../../reference/variables).
 
+## Loops
+!since[0.2.0]
+
+While loops can be used to execute commands multiple times.
+The entire loop takes place within a single game-tick.
+For running commands every tick, the `#[tick]` annotation should be used on a function.
+
+```shulkerscript
+while ("entity @p") {
+    /say @p
+}
+```
+
+Compile-time conditions will be expanded at compile-time into a list of commands without requiring logic in Minecraft.
+
+```shulkerscript
+val x = 0;
+while (x < 3) {
+    run `say $(x)`;
+    x = x + 1;
+}
+```
+This will become
+```mcfunction
+say 0
+say 1
+say 2
+```
+
 ## Run
 The `run` keyword is used to evaluate the following expression and include the resulting command in the output.
 ```shulkerscript
@@ -348,3 +377,11 @@ run lua() {
     return "Hello, Lua!";
 };
 ```
+
+## Member Access
+!since[0.2.0]
+
+Additional properties of values can be accessed via member access (or dot notation).
+For example, `.length` gets the length of a string.
+Additional information about variable member access can be found in the [variable reference](../../reference/variables).
+If you need the actual name of the macro used in a function, you can get it with `.name`.

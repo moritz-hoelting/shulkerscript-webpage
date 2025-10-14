@@ -51,7 +51,7 @@
             "patterns": [
                 {
                     "name": "keyword.control.flow.shulkerscript",
-                    "match": "\\b(if|else|return|group)\\b"
+                    "match": "\\b(if|else|return|group|while)\\b"
                 }
             ]
         },
@@ -184,7 +184,7 @@
             "match": "^\\s*(/\\w+)(.*)$",
             "captures": {
                 "1": {
-                    "name": "keyword.other.commandliteral.shulkerscript"
+                    "name": "entity.name.function.commandliteral.shulkerscript"
                 },
                 "2": {
                     "name": "string.command.shulkerscript"
